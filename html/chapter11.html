@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 11：工程化实践：从脚本到生产级流水线</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-11">Chapter 11：工程化实践：从脚本到生产级流水线</h1>
+<p>在前面的章节中，你可能已经用 Python 脚本跑通过几个 SPARQL 查询，并用简单的字符串替换生成了一些对话。这对于验证想法（PoC）很好，但如果你需要生产<strong>百万级</strong>数据、支持<strong>每周更新</strong>、或者需要<strong>多人协作</strong>，这种“手工作坊”模式很快就会崩溃。</p>
+<p>本章将教你如何将实验代码重构为<strong>健壮、可复现、可监控的生产级数据流水线</strong>。</p>
+<hr />
+<h2 id="_1">本章学习目标</h2>
+<ol>
+<li><strong>工程架构</strong>：掌握 E-T-L-E（Extract-Transform-Load-Evaluate）在数据合成中的应用。</li>
+<li><strong>鲁棒性设计</strong>：处理网络抖动、API 速率限制（Rate Limiting）和断点续跑。</li>
+<li><strong>标准化中间层</strong>：使用 Pydantic 定义严谨的数据 Schema（IR），解耦采集与生成。</li>
+<li><strong>质量保障体系</strong>：建立“金样（Golden Set）”回归测试，防止规则修改导致的“蝴蝶效应”。</li>
+<li><strong>项目组织</strong>：一个标准的数据工程项目该长什么样。</li>
+</ol>
+<hr />
+<h2 id="1">1. 理想的目录结构</h2>
+<p>在开始写代码前，先整理你的工位。一个标准化的目录结构能让你的项目清晰可维护。</p>
+<div class="codehilite"><pre><span></span><code>wikidata-dialogue-synth/
+├── config/                 # 配置中心
+│   ├── topic_schema.yaml   # 定义要采样的领域、权重
+│   ├── queries/            # SPARQL 模板文件 (.sparql)
+│   └── templates/          # 自然语言生成模板 (.jinja2 / .yaml)
+├── data/                   # 数据落地（通常在 .gitignore 中忽略）
+│   ├── 0_raw/              # 原始 SPARQL JSON 响应（缓存层）
+│   ├── 1_intermediate/     # 清洗后的标准中间态数据 (JSONL/Parquet)
+│   ├── 2_final/            # 最终生成的对话数据
+│   └── goldens/            # 测试用的金样数据
+├── src/                    # 源代码
+│   ├── collector/          # 采样器：负责与 Wikidata 交互
+│   ├── normalizer/         # 清洗器：负责脏数据处理、类型转换
+│   ├── generator/          # 生成器：负责逻辑渲染、LLM 调用
+│   ├── validator/          # 评估器：负责质量打分、去重
+│   └── utils/              # 通用工具（日志、IO、哈希）
+├── tests/                  # 单元测试与回归测试
+├── scripts/                # 启动脚本 (e.g., run_pipeline.sh)
+├── requirements.txt
+├── Makefile                # 常用指令快捷方式
+└── README.md
+</code></pre></div>
+
+<hr />
+<h2 id="2-the-e-t-s-v-pipeline">2. 流水线架构详解 (The E-T-S-V Pipeline)</h2>
+<p>我们将传统的 ETL 扩展为 <strong>ETSV</strong>：Extract（采集） -&gt; Transform（规范化） -&gt; Synthesize（合成） -&gt; Validate（验证）。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">TD</span>
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Config</span>
+<span class="w">    </span><span class="n">C1</span><span class="p">[</span><span class="n">Topic</span><span class="w"> </span><span class="n">Config</span><span class="p">]</span>
+<span class="w">    </span><span class="n">C2</span><span class="p">[</span><span class="n">SPARQL</span><span class="w"> </span><span class="n">Templates</span><span class="p">]</span>
+<span class="w">    </span><span class="n">C3</span><span class="p">[</span><span class="n">Prompt</span><span class="o">/</span><span class="n">Jinja</span><span class="w"> </span><span class="n">Templates</span><span class="p">]</span>
+<span class="w">    </span><span class="n">end</span>
+
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Phase</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="n">Extraction</span>
+<span class="w">    </span><span class="n">W</span><span class="p">[</span><span class="n">Wikidata</span><span class="w"> </span><span class="n">Query</span><span class="w"> </span><span class="n">Service</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;--&gt;|</span><span class="n">HTTP</span><span class="o">/</span><span class="n">Retry</span><span class="o">|</span><span class="w"> </span><span class="n">S</span><span class="p">[</span><span class="n">Sampler</span><span class="p">]</span>
+<span class="w">    </span><span class="n">S</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Raw</span><span class="w"> </span><span class="n">JSON</span><span class="o">|</span><span class="w"> </span><span class="n">D1</span><span class="p">[(</span><span class="n">Raw</span><span class="w"> </span><span class="n">Cache</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">end</span>
+
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Phase</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="n">Normalization</span>
+<span class="w">    </span><span class="n">D1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">N</span><span class="p">[</span><span class="n">Normalizer</span><span class="p">]</span>
+<span class="w">    </span><span class="n">N</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Pydantic</span><span class="w"> </span><span class="n">Models</span><span class="o">|</span><span class="w"> </span><span class="n">D2</span><span class="p">[(</span><span class="n">Intermediate</span><span class="w"> </span><span class="n">Repr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">IR</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">end</span>
+
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Phase</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="n">Synthesis</span>
+<span class="w">    </span><span class="n">D2</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G</span><span class="p">[</span><span class="n">Generator</span><span class="p">]</span>
+<span class="w">    </span><span class="n">C3</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G</span>
+<span class="w">    </span><span class="n">G</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Dialogues</span><span class="o">|</span><span class="w"> </span><span class="n">D3</span><span class="p">[(</span><span class="n">Candidate</span><span class="w"> </span><span class="n">Dataset</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">end</span>
+
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Phase</span><span class="w"> </span><span class="mi">4</span><span class="o">:</span><span class="w"> </span><span class="n">Validation</span>
+<span class="w">    </span><span class="n">D3</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">V</span><span class="p">[</span><span class="n">Validator</span><span class="o">/</span><span class="n">Filter</span><span class="p">]</span>
+<span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Pass</span><span class="o">|</span><span class="w"> </span><span class="n">D4</span><span class="p">[(</span><span class="n">Final</span><span class="w"> </span><span class="n">Dataset</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Fail</span><span class="o">|</span><span class="w"> </span><span class="n">D5</span><span class="p">[</span><span class="n">Audit</span><span class="w"> </span><span class="n">Log</span><span class="p">]</span>
+<span class="w">    </span><span class="n">end</span>
+
+<span class="w">    </span><span class="n">C1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">S</span>
+<span class="w">    </span><span class="n">C2</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">S</span>
+</code></pre></div>
+
+<h3 id="21-the-samplercollector">2.1 阶段一：采集器 (The Sampler/Collector)</h3>
+<p><strong>核心挑战</strong>：Wikidata 的 SPARQL 端点（WDQS）极其不稳定，有严格的速率限制（Rate Limit）和超时时间（60秒）。</p>
+<p><strong>工程实践</strong>：</p>
+<ol>
+<li><strong>用户代理 (User-Agent)</strong>：必须设置。<ul>
+<li><code>User-Agent: MyBot/1.0 (contact@example.com) tool/data-synth</code></li>
+<li>不设置会被直接封禁。</li>
+</ul>
+</li>
+<li><strong>指数退避重试 (Exponential Backoff)</strong>：<ul>
+<li>不要用死循环 <code>while True</code>。推荐使用 Python 的 <code>tenacity</code> 库。</li>
+<li>策略：遇到 429 (Too Many Requests) 或 5xx 错误，等待 2s, 4s, 8s, 16s... 后重试。</li>
+</ul>
+</li>
+<li><strong>分页策略</strong>：<ul>
+<li>不要试图一次拉取 <code>LIMIT 100000</code>。</li>
+<li>使用 <code>OFFSET</code> 效率很低。<strong>最佳实践</strong>是基于 ID 排序或时间戳切片。</li>
+</ul>
+</li>
+<li><strong>幂等缓存 (Idempotent Caching)</strong>：<ul>
+<li>计算 SPARQL 查询字符串的 MD5 哈希值。</li>
+<li>在请求前，检查 <code>data/0_raw/{hash}.json</code> 是否存在。存在则直接读取。</li>
+<li><strong>价值</strong>：开发调试时，你可以随意修改清洗逻辑，而无需反复轰炸 Wikidata 服务器。</li>
+</ul>
+</li>
+</ol>
+<p><strong>代码片段示例 (使用 Tenacity)</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">tenacity</span> <span class="kn">import</span> <span class="n">retry</span><span class="p">,</span> <span class="n">stop_after_attempt</span><span class="p">,</span> <span class="n">wait_exponential</span><span class="p">,</span> <span class="n">retry_if_exception_type</span>
+
+<span class="nd">@retry</span><span class="p">(</span>
+    <span class="n">stop</span><span class="o">=</span><span class="n">stop_after_attempt</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">wait</span><span class="o">=</span><span class="n">wait_exponential</span><span class="p">(</span><span class="n">multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">60</span><span class="p">),</span>
+    <span class="n">retry</span><span class="o">=</span><span class="n">retry_if_exception_type</span><span class="p">((</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Timeout</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">fetch_sparql</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;https://query.wikidata.org/sparql&quot;</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;MyDataBot/1.0 (me@example.com)&quot;</span><span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">(</span><span class="s2">&quot;Rate Limited&quot;</span><span class="p">)</span> <span class="c1"># 触发重试</span>
+
+    <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="22-the-normalizer">2.2 阶段二：规范化器 (The Normalizer)</h3>
+<p><strong>核心挑战</strong>：SPARQL 返回的是极其啰嗦的 JSON（包含 xml:lang, type, value 等字段），且数据脏乱差（日期格式不一、多值、缺失）。</p>
+<p><strong>工程实践</strong>：</p>
+<ol>
+<li><strong>中间表示 (Intermediate Representation, IR)</strong>：<ul>
+<li><strong>切记</strong>：不要把原始 JSON 直接传给生成器。</li>
+<li>定义一个清晰、扁平的结构。</li>
+</ul>
+</li>
+<li><strong>防御性编程 (Pydantic)</strong>：<ul>
+<li>使用 <code>pydantic</code> 定义数据模型。它能在数据流入下一环节前自动校验类型。</li>
+<li>如果数据缺少关键字段（如中文名），在这里决定是<strong>丢弃</strong>、<strong>回退到英文</strong>还是<strong>标记</strong>。</li>
+</ul>
+</li>
+</ol>
+<p><strong>代码片段示例 (Pydantic Schema)</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">field_validator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="k">class</span> <span class="nc">EntityIR</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">qid</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">aliases</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">facts</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span> <span class="c1"># {&quot;P569&quot;: &quot;1893-12-26&quot;, ...}</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">fallback_label</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Label is mandatory&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="c1"># 使用</span>
+<span class="c1"># raw_item = {&quot;item&quot;: {&quot;value&quot;: &quot;http://.../Q1&quot;}, &quot;itemLabel&quot;: {&quot;value&quot;: &quot;Universe&quot;}}</span>
+<span class="c1"># ir_obj = EntityIR(qid=&quot;Q1&quot;, label=&quot;Universe&quot;, ...)</span>
+</code></pre></div>
+
+<h3 id="23-the-generator">2.3 阶段三：生成器 (The Generator)</h3>
+<p><strong>核心挑战</strong>：如何保证多样性，同时保持事实准确？</p>
+<p><strong>工程实践</strong>：</p>
+<ol>
+<li><strong>模板与逻辑分离</strong>：<ul>
+<li>不要在 Python 代码里写 <code>f"你好，{name}"</code>。</li>
+<li>使用 <code>Jinja2</code> 模板引擎。这允许非程序员（如语言学家）修改话术而不动代码。</li>
+</ul>
+</li>
+<li><strong>确定性随机 (Deterministic Randomness)</strong>：<ul>
+<li><strong>铁律</strong>：生成器的输入相同时，输出必须完全一致。</li>
+<li><strong>做法</strong>：使用 <code>random.Random(seed=qid_hash)</code>。</li>
+<li><strong>场景</strong>：如果不这样做，你为了修复第 1000 条数据的错别字重跑代码，结果第 1 条数据的问法变了，导致你需要重新人工审核所有数据。</li>
+</ul>
+</li>
+<li><strong>元数据注入</strong>：<ul>
+<li>生成的每一行数据，必须携带 <code>source_qid</code> 和 <code>provenance</code>（来源），便于溯源。</li>
+</ul>
+</li>
+</ol>
+<h3 id="24-validator-loader">2.4 阶段四：验证与落地 (Validator &amp; Loader)</h3>
+<p><strong>核心挑战</strong>：生成了 10 万条数据，里面混进去了乱码或敏感内容怎么办？</p>
+<p><strong>工程实践</strong>：</p>
+<ol>
+<li><strong>阻塞式检查</strong>：JSON 格式错误、必填字段缺失 -&gt; <strong>报错并停止</strong>。</li>
+<li><strong>统计式检查</strong>：<ul>
+<li>计算<strong>平均长度</strong>、<strong>词汇丰富度</strong>。</li>
+<li>检查<strong>重复率</strong>（SimHash 或 MinHash）。</li>
+</ul>
+</li>
+<li><strong>格式落地</strong>：<ul>
+<li>推荐 <code>JSONL</code> (JSON Lines) 用于文本数据，方便 <code>head</code> / <code>tail</code> 查看。</li>
+<li>推荐 <code>Parquet</code> 用于存储中间结构化数据（体积小，Pandas读取快）。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="3">3. 质量保障：防止“代码腐烂”</h2>
+<p>在数据工程中，最可怕的不是代码报错，而是<strong>代码没报错，但数据质量悄悄下降了</strong>。</p>
+<h3 id="31-unit-tests">3.1 单元测试 (Unit Tests)</h3>
+<p>测试<strong>函数级</strong>逻辑。</p>
+<ul>
+<li><code>test_date_parser.py</code>: 输入 <code>+1893-00-00T00:00:00Z</code>，断言输出 <code>1893年</code>。</li>
+<li><code>test_template.py</code>: 输入包含特殊符号的名字 <code>C++ Standard</code>，断言模板没有崩溃或乱码。</li>
+</ul>
+<h3 id="32-golden-set-regression">3.2 黄金集回归测试 (Golden Set Regression)</h3>
+<p>这是针对生成效果最重要的测试。</p>
+<ol>
+<li><strong>选样</strong>：挑选 50 个覆盖各类边缘情况的实体（如：没有中文名的、名字很长的、公元前的、有歧义的）。</li>
+<li><strong>锁定</strong>：人工确认这 50 个实体的生成结果是完美的，存为 <code>tests/goldens/expected_output.jsonl</code>。</li>
+<li><strong>自动化对比</strong>：<ul>
+<li>每次 Git Push 前，脚本自动跑这 50 个实体。</li>
+<li>对比新旧输出。</li>
+<li><strong>Diff 报警</strong>：如果发现差异，展示 Diff。</li>
+<li><strong>决策</strong>：<ul>
+<li>是意外破坏了逻辑？-&gt; 回滚代码。</li>
+<li>是优化了模板？-&gt; <code>git commit</code> 更新 Golden Set。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="4">4. 版本管理与可复现性</h2>
+<p>当你发布 <code>v1.0</code> 数据集时，必须能回答：它是怎么来的？</p>
+<p>建议在最终数据的 Header 或单独的 <code>manifest.json</code> 中记录：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;dataset_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-10-27T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;lineage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;code_commit_sha&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4e5...&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;config_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f6g7h8i9...&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wikidata_snapshot_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-10-20&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;stats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;total_dialogues&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15420</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;unique_entities&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Rule of Thumb</strong>：如果只有数据没有 Config 和 Commit Hash，这堆数据就是垃圾，因为它不可复现，无法迭代。</p>
+<hr />
+<h2 id="_2">本章小结</h2>
+<ul>
+<li><strong>架构分层</strong>：Sampler 负责网络，Normalizer 负责清洗（Pydantic），Generator 负责合成（Jinja2/Prompt），Validator 负责质检。</li>
+<li><strong>断点续跑</strong>：利用文件缓存和任务队列，避免因网络波动前功尽弃。</li>
+<li><strong>防退化</strong>：通过“金样回归测试”确保修改模板不会破坏现有质量。</li>
+<li><strong>确定性</strong>：固定随机数种子，确保流水线是幂等的可复现的。</li>
+</ul>
+<hr />
+<h2 id="_3">练习题</h2>
+<h3 id="_4">基础题</h3>
+<details>
+<summary><strong>习题 1：编写一个健壮的文件写入器</strong></summary>
+<p><strong>题目</strong>：
+在数据处理中，如果程序写文件写到一半崩溃，会留下损坏的文件。
+请编写一个函数 <code>safe_write_jsonl(data, filename)</code>，要求：</p>
+<ol>
+<li>先写入临时文件 <code>filename.tmp</code>。</li>
+<li>写入完成后，再重命名为 <code>filename</code>（原子操作）。</li>
+<li>包含异常处理。</li>
+</ol>
+<p><strong>提示</strong>：使用 <code>os.replace</code> (Windows/Linux 兼容的原子移动)。</p>
+<details>
+<summary><strong>参考答案</strong></summary>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="k">def</span> <span class="nf">safe_write_jsonl</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">temp_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.tmp&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># 原子替换：要么成功，要么文件不存在，不会出现写一半的文件</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">temp_filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully wrote to </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to write file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">temp_filename</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_filename</span><span class="p">)</span> <span class="c1"># 清理垃圾</span>
+        <span class="k">raise</span>
+</code></pre></div>
+
+</details>
+</details>
+<details>
+<summary><strong>习题 2：Pydantic 校验练习</strong></summary>
+<p><strong>题目</strong>：
+定义一个 Pydantic 模型 <code>ConversationTurn</code>，要求：</p>
+<ol>
+<li><code>role</code>: 只能是 "user" 或 "bot"。</li>
+<li><code>content</code>: 字符串，长度必须大于 2。</li>
+<li><code>confidence</code>: 浮点数，0.0 到 1.0 之间，默认 1.0。</li>
+</ol>
+<details>
+<summary><strong>参考答案</strong></summary>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">field_validator</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+
+<span class="k">class</span> <span class="nc">ConversationTurn</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;bot&quot;</span><span class="p">]</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># 长度&gt;2，即最小3</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># 测试</span>
+<span class="c1"># t = ConversationTurn(role=&quot;user&quot;, content=&quot;hi&quot;, confidence=0.9) # 报错：content太短</span>
+<span class="c1"># t = ConversationTurn(role=&quot;system&quot;, content=&quot;hello&quot;) # 报错：role 不合法</span>
+</code></pre></div>
+
+</details>
+</details>
+<h3 id="_5">挑战题</h3>
+<details>
+<summary><strong>习题 3：设计一个基于文件哈希的断点续跑器</strong></summary>
+<p><strong>题目</strong>：
+你需要处理 100 个大任务（task_id: 1~100）。
+请设计一个简单的 TaskManager 类：</p>
+<ol>
+<li>接受一个任务列表。</li>
+<li>检查 output 目录下是否已经存在 <code>result_{task_id}.json</code>。</li>
+<li>如果存在且文件完整（这里简单判断文件不为空），跳过该任务。</li>
+<li>提供一个进度条（使用 <code>tqdm</code>）。</li>
+</ol>
+<p><strong>提示</strong>：利用 Python 的 <code>pathlib</code> 和 <code>tqdm</code>。</p>
+<details>
+<summary><strong>参考答案</strong></summary>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">TaskManager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">output_dir</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_ids</span><span class="p">,</span> <span class="n">process_func</span><span class="p">):</span>
+        <span class="c1"># 1. 过滤已完成的任务</span>
+        <span class="n">todos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">task_ids</span><span class="p">:</span>
+            <span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;result_</span><span class="si">{</span><span class="n">tid</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span>
+            <span class="c1"># 简单检查：文件存在且大小&gt;0</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">todos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipped </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">task_ids</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks. Processing </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 2. 处理剩余任务</span>
+        <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">todos</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">process_func</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
+                <span class="c1"># 写入结果</span>
+                <span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;result_</span><span class="si">{</span><span class="n">tid</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="c1"># 简化写入</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Task </span><span class="si">{</span><span class="n">tid</span><span class="si">}</span><span class="s2"> failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 模拟处理函数</span>
+<span class="k">def</span> <span class="nf">mock_worker</span><span class="p">(</span><span class="n">tid</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">tid</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;done&quot;</span><span class="p">}</span>
+
+<span class="c1"># 运行</span>
+<span class="n">mgr</span> <span class="o">=</span> <span class="n">TaskManager</span><span class="p">(</span><span class="s2">&quot;./output_buffer&quot;</span><span class="p">)</span>
+<span class="n">mgr</span><span class="o">.</span><span class="n">process_tasks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">mock_worker</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+</details>
+<hr />
+<h2 id="gotchas">常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1-oom">1. 内存溢出 (OOM)</h3>
+<ul>
+<li><strong>错误做法</strong>：<code>all_data = []</code>，然后在循环里把 100 万条数据 append 进去，最后一次性 write。</li>
+<li><strong>后果</strong>：跑到 80% 时内存爆了，程序被 Kill，所有数据丢失。</li>
+<li><strong>修正</strong>：使用<strong>流式处理</strong>（Generator/Iterator）。每处理一条（或一个 Batch），就 yield 出来写入文件。</li>
+</ul>
+<h3 id="2">2. 多进程的文件锁冲突</h3>
+<ul>
+<li><strong>错误做法</strong>：开启 8 个进程并行处理，结果它们试图同时写入同一个 <code>output.jsonl</code> 文件。</li>
+<li><strong>后果</strong>：文件内容交错乱码，JSON 格式损坏。</li>
+<li><strong>修正</strong>：<ul>
+<li>方案 A：每个进程写自己的文件 <code>part_1.jsonl</code>, <code>part_2.jsonl</code>，最后合并。</li>
+<li>方案 B：使用主进程负责写（Receiver），子进程只负责处理并通过 Queue 发送结果。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3_1">3. 时间与时区的泥潭</h3>
+<ul>
+<li><strong>错误做法</strong>：在代码里假设 <code>date</code> 都是 "YYYY-MM-DD"。</li>
+<li><strong>现实</strong>：Wikidata 有 "18世纪" (precision=8), "2020s" (precision=8), "公元前200年"。</li>
+<li><strong>修正</strong>：必须检查 Wikidata 时间值的 <code>precision</code> 字段。不要盲目转化为 Python <code>datetime</code> 对象，有时保留原始字符串更安全。</li>
+</ul>
+<hr />
+<p><a href="chapter10.html">&lt; Chapter 10：许可与合规</a> | <a href="chapter12.html">Appendices：查询模板库与速查表 &gt;</a></p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter10.html" class="nav-link prev">← Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</a><a href="chapter12.html" class="nav-link next">Chapter 12：查询模板库与速查表 (Appendices) →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 7：中文自然语言生成：从三元组到口语化表达</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-7">Chapter 7：中文自然语言生成：从三元组到口语化表达</h1>
+<h2 id="1">1. 开篇段落</h2>
+<p>欢迎来到数据合成中最具艺术性的一步。在前面的章节中，我们通过 SPARQL 获得了大量精确但冰冷的结构化数据（JSON/CSV）。例如 <code>{"entity": "李白", "property": "P569", "value": "+0701-02-28T00:00:00Z"}</code>。</p>
+<p>如果你直接把这些数据喂给对话模型训练，模型学会的将是“机器语”。本章的目标是<strong>跨越“结构化事实”到“自然中文对话”的鸿沟</strong>。这不仅仅是简单的填空游戏，它涉及：</p>
+<ol>
+<li><strong>数据清洗（Normalization）</strong>：把数据库格式（ISO时间、QID单位）变成人类可读格式。</li>
+<li><strong>句法构建（Realization）</strong>：如何根据属性类型选择正确的疑问词（谁/哪/什么/几）和量词。</li>
+<li><strong>多轮连贯性（Coherence）</strong>：在对话中正确使用代词（他/她/它）和省略主语，避免重复啰嗦。</li>
+<li><strong>风格化（Stylization）</strong>：如何让机器人既能像百科全书一样严谨，又能像朋友一样闲聊。</li>
+</ol>
+<hr />
+<h2 id="2">2. 核心论述</h2>
+<h3 id="21-the-pipeline">2.1 数据到文本的完整流水线 (The Pipeline)</h3>
+<p>一个成熟的对话生成系统通常包含以下模块：</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[</span><span class="c"> Wikidata Raw Response </span><span class="k">]</span>
+<span class="c">       | (JSON)</span>
+<span class="c">       v</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">| 1</span><span class="nt">.</span><span class="c"> 规范化器 (Normalizer)    | </span><span class="nv">&lt;</span><span class="nb">--</span><span class="c"> &quot;脏活累活&quot;：日期清洗、单位换算、名称回退</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">       | (Cleaned Dict)</span>
+<span class="c">       v</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">| 2</span><span class="nt">.</span><span class="c"> 语义映射 (Semantic Map)  | </span><span class="nv">&lt;</span><span class="nb">--</span><span class="c"> 决定用什么词：P569 </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> &quot;生日&quot;/&quot;诞辰&quot;</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">       | (Schema)</span>
+<span class="c">       v</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">| 3</span><span class="nt">.</span><span class="c"> 生成策略 (Strategy)      | </span><span class="nv">&lt;</span><span class="nb">--</span><span class="c"> 决定怎么说：模板填槽 OR LLM重写</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">       | (Sentences)</span>
+<span class="c">       v</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">| 4</span><span class="nt">.</span><span class="c"> 上下文注入 (Contextual)  | </span><span class="nv">&lt;</span><span class="nb">--</span><span class="c"> 多轮处理：指代消解、连接词插入</span>
+<span class="nb">+-----------------------------+</span>
+<span class="c">       |</span>
+<span class="c">       v</span>
+<span class="k">[</span><span class="c"> Final Dialogue Dataset </span><span class="k">]</span>
+</code></pre></div>
+
+<h3 id="22-wikidata">2.2 规范化：处理 Wikidata 的“生肉”</h3>
+<p>Wikidata 的原始数据在直接使用前必须经过严格的清洗。以下是三个最关键的领域：</p>
+<h4 id="a-temporal-normalization">A. 时间的深度处理 (Temporal Normalization)</h4>
+<p>Wikidata 使用 ISO 8601 扩展格式，关键在于处理 <strong>Precision (精度)</strong> 字段。</p>
+<p>| Precision 代码 | 含义 | 原始值示例 | 目标中文表达 | 逻辑处理提示 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Precision 代码</th>
+<th style="text-align: left;">含义</th>
+<th style="text-align: left;">原始值示例</th>
+<th style="text-align: left;">目标中文表达</th>
+<th style="text-align: left;">逻辑处理提示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>11</strong></td>
+<td style="text-align: left;">日</td>
+<td style="text-align: left;"><code>+1998-05-12T...</code></td>
+<td style="text-align: left;">1998年5月12日</td>
+<td style="text-align: left;">最常见，标准格式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>10</strong></td>
+<td style="text-align: left;">月</td>
+<td style="text-align: left;"><code>+1998-05-00T...</code></td>
+<td style="text-align: left;">1998年5月</td>
+<td style="text-align: left;">去掉 T 后面的部分，忽略日</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9</strong></td>
+<td style="text-align: left;">年</td>
+<td style="text-align: left;"><code>+1998-00-00T...</code></td>
+<td style="text-align: left;">1998年</td>
+<td style="text-align: left;">仅提取前四位</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>8</strong></td>
+<td style="text-align: left;">十年</td>
+<td style="text-align: left;"><code>+1990-00-00T...</code></td>
+<td style="text-align: left;">20世纪90年代</td>
+<td style="text-align: left;"><code>(Year // 10) * 10</code> + "年代"</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7</strong></td>
+<td style="text-align: left;">世纪</td>
+<td style="text-align: left;"><code>+1900-00-00T...</code></td>
+<td style="text-align: left;">20世纪</td>
+<td style="text-align: left;"><code>(Year // 100) + 1</code> + "世纪"</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>陷阱：公元前</strong>。若原始值以 <code>-</code> 开头（如 <code>-0221</code>），需转换为“公元前221年”。</li>
+<li><strong>口语化技巧</strong>：对于最近 5 年内的时间，可以转换为相对时间：“去年”、“前年”。</li>
+</ul>
+<h4 id="b-units-measures">B. 量纲与单位的本地化 (Units &amp; Measures)</h4>
+<p>属性 <code>P2048</code> (身高) 可能返回 <code>1.78</code>，单位是 <code>Q11573</code> (米)。
+属性 <code>P2067</code> (质量) 可能返回 <code>170</code>，单位是 <code>Q11570</code> (磅)。</p>
+<ol>
+<li><strong>建立映射表</strong>：维护一个 <code>unit_map.json</code>。</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Q11573&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;米&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{value}米&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;Q11570&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;千克&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;convert_from_lbs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.453592</span><span class="p">},</span><span class="w"> </span>
+<span class="w">  </span><span class="nt">&quot;Q4917&quot;</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;美元&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;suffix&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;美元&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<ol start="2">
+<li><strong>数值修剪</strong>：Wikidata 常包含极高精度的浮点数（如 <code>1.78999999</code>）。务必进行 <code>round(x, 1)</code> 或 <code>round(x, 0)</code> 处理。</li>
+<li><strong>大数缩略</strong>：中文习惯用“万”、“亿”。<code>15,000,000</code> 应转化为 <code>1500万</code>，而不是 <code>一千五百万</code> 或 <code>1.5E7</code>。</li>
+</ol>
+<h4 id="c-label-fallback">C. 实体名称的回退策略 (Label Fallback)</h4>
+<p>这是中文数据构建最大的痛点：<strong>很多实体没有中文 Label</strong>。
+建议的优先级逻辑：</p>
+<ol>
+<li><code>zh-cn</code> label (简体中文)</li>
+<li><code>zh</code> / <code>zh-hans</code> / <code>zh-hant</code> (繁体需转简体)</li>
+<li><strong>Alias (别名)</strong>：有时 Label 缺失但 Alias 里有中文。</li>
+<li><strong>Fallback (英文)</strong>：保留英文原名。</li>
+<li><strong>LLM 辅助翻译 (可选)</strong>：如果上述都失败，且该实体很重要，调用 LLM 翻译并缓存。</li>
+</ol>
+<h3 id="23">2.3 模板工程：从“填空”到“造句”</h3>
+<p>不要只写一个模板！为了保证数据的多样性，我们需要构建一个<strong>模板库</strong>。</p>
+<h4 id="a">A. 属性感知的模板设计</h4>
+<p>不同类型的属性需要不同的问法（Wh-words）：</p>
+<ul>
+<li><strong>P569 (时间类)</strong> -&gt; 什么时候 / 哪一年 / 多大<ul>
+<li>T1: <code>{S}是哪一年出生的？</code></li>
+<li>T2: <code>告诉我{S}的生日。</code></li>
+</ul>
+</li>
+<li><strong>P19 (地点类)</strong> -&gt; 哪里 / 哪座城市<ul>
+<li>T1: <code>{S}的老家是哪？</code></li>
+<li>T2: <code>{S}出生在什么地方？</code></li>
+</ul>
+</li>
+<li><strong>P161 (人物列表类)</strong> -&gt; 谁 / 哪些人<ul>
+<li>T1: <code>谁演了{S}？</code></li>
+<li>T2: <code>{S}的主演名单里都有谁？</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="b">B. 增加“人味”的修饰语</h4>
+<p>在模板中随机插入<strong>语篇标记（Discourse Markers）</strong>，模拟真实对话：</p>
+<ul>
+<li><strong>前缀</strong>：<code>嗯...</code>, <code>我想想，</code>, <code>据我所知，</code>, <code>资料显示，</code></li>
+<li><strong>后缀</strong>：<code>吧。</code>, <code>哦。</code>, <code>呢。</code></li>
+<li><strong>示例</strong>：<ul>
+<li>机器味：<code>李白出生于701年。</code></li>
+<li>人味：<code>据记载，李白是701年出生的。</code> / <code>他大概是在701年出生的吧。</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="24-llm-paraphrasing">2.4 进阶：利用 LLM 进行 Paraphrasing (复述)</h3>
+<p>为了突破模板的僵硬，我们可以使用 LLM 对构建好的“半成品”进行润色。</p>
+<p><strong>Pipeline 变体：</strong></p>
+<ol>
+<li><strong>构造 Prompt</strong>：包含结构化事实 + 目标风格。</li>
+<li><strong>输入</strong>：<code>Fact: [埃隆·马斯克, CEO, SpaceX]; Style: 幽默闲聊</code></li>
+<li><strong>LLM 输出</strong>：<code>虽然马斯克管的事儿很多，但他最著名的头衔还得是 SpaceX 的老大。</code></li>
+</ol>
+<p><strong>Cost-Saving Trick (省钱技巧)</strong>：
+不要对每条数据都调 LLM。</p>
+<ol>
+<li>用 LLM 生成 50 个高质量模板。</li>
+<li>人工校验这 50 个模板。</li>
+<li>用 Python 代码随机填充这 50 个模板。
+(这种方法叫 "LLM-assisted Template Engineering")。</li>
+</ol>
+<h3 id="25">2.5 多轮对话的结构化</h3>
+<p>多轮对话的核心在于<strong>信息的逐渐披露</strong>和<strong>指代的连贯性</strong>。</p>
+<h4 id="follow-up">场景：追问 (Follow-up)</h4>
+<ul>
+<li><strong>Turn 1</strong>: 询问核心事实。<ul>
+<li>User: 谁导演了《流浪地球》？</li>
+<li>Bot: 是<strong>郭帆</strong>导演的。</li>
+</ul>
+</li>
+<li><strong>Turn 2</strong>: 基于 Turn 1 的 Object (郭帆) 进行追问。<ul>
+<li><em>(后台查询郭帆 (Q...) 的其他属性，如出生地)</em></li>
+<li>User: 那<strong>他</strong>是哪里人？ (这里用“他”替换了“郭帆”)</li>
+<li>Bot: <strong>他</strong>出生在山东济宁。</li>
+</ul>
+</li>
+</ul>
+<h4 id="_1">规则：代词选择逻辑</h4>
+<p>构建一个函数 <code>get_pronoun(entity_id)</code>：</p>
+<ol>
+<li>检查 <code>P21</code> (性别)。<ul>
+<li><code>Q6581097</code> (男) -&gt; <strong>他</strong></li>
+<li><code>Q6581072</code> (女) -&gt; <strong>她</strong></li>
+</ul>
+</li>
+<li>若无性别，检查 <code>P31</code> (类型)。<ul>
+<li>若属于 <code>组织 (Q43229)</code> -&gt; <strong>这家</strong> / <strong>该机构</strong></li>
+<li>若属于 <code>作品</code> -&gt; <strong>这部</strong> / <strong>它</strong></li>
+</ul>
+</li>
+<li><strong>零指代 (Zero Anaphora)</strong>：中文允许完全省略主语。<ul>
+<li>Bot: “出生在山东济宁。” (完全自然)</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="3">3. 本章小结</h2>
+<ul>
+<li><strong>数据清洗是地基</strong>：时间精度、单位换算、中英混合处理直接决定数据质量。</li>
+<li><strong>模板需要分层</strong>：针对不同属性类型（时间/地点/人物/数值）设计特定的疑问词和句式。</li>
+<li><strong>多轮靠指代</strong>：利用 P21（性别）和 P31（类型）自动推断“他/她/它”，或者大胆使用中文的“零指代”特性。</li>
+<li><strong>多样性策略</strong>：通过 LLM 辅助扩充模板库，或对生成的文本进行风格迁移（Style Transfer），避免千篇一律的百科腔。</li>
+</ul>
+<hr />
+<h2 id="4">4. 练习题</h2>
+<h3 id="_2">基础题</h3>
+<p><strong>练习 7.1：单位与数值处理</strong>
+你需要处理属性 <code>P2048</code> (身高)。
+Wikidata 返回：<code>amount: "+1.853"</code>, <code>unit: "http://www.wikidata.org/entity/Q11573"</code> (米)。
+请写出转化为以下两种风格的逻辑和结果：</p>
+<ol>
+<li><strong>精准百科风</strong></li>
+<li><strong>口语闲聊风</strong></li>
+</ol>
+<details>
+<summary>点击查看答案</summary>
+<p><strong>答案：</strong></p>
+<ol>
+<li><strong>精准百科风</strong>：<ul>
+<li>逻辑：保留两位小数，拼接单位“米”。</li>
+<li>结果：“1.85米”</li>
+</ul>
+</li>
+<li><strong>口语闲聊风</strong>：<ul>
+<li>逻辑：将 1.x 米转换为“一米x”。如果是 1.853，可以四舍五入到 1.85，说“一米八五”。</li>
+<li>结果：“大概一米八五吧” 或 “一米八五左右”。</li>
+</ul>
+</li>
+</ol>
+</details>
+<p><strong>练习 7.2：列表截断逻辑</strong>
+查询某歌手的 <code>P136</code> (曲风/Genre) 返回了 8 个结果：[Pop, R&amp;B, Soul, Hip-hop, Dance, Electronic, Funk, Disco]。
+请设计一个生成策略，避免回答过长，同时保证信息准确。</p>
+<details>
+<summary>点击查看答案</summary>
+<p><strong>答案：</strong>
+<strong>策略：Top-N + "等"</strong></p>
+<ol>
+<li><strong>排序</strong>：如果没有固有顺序，随机取 2-3 个（增加数据多样性），或者取最短的中文词。</li>
+<li><strong>模板</strong>：<code>"{S}的曲风主要是{O1}、{O2}这些。"</code> 或 <code>"{S}涉猎广泛，包括{O1}、{O2}等风格。"</code></li>
+<li><strong>生成</strong>：“他的曲风主要是流行、R&amp;B和灵魂乐这些。”</li>
+</ol>
+</details>
+<p><strong>练习 7.3：代词推断</strong>
+实体：<code>Q230</code> (斯蒂芬·斯皮尔伯格)。属性 <code>P21</code> 为 <code>Q6581097</code> (Male)。
+实体：<code>Q142</code> (法兰西共和国)。属性 <code>P21</code> 缺失，<code>P31</code> 为 <code>Q3624078</code> (Sovereign State)。
+请分别为这两个实体在第二轮对话中选择合适的代词。</p>
+<details>
+<summary>点击查看答案</summary>
+<p><strong>答案：</strong></p>
+<ul>
+<li><strong>斯皮尔伯格</strong>：检测到 P21=Male -&gt; 使用 <strong>“他”</strong> 或 <strong>“这位导演”</strong>。</li>
+<li><strong>法国</strong>：检测到 P21 缺失，P31 是国家/政体 -&gt; 使用 <strong>“这个国家”</strong> 或 <strong>“它”</strong>。</li>
+</ul>
+</details>
+<hr />
+<h3 id="_3">挑战题</h3>
+<p><strong>练习 7.4：处理“限定符” (Qualifiers) 的复杂句生成</strong>
+<strong>事实</strong>：[李娜 (Q298220), 获胜 (P2522), 法国网球公开赛 (Q102376)]
+<strong>限定符</strong>：[时间点 (P585): 2011年]
+请利用上述信息，生成一个包含<strong>追问</strong>的 <strong>User-Bot-User-Bot</strong> 两轮对话。</p>
+<details>
+<summary>点击查看答案</summary>
+<p><strong>答案示例：</strong></p>
+<ul>
+<li><strong>Turn 1</strong><ul>
+<li>User: 李娜拿过法网冠军吗？ (基于主事实 P2522 生成问句)</li>
+<li>Bot: 拿过，她是法网冠军。</li>
+</ul>
+</li>
+<li>
+<p><strong>Turn 2</strong> (利用 Qualifier P585 构造追问)</p>
+<ul>
+<li>User: 那是哪一年的事？ / 什么时候拿的？</li>
+<li>Bot: 是在2011年拿的。 (提取 Qualifier 生成回答)</li>
+</ul>
+<p><em>或者合并在一句中：</em></p>
+<ul>
+<li>User: 李娜哪年拿的法网？</li>
+<li>Bot: 2011年。</li>
+</ul>
+</li>
+</ul>
+</details>
+<p><strong>练习 7.5：消除歧义的自然语言生成</strong>
+你有两个实体都叫“李白”。</p>
+<ol>
+<li>Q7074: 诗人 (Tang Dynasty poet)</li>
+<li>Q10565882: 间谍 (Secret agent)
+当用户问“李白是谁？”时，请设计一个回复模板，能够同时涵盖这两个实体，或者引导用户澄清。</li>
+</ol>
+<details>
+<summary>点击查看答案</summary>
+<p><strong>答案：</strong>
+<strong>策略：澄清式反问 (Clarification)</strong></p>
+<ul>
+<li><strong>模板</strong>：<code>你是想问{Desc1}的那个{Label}，还是{Desc2}的那个？</code></li>
+<li><strong>数据填充</strong>：利用 Wikidata 的 <code>description</code> 字段。</li>
+<li><strong>结果</strong>：<ul>
+<li>Bot: “你是问唐朝的那位大诗人李白，还是《永不消逝的电波》里的那个角色？”</li>
+</ul>
+</li>
+</ul>
+<p><strong>策略：默认头部 + 补充</strong></p>
+<ul>
+<li><strong>逻辑</strong>：Q7074 的 sitelinks 数量远大于 Q10565882，判定为头部实体。</li>
+<li><strong>结果</strong>：<ul>
+<li>Bot: “通常是指唐朝诗人李白。不过也有一个同名的影视角色，你想了解哪个？”</li>
+</ul>
+</li>
+</ul>
+</details>
+<p><strong>练习 7.6：开放性思考 - LLM 幻觉控制</strong>
+你决定使用 LLM 将 <code>{S} {P} {O}</code> 改写成生动的句子。但你发现，对于事实 <code>[特斯拉, 创始人, 马斯克]</code>，LLM 有时会生成“马斯克在2003年创立了特斯拉”（<strong>错误：马斯克其实是早期投资人，严格法律意义上的创始人是 Eberhard 和 Tarpenning，虽然 Tesla 官方后来承认了马斯克的 Founder 头衔，但 2003 年创立这个动作本身有争议</strong>）。
+请设计一个 Prompt 策略或校验流程，尽量减少这种“添加额外错误细节”的幻觉。</p>
+<details>
+<summary>点击查看答案</summary>
+<p><strong>答案：</strong></p>
+<ol>
+<li><strong>Prompt 约束</strong>：在 Prompt 中明确加入 Negative Constraint。<ul>
+<li><code>"请仅依据提供的三元组信息进行改写，严禁添加任何时间、地点或背景描述，除非三元组中显式包含这些信息。"</code></li>
+</ul>
+</li>
+<li><strong>Fact Verification (事后校验)</strong>：<ul>
+<li>使用 NLI (Natural Language Inference) 模型。</li>
+<li>Premise: 结构化三元组转换成的简单句。</li>
+<li>Hypothesis: LLM 生成的句子。</li>
+<li>如果 Entailment 分数过低（即生成的句子包含了原数据没有的信息），则丢弃该生成结果，回退到模板版。</li>
+</ul>
+</li>
+<li><strong>One-shot 示例</strong>：<ul>
+<li>User: [李白, 职业, 诗人] -&gt; 李白是唐朝最伟大的诗人 (错误，原文没说唐朝/最伟大)。</li>
+<li>User: [李白, 职业, 诗人] -&gt; 李白是一名诗人 (正确)。</li>
+<li>通过示例告诉 LLM 边界在哪里。</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h2 id="5-gotchas">5. 常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1_1">1. 多个值的连接词灾难</h3>
+<ul>
+<li><strong>错误</strong>：<code>李白的职业是诗人、书法家、作家、剑客。</code> (僵硬)</li>
+<li><strong>错误</strong>：<code>李白的职业是诗人，和书法家，和作家。</code> (翻译腔：A, and B, and C)</li>
+<li><strong>修复</strong>：检测列表长度。如果 &gt; 2，前几个用顿号 <code>、</code>，最后一个用 <code>和</code> 或 <code>以及</code>。<ul>
+<li><code>李白既是诗人、书法家，也是一位剑客。</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-copula-overuse">2. "是" 字句的滥用 (Copula Overuse)</h3>
+<ul>
+<li><strong>现象</strong>：<code>他的出生地是北京。他的职业是医生。他的爱好是篮球。</code></li>
+<li><strong>原因</strong>：过度依赖 <code>{Subject} 的 {Property} 是 {Object}</code> 模板。</li>
+<li><strong>修复</strong>：动词化。<ul>
+<li><code>出生地</code> -&gt; <code>他出生在北京。</code></li>
+<li><code>职业</code> -&gt; <code>他当过医生。</code> / <code>他是做医生的。</code></li>
+<li><code>工作于</code> -&gt; <code>他在...工作。</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="3_1">3. 古今地名混淆</h3>
+<ul>
+<li><strong>场景</strong>：Wikidata 中 <code>李白</code> 的出生地可能链接到 <code>碎叶城 (Q849683)</code>。</li>
+<li><strong>生成</strong>：<code>李白出生在碎叶城。</code> (没问题)</li>
+<li><strong>潜在问题</strong>：如果此时你试图把 <code>碎叶城</code> 映射到现代国家 <code>吉尔吉斯斯坦</code> 并生成 <code>李白是吉尔吉斯斯坦人</code>，这就极其违和且引发争议。</li>
+<li><strong>Rule of Thumb</strong>：处理历史人物时，尽量使用当时的地理名称（Wikidata 通常会区分历史行政区划实体）。不要随意通过 <code>P17</code> (国家) 推断现代国籍。</li>
+</ul>
+<h3 id="4_1">4. 括号与特殊字符的残留</h3>
+<ul>
+<li><strong>现象</strong>：<code>这部电影是钢铁侠 (2008年电影)。</code></li>
+<li><strong>原因</strong>：直接使用了 Wikidata 带消歧义后缀的 Label。</li>
+<li><strong>修复</strong>：Regex 清洗。<code>re.sub(r'（.*?）|\(.*?\)', '', text)</code>。一定要去掉 Label 中的括号内容。</li>
+</ul>
+<hr />
+<p><a href="chapter6.html">&lt; Chapter 6: 自动化抓取与缓存</a> | <a href="chapter8.html">Chapter 8: 质量控制与评估 &gt;</a></p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter6.html" class="nav-link prev">← Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</a><a href="chapter8.html" class="nav-link next">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局” →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

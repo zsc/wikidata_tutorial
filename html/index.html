@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item active" >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="wikidata">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</h1>
+<p>本教程面向<strong>对话数据构造/合成（dialogue data synthesis）</strong>场景：使用 Wikidata 作为开放知识库，通过可控采样与模板化表达，生成覆盖面广、主题多样、可追溯的中文对话数据（如闲聊、任务型、问答混合、多轮知识注入等）。</p>
+<hr />
+<h2 id="_1">你将学到什么</h2>
+<p>完成本教程后，你将能够：</p>
+<ul>
+<li>理解 Wikidata 的核心数据模型（Q/P、声明、限定符、引用等），并知道它如何映射到对话数据需求。</li>
+<li>使用 Wikidata Query Service（WDQS）编写 SPARQL 查询，<strong>按主题、类型、时间、地域、关系</strong>等维度采样实体与事实。</li>
+<li>设计“多样化主题生成器”：控制<strong>主题覆盖、长尾采样、去重、难度分层、敏感内容规避</strong>。</li>
+<li>将结构化三元组/声明转成<strong>自然中文表达</strong>，并构造成多轮对话（提问、追问、澄清、纠错、对比、推荐等）。</li>
+<li>搭建可复现的数据流水线：缓存、版本、质量评估、数据卡（data card）与合规说明。</li>
+</ul>
+<hr />
+<h2 id="_2">适用读者</h2>
+<ul>
+<li>需要构造<strong>多轮中文对话数据</strong>的研发/产品/研究人员  </li>
+<li>需要做主题覆盖、长尾采样、知识问答、多领域对话评测集的同学  </li>
+<li>想用公开知识库做“可解释”的合成数据（每条数据可追溯到来源）的团队  </li>
+</ul>
+<hr />
+<h2 id="_3">你需要准备什么</h2>
+<p><strong>最少工具（零代码也可学）</strong></p>
+<ul>
+<li>浏览器（用于 WDQS：Wikidata Query Service）</li>
+<li>基础数据素养（能读懂表格、字段、ID）</li>
+</ul>
+<p><strong>推荐能力（写代码做自动化）</strong></p>
+<ul>
+<li>Python 基础（requests、pandas）</li>
+<li>了解 JSON/CSV</li>
+<li>对 SPARQL 有一点点耐心（我们会从 0 开始）</li>
+</ul>
+<hr />
+<h2 id="_4">阅读路线</h2>
+<ul>
+<li>
+<p><strong>快速上手（1～2 天）</strong>：第 1、3、4、7 章 + 附录模板<br />
+  目标：能跑通“查询 → 采样 → 口语化 → 对话化”的最小闭环。</p>
+</li>
+<li>
+<p><strong>工程落地（3～7 天）</strong>：补齐第 5、6、8、11 章<br />
+  目标：批量生产、缓存、评估、版本化与可复现。</p>
+</li>
+<li>
+<p><strong>高质量中文与多语言（持续迭代）</strong>：第 9 章 + 第 8 章深化<br />
+  目标：更自然的中文、更强的主题多样性控制、减少事实与表达瑕疵。</p>
+</li>
+</ul>
+<hr />
+<h2 id="_5">核心思想（本教程的“数据观”）</h2>
+<p>对话数据的“多样化主题”不是随机堆砌，而是可控的系统工程：</p>
+<ol>
+<li><strong>主题空间定义</strong>：你要覆盖哪些领域？（人物/地点/作品/科学概念/组织/事件…）</li>
+<li><strong>采样策略</strong>：头部与长尾怎么平衡？如何避免全是“欧美名人+热门城市”？</li>
+<li><strong>表达策略</strong>：结构化事实如何变成自然中文？如何多样化问法与追问？</li>
+<li><strong>对话结构</strong>：单轮问答 vs 多轮澄清、对比、推荐、纠错、追问证据链</li>
+<li><strong>质量评估</strong>：事实一致性、重复率、主题覆盖率、语言自然度、安全与合规</li>
+</ol>
+<p>Wikidata 的价值在于：<strong>可结构化采样 + 可追溯</strong>（每条事实都有实体 ID、属性 ID，有时还有引用来源）。</p>
+<hr />
+<h2 id="_6">目录</h2>
+<blockquote>
+<p>下面是本教程计划章节（你可以按需阅读）。点击可跳转到相应文件。</p>
+</blockquote>
+<h3 id="chapter-1wikidata"><a href="chapter1.html">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</a></h3>
+<ul>
+<li>用 Wikidata 造对话数据的典型用例</li>
+<li>结构化知识对“主题覆盖/可控采样/可追溯”的意义</li>
+<li>你将构建的最终数据流水线概览</li>
+</ul>
+<h3 id="chapter-2wikidata-qp"><a href="chapter2.html">Chapter 2：Wikidata 数据模型速通（Q/P/声明/限定符/引用）</a></h3>
+<ul>
+<li>QID（实体）与 PID（属性）</li>
+<li>statement / qualifier / reference</li>
+<li>label/description/alias 与多语言</li>
+<li>常见坑：时间、坐标、单位、多个值、冲突值</li>
+</ul>
+<h3 id="chapter-3wdqs-sparql"><a href="chapter3.html">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</a></h3>
+<ul>
+<li>WDQS 界面与结果格式</li>
+<li>最小可用查询（按类型取实体）</li>
+<li>过滤、排序、限制、去重</li>
+<li>label 服务与中文标签获取</li>
+</ul>
+<h3 id="chapter-4"><a href="chapter4.html">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</a></h3>
+<ul>
+<li>主题空间设计：领域→子领域→主题→实例</li>
+<li>多样化策略：分层采样、长尾加权、地域/时间均衡</li>
+<li>去重策略：实体去重、关系去重、问法去重</li>
+<li>敏感内容的预过滤（类型、属性、关键词、黑白名单）</li>
+</ul>
+<h3 id="chapter-5"><a href="chapter5.html">Chapter 5：把事实变成对话：多轮结构与标注方案</a></h3>
+<ul>
+<li>多轮对话的“动作集合”：询问/追问/澄清/对比/推荐/纠错</li>
+<li>角色设定与口吻多样化（不改变事实）</li>
+<li>标注字段建议：topic、entities、facts、turn_intent、difficulty、source_qid/pid</li>
+</ul>
+<h3 id="chapter-6-wdqs"><a href="chapter6.html">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</a></h3>
+<ul>
+<li>SPARQL 批量查询与分页</li>
+<li>缓存、断点续跑、速率限制与失败重试</li>
+<li>数据落地格式：JSONL/Parquet/SQLite</li>
+<li>可复现：查询版本、时间戳、endpoint 记录</li>
+</ul>
+<h3 id="chapter-7"><a href="chapter7.html">Chapter 7：中文自然语言生成：从三元组到口语化表达</a></h3>
+<ul>
+<li>中文模板库：别名/简称/时间表达/量纲单位</li>
+<li>多种问法生成：同义改写、信息密度控制</li>
+<li>避免“百科腔”与避免过拟合模板</li>
+<li>让对话更像人：补全背景句、自然追问、上下文省略</li>
+</ul>
+<h3 id="chapter-8"><a href="chapter8.html">Chapter 8：质量控制与评估：覆盖率、重复率、事实一致性</a></h3>
+<ul>
+<li>覆盖率指标（主题/类型/地域/时间）</li>
+<li>重复率与近重复检测</li>
+<li>事实一致性检查：同一实体多属性冲突、过期信息、缺失中文标签</li>
+<li>抽检策略与自动审计（审计日志）</li>
+</ul>
+<h3 id="chapter-9"><a href="chapter9.html">Chapter 9：多语言与中文缺失处理</a></h3>
+<ul>
+<li>中文 label 缺失怎么办：回退策略（英文→翻译/音译/保留）</li>
+<li>中英文混排的可接受边界</li>
+<li>别名与描述的选择：更口语 vs 更严谨</li>
+</ul>
+<h3 id="chapter-10wikidata-cc0"><a href="chapter10.html">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</a></h3>
+<ul>
+<li>Wikidata 的 CC0 含义与“可用/可发布”的边界</li>
+<li>引用来源与外部链接的处理策略</li>
+<li>数据集说明（data card）建议字段</li>
+</ul>
+<h3 id="chapter-11"><a href="chapter11.html">Chapter 11：工程化实践：从脚本到生产级流水线</a></h3>
+<ul>
+<li>任务分解：采样器、规范化器、生成器、评估器</li>
+<li>单元测试与回归：避免“改模板导致全量漂移”</li>
+<li>版本管理：query 版本、模板版本、词表版本</li>
+</ul>
+<h3 id="appendices"><a href="chapter12.html">Appendices：查询模板库与速查表</a></h3>
+<ul>
+<li>常用“按类型取实体”模板</li>
+<li>常用属性（P）与类型（Q）索引思路</li>
+<li>可直接复制的多样化采样查询合集</li>
+<li>常见错误与排障清单</li>
+</ul>
+<hr />
+<h2 id="_7">本教程的产出物（建议你跟做）</h2>
+<p>建议你在学的过程中同步产出这些文件（不强制）：</p>
+<ul>
+<li><code>topic_schema.yaml</code>：主题空间定义（领域、子领域、采样权重、过滤规则）</li>
+<li><code>queries/</code>：SPARQL 查询集合（每个查询说明用途与字段）</li>
+<li><code>templates/</code>：中文问法与答法模板库</li>
+<li><code>dataset.jsonl</code>：最终对话数据（每行一个对话，包含元信息与可追溯来源）</li>
+<li><code>audit_report.md</code>：质量评估与抽检报告</li>
+<li><code>DATA_CARD.md</code>：数据卡（许可、生成流程、风险说明、使用建议）</li>
+</ul>
+<hr />
+<h2 id="_8">约定与记号</h2>
+<p>为避免阅读歧义，本教程使用以下约定：</p>
+<ul>
+<li><code>Qxxxx</code>：实体（Item），例如某个城市、人物、作品</li>
+<li><code>Pxxx</code>：属性（Property），例如“出生日期”“位于”“作者”</li>
+<li>“声明（statement）”：<code>实体 —属性→ 值</code> 的基本事实</li>
+<li>“限定符（qualifier）”：对声明补充条件（时间范围、顺序、角色等）</li>
+<li>“引用（reference）”：声明的来源信息（并非每条都有）</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter1.html" class="nav-link next">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题” →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

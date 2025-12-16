@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 9：多语言与中文缺失处理</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-9">Chapter 9：多语言与中文缺失处理</h1>
+<p>在构建中文对话数据集时，Wikidata 的多语言特性既是最大的优势，也是最大的陷阱。理想情况下，我们希望每个实体都有完美的 <code>zh-cn</code>（大陆简体）标签。但现实是，数据分布极不均匀：头部实体中文资料详尽，长尾实体往往只有英文、德文甚至只有 QID。</p>
+<p>如果处理不当，你的对话数据可能会出现以下“车祸现场”：</p>
+<ul>
+<li><strong>混合语言怪胎</strong>：“Q12345 位于 Finland。”（ID泄漏 + 英文地名）</li>
+<li><strong>繁简混乱</strong>：“这个程式的设计非常好。”（在大陆语境下使用了台湾术语）</li>
+<li><strong>生硬翻译</strong>：“我是土耳其。”（将国家 Turkey 误译为火鸡）</li>
+</ul>
+<p>本章将构建一套防御性的<strong>多语言回退流水线（Language Fallback Pipeline）</strong>，确保生成的对话在中文语境下自然、流畅且准确。</p>
+<h2 id="1-wikidata">1. Wikidata 的语言代码迷宫</h2>
+<p>首先，你需要理解 Wikidata 混乱的语言标签系统。中文并不是只有一个 <code>zh</code> 代码。</p>
+<p>| 语言代码 | 含义 | 典型特征 | 处理策略 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">语言代码</th>
+<th style="text-align: left;">含义</th>
+<th style="text-align: left;">典型特征</th>
+<th style="text-align: left;">处理策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>zh</code></td>
+<td style="text-align: left;">中文（通用）</td>
+<td style="text-align: left;">可能是简繁混杂，早期数据常标记为此</td>
+<td style="text-align: left;">需要检测脚本并转码</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zh-cn</code></td>
+<td style="text-align: left;">大陆简体</td>
+<td style="text-align: left;">我们最想要的目标</td>
+<td style="text-align: left;"><strong>直接使用</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zh-hans</code></td>
+<td style="text-align: left;">简体中文（通用）</td>
+<td style="text-align: left;">与 <code>zh-cn</code> 极度接近</td>
+<td style="text-align: left;"><strong>直接使用</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zh-tw</code></td>
+<td style="text-align: left;">台湾正体</td>
+<td style="text-align: left;">繁体字，且包含地区词（如软体/软件）</td>
+<td style="text-align: left;"><strong>需 OpenCC 转换</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zh-hk</code></td>
+<td style="text-align: left;">香港繁体</td>
+<td style="text-align: left;">繁体字，包含香港地区词</td>
+<td style="text-align: left;"><strong>需 OpenCC 转换</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zh-hant</code></td>
+<td style="text-align: left;">繁体中文（通用）</td>
+<td style="text-align: left;">繁体字</td>
+<td style="text-align: left;"><strong>需 OpenCC 转换</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zh-sg</code> / <code>zh-my</code></td>
+<td style="text-align: left;">新马简体</td>
+<td style="text-align: left;">简体字，但在某些词汇上可能不同</td>
+<td style="text-align: left;">视作简体使用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心原则</strong>：你不能只请求 <code>zh</code>。你必须制定一个<strong>优先级队列</strong>。</p>
+<hr />
+<h2 id="2-sparql">2. 策略一：SPARQL 层面的精准获取</h2>
+<p>许多教程建议使用 <code>SERVICE wikibase:label</code> 魔法服务，这对于快速查看数据很有用，但<strong>对于工程化数据生产是危险的</strong>。因为你无法知道返回的字符串到底是原本的中文，还是系统自动回退的英文。</p>
+<h3 id="_1">推荐做法：显式获取 + 语言标记</h3>
+<p>我们在查询时，应该把所有可能的中文变体以及英文都查出来，并带上语言标记，把决策逻辑留在 Python 端处理。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?label_zh_cn</span> <span class="nv">?label_zh_tw</span> <span class="nv">?label_en</span> <span class="nv">?sitelink_title</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="c"># 1. 你的核心查询逻辑</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">.</span> <span class="c"># 比如查人物</span>
+
+  <span class="c"># 2. 显式获取不同语言的 Label (利用 OPTIONAL)</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?label_zh_cn</span><span class="p">.</span> <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?label_zh_cn</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;zh-cn&quot;</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?label_zh_tw</span><span class="p">.</span> <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?label_zh_tw</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;zh-tw&quot;</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?label_en</span><span class="p">.</span>    <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?label_en</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;en&quot;</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="c"># 3. 获取中文维基百科的标题 (Sitelink) - 这是关键备胎！</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span>
+    <span class="nv">?sitelink</span> <span class="nn">schema</span><span class="p">:</span><span class="nt">about</span> <span class="nv">?item</span><span class="p">;</span>
+              <span class="nn">schema</span><span class="p">:</span><span class="nt">isPartOf</span> <span class="nl">&lt;https://zh.wikipedia.org/&gt;</span><span class="p">;</span>
+              <span class="nn">schema</span><span class="p">:</span><span class="nt">name</span> <span class="nv">?sitelink_title</span><span class="p">.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">10</span>
+</code></pre></div>
+
+<p><strong>为什么这样做？</strong>
+这给了你最大的灵活性。你可以在本地代码中决定：“如果 <code>zh-cn</code> 有，用它；如果没，看 <code>sitelink</code>；再没，看 <code>zh-tw</code> 转码；最后才考虑 <code>en</code>。”</p>
+<hr />
+<h2 id="3-sitelinks">3. 策略二：利用 Sitelinks（维基百科标题）</h2>
+<p>这是处理中文缺失的<strong>“核武器”</strong>。
+很多时候，Wikidata 志愿者忘记填写 <code>label</code>，但维基百科上已经有成熟的中文条目了。</p>
+<ul>
+<li><strong>Entity</strong>: <code>Q12345</code></li>
+<li><strong>Label (zh)</strong>: (Missing)</li>
+<li><strong>Sitelink (zhwiki)</strong>: <code>绝命毒师</code></li>
+</ul>
+<p><strong>处理 Sitelink 的痛点：消歧义后缀</strong>
+维基百科标题为了唯一性，常带有括号。</p>
+<ul>
+<li>原始标题：<code>李白 (诗人)</code>、<code>苹果 (消歧义)</code>、<code>Python (编程语言)</code></li>
+<li><strong>清洗规则</strong>：
+  在生成对话前，必须使用正则表达式去除末尾的括号内容。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">clean_sitelink</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span><span class="p">:</span> <span class="k">return</span> <span class="kc">None</span>
+    <span class="c1"># 去除末尾的括号及其内容，如 &quot;Name (Type)&quot; -&gt; &quot;Name&quot;</span>
+    <span class="c1"># 注意：这就处理了 99% 的情况，但要小心 &quot;Alien (film)&quot; 这种变成 &quot;Alien&quot; 后是否会有歧义</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s*\(.*?\)$&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="4-opencc">4. 策略三：繁简与地区词转换 (OpenCC)</h2>
+<p>如果只有 <code>zh-tw</code> 标签（例如 "光年" vs "光年" 没区别，但 "程式" vs "程序" 区别很大），我们需要转换。</p>
+<p>简单的字符映射（Character Mapping）是不够的，我们需要<strong>词汇转换（Phrase Mapping）</strong>。</p>
+<h3 id="opencc">工具推荐：OpenCC</h3>
+<p>不要自己写 replace，请使用 OpenCC（Python版 <code>opencc-python-reimplemented</code>）。</p>
+<p>| 配置文件 | 功能 | 适用场景 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">配置文件</th>
+<th style="text-align: left;">功能</th>
+<th style="text-align: left;">适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>t2s.json</code></td>
+<td style="text-align: left;">繁体字符 -&gt; 简体字符</td>
+<td style="text-align: left;">仅字形转换，不改词汇。适合人名、古籍。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tw2sp.json</code></td>
+<td style="text-align: left;">台湾正体 -&gt; 大陆简体（含词汇）</td>
+<td style="text-align: left;"><strong>推荐默认使用</strong>。会将“软体”转为“软件”，“计程车”转为“出租车”。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Python 实现：</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">opencc</span> <span class="kn">import</span> <span class="n">OpenCC</span>
+
+<span class="c1"># 初始化转换器 (台湾正体 -&gt; 大陆简体)</span>
+<span class="n">cc</span> <span class="o">=</span> <span class="n">OpenCC</span><span class="p">(</span><span class="s1">&#39;tw2sp&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fallback_strategy</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="c1"># 1. 优先 zh-cn</span>
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label_zh_cn&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;label_zh_cn&#39;</span><span class="p">]</span>
+
+    <span class="c1"># 2. 其次 Sitelink (通常质量很高，且大部分是繁体/简体自动适应)</span>
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sitelink_title&#39;</span><span class="p">):</span>
+        <span class="c1"># 维基百科标题可能是繁体，建议也过一遍 OpenCC 以防万一</span>
+        <span class="k">return</span> <span class="n">cc</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">clean_sitelink</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;sitelink_title&#39;</span><span class="p">]))</span>
+
+    <span class="c1"># 3. 再次 zh-tw (进行词汇转换)</span>
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label_zh_tw&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cc</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;label_zh_tw&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="kc">None</span> <span class="c1"># 依然没有中文</span>
+</code></pre></div>
+
+<hr />
+<h2 id="5-code-switching">5. 策略四：中英混排的边界（Code-Switching）</h2>
+<p>当所有中文手段都失效，只剩下英文 Label 时，我们该怎么办？
+这取决于<strong>实体类型</strong>与<strong>对话场景</strong>。我们需要建立一个“可接受度”评分。</p>
+<h3 id="acceptable">可接受保留英文的场景 (Acceptable)</h3>
+<ol>
+<li><strong>软件/编程/技术栈</strong>：<code>Python</code>, <code>TensorFlow</code>, <code>Linux</code>, <code>API</code>。<ul>
+<li><em>自然度</em>：“如何安装 TensorFlow？”（完美）</li>
+</ul>
+</li>
+<li><strong>特定的品牌/型号</strong>：<code>iPhone 15</code>, <code>PlayStation 5</code>。<ul>
+<li><em>自然度</em>：“我想买一台 PlayStation。”（自然）</li>
+</ul>
+</li>
+<li><strong>学术/专有名词（无标准译名）</strong>：某些只有拉丁学名的生物，或最新的论文概念。</li>
+<li><strong>著名的英文缩写</strong>：<code>NASA</code>, <code>FIFA</code>, <code>WHO</code>。<ul>
+<li><em>技巧</em>：优先查找实体的 Alias 中全大写的词。</li>
+</ul>
+</li>
+</ol>
+<h3 id="unacceptable">必须丢弃或强力翻译的场景 (Unacceptable)</h3>
+<ol>
+<li><strong>自然地名</strong>：<code>Smallville</code>。<ul>
+<li><em>怪异度</em>：“我想去 Smallville 旅游。”（像机翻）</li>
+</ul>
+</li>
+<li><strong>历史人物/普通人名</strong>：<code>John Smith</code>。<ul>
+<li><em>怪异度</em>：“你知道 John Smith 是谁吗？”（除非是英语教学场景，否则很怪）</li>
+</ul>
+</li>
+<li><strong>普通名词/概念</strong>：<code>Chair</code>, <code>Freedom</code>。<ul>
+<li><em>怪异度</em>：“这张 Chair 很舒服。”（只有特定ABC群体这样说话）</li>
+</ul>
+</li>
+</ol>
+<p><strong>工程决策</strong>：
+在数据采样的 <code>Where</code> 子句中，你可以通过过滤 <code>P31</code>（实例）来决定是否允许英文回退。例如，如果 <code>P31</code> 是 <code>wd:Q6256</code>（国家），则强制要求必须有中文；如果是 <code>wd:Q7397</code>（软件），则允许英文。</p>
+<hr />
+<h2 id="6-llm">6. 进阶：利用 LLM 进行“上下文感知”补全</h2>
+<p>这是现代数据工程的最后一道防线。如果你必须提高数据覆盖率，可以使用 LLM 离线批量翻译。</p>
+<p><strong>关键点：不要只扔一个单词给 LLM 翻译。</strong>
+Wikidata 里的 <code>Label</code> 脱离上下文会有歧义。</p>
+<ul>
+<li>例子：<code>Turkey</code></li>
+<li>如果不给上下文，LLM 可能翻译成“火鸡”或“土耳其”。</li>
+</ul>
+<p><strong>Prompt 模板</strong>：</p>
+<div class="codehilite"><pre><span></span><code>Context: The entity has ID {qid}. 
+Type: {type_label} (e.g., Country, Animal, or Food).
+Description: {english_description}.
+English Label: {english_label}.
+
+Task: Provide the most standard Simplified Chinese name for this entity. 
+If it is a person&#39;s name, use standard transliteration.
+Output only the Chinese name.
+</code></pre></div>
+
+<hr />
+<h2 id="7">7. 本章小结</h2>
+<ol>
+<li><strong>回退链条（Fallback Chain）</strong>：<code>zh-cn</code> &gt; <code>Sitelink (Cleaned)</code> &gt; <code>zh-tw (OpenCC)</code> &gt; <code>zh</code> &gt; <code>LLM Translation</code> &gt; <code>English (特定领域)</code> &gt; <code>DROP</code>。</li>
+<li><strong>Sitelink 价值连城</strong>：它是被低估的高质量中文语料源，记得清洗括号。</li>
+<li><strong>OpenCC 必不可少</strong>：使用 <code>tw2sp</code> 配置进行“词汇级”简繁转换。</li>
+<li><strong>类型决定策略</strong>：根据实体的 P31 类型（人/地/物/事）决定是否接受英文 Label。</li>
+</ol>
+<hr />
+<h2 id="8">8. 练习题</h2>
+<h3 id="_2">基础题</h3>
+<ol>
+<li>
+<p><strong>OpenCC 实践</strong>：
+    安装 <code>opencc</code> (Python)，尝试转换字符串 <code>“他在使用软体看影片”</code>（台湾惯用语）。使用 <code>t2s.json</code> 和 <code>tw2sp.json</code> 分别转换，观察并记录结果的区别。</p>
+</li>
+<li>
+<p><strong>Sitelink 清洗正则</strong>：
+    编写一个 Python 函数，能够正确处理以下 Wikipedia 标题：</p>
+<ul>
+<li><code>Java (编程语言)</code> -&gt; <code>Java</code></li>
+<li><code>速度与激情 (电影)</code> -&gt; <code>速度与激情</code></li>
+<li><code>(Do Not Clean Me)</code> -&gt; <code>(Do Not Clean Me)</code> (如果整个标题就在括号里，可能是特殊艺术作品，怎么处理？)</li>
+</ul>
+</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+<ol>
+<li>
+<p><strong>OpenCC 实践</strong></p>
+<ul>
+<li><code>t2s.json</code>: "他在使用软体看影片" -&gt; "他在使用软体看影片" (仅转了字，词汇没变，大陆读起来依然别扭)。</li>
+<li><code>tw2sp.json</code>: "他在使用软体看影片" -&gt; "他在使用软件看视频" (词汇也转换了，符合大陆习惯)。</li>
+</ul>
+</li>
+<li>
+<p><strong>Sitelink 清洗正则</strong></p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">re</span>
+<span class="k">def</span> <span class="nf">clean_title</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="c1"># 匹配末尾的括号，且括号前允许有空格</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\s*\([^)]+\)$&quot;</span>
+    <span class="c1"># 只有当去除括号后还有内容时才去除（防止整个标题就是括号的情况）</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cleaned</span> <span class="k">if</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">clean_title</span><span class="p">(</span><span class="s2">&quot;(Do Not Clean Me)&quot;</span><span class="p">))</span> <span class="c1"># 输出 (Do Not Clean Me)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clean_title</span><span class="p">(</span><span class="s2">&quot;Java (编程语言)&quot;</span><span class="p">))</span>   <span class="c1"># 输出 Java</span>
+</code></pre></div>
+
+</details>
+<h3 id="_3">挑战题</h3>
+<ol start="3">
+<li>
+<p><strong>构建完整的采样器类</strong>：
+    设计一个 Python 类 <code>EntityResolver</code>，输入一个包含 Wikidata 原始 SPARQL 结果（含多语言字段）的字典，输出最终用于对话的中文名称。
+    要求：</p>
+<ul>
+<li>集成 OpenCC。</li>
+<li>集成 Sitelink 清洗。</li>
+<li>包含一个 <code>allow_english_types</code> 的白名单（如 Q7397 软件），如果在白名单内且无中文，返回英文；否则返回 None。</li>
+</ul>
+</li>
+</ol>
+<details>
+<summary>提示 (Hint)</summary>
+<p>你的类初始化时应该加载 OpenCC 模型。<code>resolve</code> 方法应该接收 row 和 type_qid。逻辑中包含：
+<code>name = row['zh_cn']</code> -&gt; <code>if not name: name = clean(row['sitelink'])</code> -&gt; <code>if not name: name = cc.convert(row['zh_tw'])</code> -&gt; <code>if not name and type_qid in allow_list: name = row['en']</code>。</p>
+</details>
+<hr />
+<h2 id="9-gotchas">9. 常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1">1. 错误的“通用中文”</h3>
+<p>Wikidata 早期的 <code>zh</code> 标签质量参差不齐。有时候 <code>zh</code> 标签里填的是繁体，甚至是日文汉字（Kanji）。</p>
+<ul>
+<li><strong>调试技巧</strong>：如果取到了 <code>zh</code> 标签，建议依然过一遍 <code>OpenCC</code> 的 <code>t2s</code>，确保统一为简体。</li>
+</ul>
+<h3 id="2-alias">2. 别名 (Alias) 的陷阱</h3>
+<p>你可能发现某个实体没有中文 Label，但有中文 Alias。</p>
+<ul>
+<li><strong>例子</strong>：Label: None; Alias: <code>肯伊·威斯特</code>。</li>
+<li><strong>Gotcha</strong>：Wikidata 的 Alias 可能包含非常口语化甚至错误的叫法（黑粉的蔑称）。使用 Alias 替代 Label 时要小心，最好只在多轮对话的“同义改写”环节使用，不要在第一轮介绍时作为正式名称使用。</li>
+</ul>
+<h3 id="3-sitelinks_1">3. 多值 Sitelinks</h3>
+<p>极少数情况下，一个 Item 可能链接到多个中文维基项目（如 zhwiki, zh-yue-wiki 粤语, zh-min-nan-wiki 闽南语）。</p>
+<ul>
+<li><strong>Gotcha</strong>：SPARQL 查询时如果只写 <code>schema:inLanguage "zh"</code>，可能会导致笛卡尔积（一行变多行）。</li>
+<li><strong>修复</strong>：明确指定 <code>schema:isPartOf &lt;https://zh.wikipedia.org/&gt;</code>。</li>
+</ul>
+<h3 id="4-description">4. 描述 (Description) 的机翻腔</h3>
+<p>有些中文描述是 bot 批量刷进去的。</p>
+<ul>
+<li><strong>特征</strong>：<code>xx是xx</code> (缺少主语)，或者语序倒装。</li>
+<li><strong>建议</strong>：如果描述看起来很短或者包含典型的机翻错误，不如根据 <code>P31</code> (类型) 和 <code>P106</code> (职业) 使用模版自己生成描述（详见第7章）。</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter8.html" class="nav-link prev">← Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</a><a href="chapter10.html" class="nav-link next">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

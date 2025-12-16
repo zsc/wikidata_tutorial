@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-1wikidata">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</h1>
+<h2 id="1">1. 开篇段落：数据合成的“多样性瓶颈”</h2>
+<p>在当今的大语言模型（LLM）开发与微调（SFT）中，我们面临一个反直觉的现象：<strong>获取海量数据很容易，但获取“不同”的数据很难。</strong></p>
+<p>如果你试图用 LLM 自我博弈（Self-play）或简单爬取网页来生成对话数据，你会很快撞上<strong>“多样性瓶颈”</strong>：</p>
+<ol>
+<li><strong>模式坍塌（Mode Collapse）</strong>：模型倾向于重复它训练数据中见过的高频模式。让你生成“100 个名人介绍”，它大概率会围着“爱因斯坦、埃隆·马斯克、迈克尔·杰克逊”转，而很难主动生成“18 世纪的日本俳句诗人”或“坦桑尼亚的地理学家”。</li>
+<li><strong>幻觉难以验证</strong>：让模型“编造”一个复杂的逻辑推理对话，如果它编错了事实（例如搞错了某药品的化学成分），你很难用自动化手段检测出来。</li>
+<li><strong>长尾知识遗忘</strong>：爬虫数据严重偏向头部流量内容（新闻、热点），导致模型在长尾领域（特定学科、冷门历史、非英语文化圈）表现不佳。</li>
+</ol>
+<p>本章将介绍如何利用 <strong>Wikidata（维基数据）</strong> 作为破局的关键。我们将它不视为简单的“查词典”工具，而是将其视为一个<strong>“可编程的主题采样器”</strong>。通过它，我们可以构建出一套自动化流水线，生成覆盖面广、事实可追溯、难度可控的高质量中文对话数据。</p>
+<p><strong>学习目标</strong>：</p>
+<ol>
+<li>深入理解<strong>结构化知识（KG）</strong>与<strong>非结构化文本（Corpus）</strong>在合成数据中的本质差异。</li>
+<li>掌握<strong>“可控采样（Controllable Sampling）”</strong>的方法论：如何利用属性组合定义数据分布。</li>
+<li>理解<strong>“可追溯性（Traceability）”</strong>对数据清洗、修正和 LLM 幻觉抑制的工程价值。</li>
+<li>建立基于 Wikidata 的对话生成流水线（Pipeline）的全局视野。</li>
+</ol>
+<hr />
+<h2 id="2">2. 核心论述</h2>
+<h3 id="21">2.1 为什么要用知识图谱造文本？</h3>
+<p>通常，我们获取知识有两种形态。理解它们的区别是设计数据流水线的前提。</p>
+<ul>
+<li><strong>形态 A：非结构化文本 (Wikipedia/CommonCrawl)</strong><ul>
+<li><strong>本质</strong>：自然语言序列。</li>
+<li><strong>优点</strong>：包含丰富的语境、修辞和逻辑连接。</li>
+<li><strong>缺点</strong>：<strong>不可查询</strong>。你无法编写一行代码来说：“给我找出 50 个‘出生在二战期间’且‘配偶也是名人’的‘欧洲科学家’”。你只能靠搜索关键词，然后人工筛选。</li>
+</ul>
+</li>
+<li><strong>形态 B：结构化数据 (Wikidata)</strong><ul>
+<li><strong>本质</strong>：实体（Item）与属性（Property）构成的图（Graph）。</li>
+<li><strong>优点</strong>：<strong>完全可编程</strong>。上述复杂的筛选条件，只是一条 SPARQL 查询语句。</li>
+<li><strong>缺点</strong>：缺乏自然语言的润色（它只有“骨架”，没有“血肉”）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>我们的策略</strong>：<strong>利用 Wikidata 的“可查询性”来解决采样问题，利用 LLM 的“生成能力”来解决润色问题。</strong></p>
+<h4 id="ascii">ASCII 对比：从“搜索”到“采样”</h4>
+<div class="codehilite"><pre><span></span><code>[ 场景：我们需要构造 1000 条关于“建筑物历史”的问答数据 ]
+
+❌ 传统爬虫/搜索方式 (Unstructured)
++-------------------------------------------------------------+
+| 输入关键词: &quot;著名建筑&quot;, &quot;古老建筑&quot;, &quot;摩天大楼&quot;              |
+| 结果:                                                       |
+| 1. 故宫 (出现 500 次) - 严重重复                            |
+| 2. 埃菲尔铁塔 (出现 300 次) - 头部效应                      |
+| 3. 哈利法塔 (出现 100 次)                                   |
+| ...                                                         |
+| 结果特点:                                                   |
+| - 很难找到&quot;建于16世纪的非洲清真寺&quot; (长尾丢失)               |
+| - 无法轻易分离&quot;高度&quot;、&quot;建筑师&quot;等具体字段                    |
++-------------------------------------------------------------+
+
+✅ Wikidata 结构化采样方式 (Structured)
++-------------------------------------------------------------+
+| 编写 SPARQL 查询逻辑:                                       |
+| Bucket A (20%): 摩天大楼 (P31=Q11303) AND 高度&gt;300m         |
+| Bucket B (30%): 宗教建筑 (P31=Q16970) AND 洲!=欧洲/北美     |
+| Bucket C (50%): 桥梁/大坝 (P31=Q12280/Q12323) AND 年代&lt;1900 |
+
+| Bucket C (50%): 桥梁/大坝 (P31=Q12280/Q12323) AND 年代&lt;1900 |
+|                                                             |
+| 结果:                                                       |
+| - Q123 (某知名大楼)                                         |
+| - Q456 (某冷门印度神庙)                                     |
+| - Q789 (某古罗马引水桥)                                     |
+|                                                             |
+| 结果特点:                                                   |
+| - 强制均衡分布 (Forced Distribution)                        |
+| - 获取纯净元数据: ID, 名称, 建造年份, 坐标                  |
+
++-------------------------------------------------------------+
+</code></pre></div>
+
+<h3 id="22">2.2 解决“长尾”与“偏见”的系统工程</h3>
+<p>大模型训练数据的分布往往是偏斜的（Skewed）。主要体现在：</p>
+<ol>
+<li><strong>地域偏见</strong>：英语世界内容过多，非英语世界（亚非拉）内容过少。</li>
+<li><strong>流行度偏见</strong>：流量明星内容过多，专业领域/冷门人物内容过少。</li>
+</ol>
+<p>Wikidata 提供了一个完美的修正机制。我们可以利用 <strong>Sitelinks（站点链接数，即该词条被多少种语言的维基百科收录）</strong> 作为“流行度”的代理指标。</p>
+<p><strong>多样化采样算法 (Rule-of-Thumb):</strong></p>
+<ul>
+<li><strong>头部数据 (Head)</strong>: 采样 <code>Sitelinks &gt; 20</code> 的实体。用于保证模型不傻，知道基本常识。</li>
+<li><strong>腰部数据 (Torso)</strong>: 采样 <code>5 &lt; Sitelinks &lt;= 20</code> 的实体。这是提升模型泛化能力的主战场。</li>
+<li><strong>长尾数据 (Tail)</strong>: 采样 <code>Sitelinks &lt;= 5</code> 甚至 <code>Sitelinks = 1</code> 的实体。用于测试模型的 few-shot 学习能力或防止过拟合。</li>
+</ul>
+<p>通过控制 SPARQL 查询中的 <code>FILTER</code> 条件，我们可以精准地控制数据集中包含 <strong>30% 的欧美数据</strong> 和 <strong>70% 的亚非拉数据</strong>，从而人为地对抗训练数据中的地域偏见。</p>
+<h3 id="23-traceability-lineage">2.3 可追溯性 (Traceability) 与数据血缘 (Lineage)</h3>
+<p>在工业级数据生产中，<strong>“这行数据哪来的？”</strong> 是一个灵魂拷问。</p>
+<p>如果你的数据是纯 LLM 生成的：</p>
+<blockquote>
+<p><em>Q: 为什么这条数据说李白会开飞机？</em>
+<em>A: 不知道，可能是模型抽风了，没法查。</em></p>
+</blockquote>
+<p>如果你的数据是基于 Wikidata 生成的：</p>
+<blockquote>
+<p><em>Q: 为什么这条数据说李白属于唐朝？</em>
+<em>A: 因为它源自 Wikidata 实体 Q7071，属性 P2348 (period) 指向 Q318635 (Tang Dynasty)。这是数据生成的</em><em>证据链 (Evidence Chain)</em><em>。</em></p>
+</blockquote>
+<p>这种<strong>结构化锚点 (Structured Anchor)</strong> 带来了巨大的工程优势：</p>
+<ol>
+<li><strong>自动去重</strong>：通过比较 QID 集合，可以确保训练集和测试集没有数据泄露（Data Leakage）。</li>
+<li><strong>版本更新</strong>：如果 Wikidata 修正了某个事实（例如某人去世了），我们可以通过 ID 快速定位并更新相关的所有对话数据，而无需人工重读文本。</li>
+<li><strong>幻觉抑制</strong>：在生成对话时，我们可以把从 Wikidata 查到的三元组放入 Prompt 作为 Context，强制模型“基于事实说话”。</li>
+</ol>
+<h3 id="24">2.4 数据生成全景流水线</h3>
+<p>这是本教程致力构建的最终系统架构。请仔细观察数据流向：</p>
+<div class="codehilite"><pre><span></span><code><span class="c">Step 1: 策略层 (Strategy)</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">| 定义主题 Schema (YAML/JSON)                      |</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 领域: </span><span class="k">[</span><span class="c">人物</span><span class="nt">,</span><span class="c"> 地理</span><span class="nt">,</span><span class="c"> 科学</span><span class="nt">,</span><span class="c"> 艺术</span><span class="nt">...</span><span class="k">]</span><span class="c">              |</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 难度分布: </span><span class="k">[</span><span class="c">简单:50%</span><span class="nt">,</span><span class="c"> 复杂推理:30%</span><span class="nt">,</span><span class="c"> 陷阱:20%</span><span class="k">]</span><span class="c">   |</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">        |</span>
+<span class="c">        v</span>
+<span class="c">Step 2: 检索层 (Retrieval </span><span class="nb">-</span><span class="c"> SPARQL)</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">| WDQS (Wikidata Query Service)                    |</span>
+<span class="c">| </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 执行查询 (Query Execution)                    |</span>
+<span class="c">| </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 过滤敏感词/无中文条目 (Filtering)             |</span>
+<span class="c">| </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 结果: JSON List </span><span class="k">[</span><span class="c">{&quot;qid&quot;: &quot;Q1&quot;</span><span class="nt">,</span><span class="c"> &quot;fact&quot;:</span><span class="nt">...</span><span class="c">}</span><span class="k">]</span><span class="c">   |</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">        |</span>
+<span class="c">        v</span>
+<span class="c">Step 3: 增强层 (Augmentation)</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">| 原始三元组 </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 自然语言化 (Linearization)         |</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 模板法: &quot;{S} 的 {P} 是 {O}&quot;                    |</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 补充上下文: 调用 Wikipedia 摘要 API 补全背景   |</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">        |</span>
+<span class="c">        v</span>
+<span class="c">Step 4: 生成层 (Synthesis </span><span class="nb">-</span><span class="c"> LLM)</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">| Input: 事实列表 </span><span class="nb">+</span><span class="c"> 对话风格 Prompt                |</span>
+<span class="c">| Model: &quot;请基于上述事实，生成一段用户询问         |</span>
+<span class="c">|         关于该建筑历史的对话，包含一次追问。&quot;    |</span>
+<span class="c">| Output: 多轮对话文本                             |</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">        |</span>
+<span class="c">        v</span>
+<span class="c">Step 5: 验证层 (Validation)</span>
+<span class="nb">+--------------------------------------------------+</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 事实一致性检查 (Fact Consistency Check)        |</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 格式校验 (Schema Validation)                   |</span>
+<span class="c">| </span><span class="nb">-</span><span class="c"> 最终产出: dataset</span><span class="nt">.</span><span class="c">jsonl (带 QID 元数据)        |</span>
+<span class="nb">+--------------------------------------------------+</span>
+</code></pre></div>
+
+<hr />
+<h2 id="3">3. 本章小结</h2>
+<ul>
+<li><strong>核心痛点</strong>：缺乏多样性和可控性是传统造数方法的瓶颈。</li>
+<li><strong>Wikidata 的角色</strong>：它不是百科全书的替代品，而是<strong>结构化的索引</strong>。它允许我们通过逻辑（SPARQL）而非概率（Prompt）来筛选数据源。</li>
+<li><strong>采样哲学</strong>：好数据 = 头部常识 + 广阔的长尾 + 均衡的地域/领域分布。Wikidata 是实现这一公式的最佳工具。</li>
+<li><strong>工程价值</strong>：通过保留 <strong>QID</strong> 和 <strong>PID</strong>，我们将非结构化的对话数据变成了可管理、可追踪、可更新的资产。</li>
+</ul>
+<hr />
+<h2 id="4">4. 练习题</h2>
+<h3 id="basic">基础题 (Basic)</h3>
+<ol>
+<li>
+<p><strong>数据形态辨析</strong>：
+    假设我们要造一批关于“诺贝尔奖得主”的数据。
+    (A) 写爬虫抓取诺贝尔奖官网的获奖者列表网页文本。
+    (B) 查询 Wikidata 中 <code>P166 (获奖)</code> 属性值为 <code>Q7191 (诺贝尔奖)</code> 的实体。
+    请列出方法 (B) 相比方法 (A) 在<strong>数据清洗</strong>阶段的两个具体优势。
+    <em>Hint</em>: 考虑一下名字的拼写变体和日期的格式。</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<ol>
+<li><strong>消歧与标准化</strong>：方法 A 得到的可能是 "Marie Curie", "M. Curie", "居里夫人" 等各种文本写法，需要复杂的清洗归一化。方法 B 直接得到唯一 ID <code>Q7186</code>，天然去重且标准化。</li>
+<li><strong>结构化字段分离</strong>：方法 A 需要从文本中用正则或 NLP 提取获奖年份、学科等信息，容易出错。方法 B 中，年份通常直接作为限定符（P585 point in time）以标准日期格式存储，学科也是独立的 QID，无需清洗自然语言。
+</details></li>
+</ol>
+</li>
+<li>
+<p><strong>ID 认知</strong>：
+    在 Wikidata 中，<code>Q42</code> 代表道格拉斯·亚当斯，<code>P31</code> 代表“是...的实例”。如果我们发现一条声明是 <code>Q42 P31 Q5</code>，且 <code>Q5</code> 的标签是“人类”。这句话翻译成中文事实是什么？
+    <em>Hint</em>: 这是一个最基础的三元组 (Subject, Predicate, Object)。</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<p><strong>事实</strong>：道格拉斯·亚当斯是人类。
+(Subject: Douglas Adams, Predicate: instance of, Object: human)
+</details></p>
+</li>
+<li>
+<p><strong>Sitelinks 理解</strong>：
+    如果一个实体的 <code>sitelinks</code> 计数为 150，另一个实体的 <code>sitelinks</code> 计数为 1。这通常分别意味着什么？在构造“高难度”问答题时，你会优先选哪一个？
+    <em>Hint</em>: Sitelink 代表该实体在多少个不同语言的维基百科中有条目。</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<ul>
+<li><strong>150 sitelinks</strong>: 代表这是一个<strong>全球知名</strong>的实体（如“巴黎”、“迈克尔·乔丹”），几乎所有语言的维基百科都收录了它。</li>
+<li><strong>1 sitelink</strong>: 代表这是一个<strong>极度冷门或本地化</strong>的实体（如某个偏僻乡村的小学、某个不知名的地方官员），可能只在其母语维基百科有记载。</li>
+<li><strong>构造“高难度”题目</strong>: 优先选 <strong>sitelinks = 1</strong> 的实体。因为模型在预训练阶段极少见到相关语料，更能测试模型的知识边界或检索增强（RAG）能力。
+</details></li>
+</ul>
+</li>
+<li>
+<p><strong>许可协议与合规</strong>：
+    某初创公司抓取了 Wikidata 的数据，训练了一个用于付费 API 的垂直领域模型，并且没有公开模型权重。这样做是否侵犯了 Wikidata 的版权？
+    <em>Hint</em>: 关键词 CC0。</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<p><strong>不侵权。</strong>
+Wikidata 使用 <strong>CC0 (Public Domain)</strong> 协议。这意味着数据没有任何版权限制。商业公司可以任意使用、修改、分发，甚至用于闭源商业项目，而无需支付费用或强制开源衍生成果。这是 Wikidata 相比 Wikipedia (CC-BY-SA) 最大的商业优势之一。
+</details></p>
+</li>
+</ol>
+<h3 id="challenge">挑战题 (Challenge)</h3>
+<ol start="5">
+<li>
+<p><strong>采样策略设计</strong>：
+    你需要为一个针对“儿童科普”的对话机器人生成数据。儿童只能理解常见概念。如果你直接从 Wikidata 随机采样“动物”，可能会采到深海多毛蠕虫（Polychaeta）。
+    请设计 2-3 条<strong>过滤规则</strong>，确保采样的实体适合儿童认知。
+    <em>Hint</em>: 什么指标能反映一个概念是否“通俗易懂”？</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<p><strong>策略建议：</strong></p>
+<ol>
+<li><strong>利用 Sitelinks 进行过滤</strong>：设定阈值，例如 <code>FILTER(?sitelinks &gt; 30)</code>。只有在 30 种以上语言都有词条的动物（如狮子、老虎、企鹅）才更有可能是常见动物。</li>
+<li><strong>利用“通用性”属性</strong>：检查该动物是否有对应的 Emoji 字符（P487 Unicode character），或者是否有由常见绘本/动画片引用的属性（虽然这很难直接查，但思路是找“文化关联”）。</li>
+<li><strong>利用外部列表</strong>：先找到“Q200569 (常见家畜)”或“Qxxx (动物园常见动物)”这类集合类目，然后只查询其子类。
+</details></li>
+</ol>
+</li>
+<li>
+<p><strong>反事实与去重思考</strong>：
+    假设你在构建一个“多轮推理”数据集。你需要生成这样的对话：“A的妻子是B，B的丈夫是A吗？”
+    在 Wikidata 中，这种关系（P26 配偶）通常是双向存储的（A 有 P26 指向 B，B 也有 P26 指向 A）。
+    如果在采样时处理不当，会导致什么样的数据冗余问题？如何解决？
+    <em>Hint</em>: 这里的冗余是指“逻辑上的重复”，即 (A, B) 和 (B, A) 是同一件事。</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<p><strong>问题</strong>：
+如果在遍历所有实体的 P26 属性时，不加控制，你会被生成两条逻辑完全重复的数据：</p>
+<ol>
+<li>“张三的妻子是谁？是李四。”</li>
+<li>“李四的丈夫是谁？是张三。”
+这会导致模型过拟合这种简单的互逆关系，且浪费 Token。</li>
+</ol>
+<p><strong>解决方案</strong>：
+在 SPARQL 查询或后处理中，利用 ID 的字典序进行去重。
+<code>FILTER(STR(?personA) &lt; STR(?personB))</code>
+这行代码强制只取 ID 较小的那个作为“主体”，从而保证每一对配偶关系 <code>(A, B)</code> 只会被采样一次，无论它们在数据库中存储了多少次。
+</details></p>
+</li>
+<li>
+<p><strong>开放性场景</strong>：
+    Wikidata 的数据虽然结构化，但并非所有数据都适合“对话”。请举出一个<strong>不适合</strong>直接转化为口语对话的 Wikidata 数据类型，并说明原因。
+    <em>Hint</em>: 想象一下把一串枯燥的代码或标识符念出来的感觉。</p>
+<p><details markdown="1">
+<summary>点击查看参考答案</summary></p>
+<p><strong>不适合的类型示例：外部标识符 (External Identifiers)</strong>。
+Wikidata 包含大量指向其他数据库的 ID，例如“IMDb 编号 (P345)”、“国会图书馆控制号 (P244)”、“DOI (P356)”。</p>
+<p><strong>原因</strong>：</p>
+<ol>
+<li><strong>不可读性</strong>：对话中出现“这部电影的 IMDb 编号是 tt0111161”非常生硬，除非是特定查询场景。</li>
+<li><strong>无信息量</strong>：对于普通用户闲聊，一串 ID 没有任何语义价值。</li>
+</ol>
+<p><strong>处理建议</strong>：在构建对话数据时，应设立<strong>属性黑名单</strong>，明确排除此类标识符属性，只保留语义属性（时间、地点、人物关系、物理性质等）。
+</details></p>
+</li>
+</ol>
+<hr />
+<h2 id="5-gotchas">5. 常见陷阱与错误 (Gotchas)</h2>
+<p>在后续章节开始实操前，请先建立对这些常见坑的认知：</p>
+<ol>
+<li>
+<p><strong>"Real World" != "Wikidata World"</strong></p>
+<ul>
+<li><em>现象</em>：你觉得“西红柿”肯定是“蔬菜”，但在 Wikidata 里，它可能被定义为“浆果 (berry)”或“果实”。</li>
+<li><em>应对</em>：不要用你的常识去硬套查询逻辑。务必先在 WDQS 页面上手动查几个样例，看看它们的 <code>P31</code> (instance of) 到底填的是什么。</li>
+</ul>
+</li>
+<li>
+<p><strong>超时 (Timeout) 是家常便饭</strong></p>
+<ul>
+<li><em>现象</em>：你写了一个完美的查询：“查找全人类的配偶”。点击运行，转圈 60 秒后报错 <code>Time out</code>。</li>
+<li><em>应对</em>：Wikidata 查询服务有严格的计算资源限制。不要试图一次性拉取全量数据。必须学会<strong>分页 (LIMIT/OFFSET)</strong> 和 <strong>分块采样 (按年份、按国家切分任务)</strong>。这将在第 6 章详细讲解。</li>
+</ul>
+</li>
+<li>
+<p><strong>粒度混淆：P31 (是...的实例) vs P279 (是...的子类)</strong></p>
+<ul>
+<li><em>现象</em>：你想找“所有程序员”，查询 <code>?x P31 程序员</code>。结果发现很少。因为大部分程序员的 P31 填的是“人类”，而职业属性 P106 填的是“程序员”。</li>
+<li><em>或者</em>：你想找“所有犬科动物”，查 <code>?x P31 犬科</code>，结果为空。因为“犬科”是一个生物学分类，具体的狗（如史努比）是“狗”的实例，而“狗”是“犬科”的子类。</li>
+<li><em>应对</em>：这将在第 2 章和第 3 章通过 <code>wdt:P31/wdt:P279*</code> 路径查询语法专门解决。</li>
+</ul>
+</li>
+<li>
+<p><strong>文本陷阱：Description 不等于 Article</strong></p>
+<ul>
+<li><em>现象</em>：期望通过 Wikidata 获得实体的详细介绍。</li>
+<li><em>现实</em>：Wikidata 的 <code>description</code> 字段通常只有短短几个词（例如：“1990年出生的日本歌手”）。如果你需要长文本来做阅读理解训练，必须使用 Wikidata 提供的 URL 去爬取对应的 Wikipedia 页面，而不是指望 Wikidata 本身提供大段文本。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p><a href="chapter2.html">下一章：Chapter 2 - Wikidata 数据模型速通</a></p>
+            </article>
+            
+            <nav class="page-nav"><a href="index.html" class="nav-link prev">← 面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</a><a href="chapter2.html" class="nav-link next">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用） →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

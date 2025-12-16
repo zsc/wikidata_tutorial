@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 5：把事实变成对话：多轮结构与标注方案</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-5">Chapter 5：把事实变成对话：多轮结构与标注方案</h1>
+<h2 id="1">1. 开篇：跨越“图”与“话”的鸿沟</h2>
+<p>在 Chapter 3 和 4 中，我们学会了如何从 Wikidata 的海洋中捕捞高质量的“三元组（Triples）”。
+比如我们抓到了：<code>[李白 (Q7078)] --P569(出生日期)--&gt; [701年]</code>。</p>
+<p>但是，<strong>三元组不是对话</strong>。</p>
+<ul>
+<li>三元组是静态的、结构化的、高压缩的信息。</li>
+<li>对话是动态的、流式的、包含冗余和上下文指代的过程。</li>
+</ul>
+<p>本章的核心任务是构建一个<strong>“对话模拟器”（Dialogue Simulator）</strong>。你需要设计一套逻辑，让两个虚拟角色（User 和 Agent）在知识图谱上“游走”，并将游走的路径转化为自然语言。</p>
+<p><strong>本章学习目标</strong>：</p>
+<ol>
+<li><strong>对话动作建模</strong>：掌握 8 种核心对话动作（从简单的属性查询到复杂的集合比较）。</li>
+<li><strong>图游走算法</strong>：学习基于“实体栈（Entity Stack）”的上下文管理机制，实现深度的多跳对话。</li>
+<li><strong>黄金标准 Schema</strong>：设计工业级的对话数据格式（JSONL），包含完整的意图（Intent）、槽位（Slot）和事实溯源（Grounding）。</li>
+<li><strong>多样性注入</strong>：通过控制“信息密度”和“角色人设”，避免生成的对话千篇一律。</li>
+</ol>
+<hr />
+<h2 id="2-dialogue-as-graph-traversal">2. 核心论述：对话即图上的游走 (Dialogue as Graph Traversal)</h2>
+<p>想象知识图谱是一张巨大的地图，对话就是在这张地图上的旅行路线。</p>
+<h3 id="21">2.1 对话状态模型</h3>
+<p>一个多轮对话系统本质上维护着一个<strong>状态（State）</strong>。在基于 Wikidata 的生成中，状态主要由<strong>当前焦点实体（Current Focus Entity）</strong>决定。</p>
+<div class="codehilite"><pre><span></span><code>图谱结构：
+[Q:诺兰] --(P:导演)--&gt; [Q:星际穿越] --(P:配乐)--&gt; [Q:汉斯·季默]
+   |                       |
+(P:出生地)              (P:主演)
+   |                       |
+[Q:伦敦]               [Q:马修·麦康纳]
+
+对话流向（游走路径）：
+Round 1: 聊诺兰 (Focus: 诺兰) -&gt; 问出生地
+Round 2: 聊他的作品 (Focus: 诺兰 -&gt; Edge -&gt; 星际穿越) -&gt; 焦点转移到 [星际穿越]
+Round 3: 聊这部电影的演员 (Focus: 星际穿越) -&gt; 提到 [马修]
+Round 4: 回溯 (Pop Stack) -&gt; 聊这部电影的配乐 (Focus: 星际穿越 -&gt; Edge -&gt; 汉斯·季默)
+</code></pre></div>
+
+<p>为了实现自动化生成，我们需要模拟这种“焦点的转移”。</p>
+<h3 id="22-the-extended-dialogue-action-set">2.2 八大对话动作集 (The Extended Dialogue Action Set)</h3>
+<p>为了生成能够训练 LLM 处理复杂任务的数据，我们需要定义丰富的动作空间：</p>
+<p>| 动作类型 (Intent) | 逻辑描述 | 示例 | 难度 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">动作类型 (Intent)</th>
+<th style="text-align: left;">逻辑描述</th>
+<th style="text-align: left;">示例</th>
+<th style="text-align: left;">难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. Fact Retrieval</strong></td>
+<td style="text-align: left;"><code>(S, P, ?)</code> <br> 查询单一事实</td>
+<td style="text-align: left;">User: "李白是哪年生的？"<br>Agent: "701年。"</td>
+<td style="text-align: left;">⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Boolean Verification</strong></td>
+<td style="text-align: left;"><code>(S, P, O) -&gt; True/False</code> <br> 验证事实真伪</td>
+<td style="text-align: left;">User: "李白是清朝人吗？"<br>Agent: "不，他是唐朝人。"</td>
+<td style="text-align: left;">⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. Entity Pivot (Drill-down)</strong></td>
+<td style="text-align: left;"><code>Last_Obj</code> 变为 <code>New_Subj</code> <br> 深入话题</td>
+<td style="text-align: left;">User: "他写过什么诗？"<br>Agent: "《静夜思》。"<br>User: "<strong>这首诗</strong>表达了什么？"</td>
+<td style="text-align: left;">⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. Contextual Follow-up</strong></td>
+<td style="text-align: left;">省略主语 <br> <code>(Current_Subj, New_P, ?)</code></td>
+<td style="text-align: left;">User: "那<strong>他</strong>死在哪里了？"<br>Agent: "安徽当涂。"</td>
+<td style="text-align: left;">⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. Listing &amp; Counting</strong></td>
+<td style="text-align: left;"><code>Count(P)</code> 或 <code>List(P)</code> <br> 集合操作</td>
+<td style="text-align: left;">User: "列举三个欧盟成员国。"<br>Agent: "法国、德国、意大利..."</td>
+<td style="text-align: left;">⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6. Comparison</strong></td>
+<td style="text-align: left;"><code>Compare(S1.P, S2.P)</code> <br> 属性对比</td>
+<td style="text-align: left;">User: "珠峰和K2谁更高？"<br>Agent: "珠峰更高，海拔8848米，而K2是8611米。"</td>
+<td style="text-align: left;">⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7. Temporal Constraint</strong></td>
+<td style="text-align: left;"><code>Query(P) where time in range</code> <br> 时间切片</td>
+<td style="text-align: left;">User: "2010年的时候苹果CEO是谁？"<br>Agent: "当时是乔布斯（直到2011年）。"</td>
+<td style="text-align: left;">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>8. Disambiguation</strong></td>
+<td style="text-align: left;"><code>Clarify(Label)</code> <br> 歧义消除</td>
+<td style="text-align: left;">User: "讲讲李娜。"<br>Agent: "你想听网球冠军李娜，还是歌手李娜？"</td>
+<td style="text-align: left;">⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-schema">3. 工程化实现：从数据到 Schema</h2>
+<p>生成数据的价值在于其<strong>结构化标注</strong>。如果只是生成文本，LLM 无法学习“检索”和“引用”。我们需要定义一个包含<strong>思维链（Chain of Thought）</strong>和<strong>溯源（Provenance）</strong>的格式。</p>
+<h3 id="31-jsonl">3.1 推荐的数据结构 (JSONL)</h3>
+<p>这是一个生产级的 Schema 设计，包含了训练对话模型所需的所有元数据。</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;conversation_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;syn_wiki_bio_001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;biography&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;seed_entity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;qid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q7078&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;label_zh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;李白&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;turns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;turn_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;李白这辈子写了多少诗啊？&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;intent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;count_property&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;slots&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;entity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;李白&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;property&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;作品数量&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;turn_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;李白一生创作了大量诗歌，现存确实的数量大约有1000多首。&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;grounding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wikidata&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;triples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span><span class="nt">&quot;s&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q7078&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;p&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P123&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;o&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000+&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;reference_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">}</span><span class="w"> </span>
+<span class="w">          </span><span class="c1">// 注：此处仅为示例，Wikidata可能通过P800列举作品，需聚合计算</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;turn_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;那他最有名的代表作是什么？&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;intent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fact_retrieval_ranking&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;context_dependency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;resolved_to:Q7078&quot;</span><span class="w"> </span><span class="c1">// 标记指代消解</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;turn_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;他最著名的作品包括《静夜思》、《望庐山瀑布》和《将进酒》等。&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;grounding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;triples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">           </span><span class="p">{</span><span class="nt">&quot;s&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q7078&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;p&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P800&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;o&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q12345&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;静夜思&quot;</span><span class="p">},</span>
+<span class="w">           </span><span class="p">{</span><span class="nt">&quot;s&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q7078&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;p&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P800&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;o&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q67890&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;将进酒&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;api_call_simulation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wiki_query(Q7078, P800, limit=3)&quot;</span><span class="w"> </span><span class="c1">// 模拟工具调用</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;turn_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;《静夜思》是什么时候写的？&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;intent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;entity_pivot&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;focus_shift&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q7078 -&gt; Q12345&quot;</span><span class="w"> </span><span class="c1">// 焦点转移</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;turn_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;关于《静夜思》具体的创作年份有争议，一般认为是他在726年创作的。&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;grounding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;triples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span><span class="nt">&quot;s&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q12345&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;p&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P571&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;o&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;726&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qualifier_p&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P1480&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qualifier_o&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;maybe&quot;</span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="32">3.2 关键字段详解</h3>
+<ul>
+<li><strong><code>grounding</code> (溯源)</strong>：这是最重要的字段。它告诉模型“这句话不是瞎编的，是来自这里”。这对减少幻觉至关重要。</li>
+<li><strong><code>focus_shift</code> (焦点转移)</strong>：记录对话焦点的变化路径，有助于训练模型的主题跟踪能力。</li>
+<li><strong><code>qualifier</code> (限定符)</strong>：如上例中的 <code>P1480</code> (sourcing circumstances) -&gt; <code>maybe</code>，捕捉知识的不确定性。</li>
+</ul>
+<hr />
+<h2 id="4">4. 自动化生成策略：状态机算法</h2>
+<p>如何编写脚本自动生成上述数据？这里提供一个 <strong>Rule-of-Thumb 算法</strong>。</p>
+<h3 id="_1">算法流程：</h3>
+<ol>
+<li><strong>初始化</strong>：<ul>
+<li><code>EntityStack = [Seed_Entity]</code></li>
+<li><code>History = []</code></li>
+<li><code>Current_Focus = Seed_Entity</code></li>
+</ul>
+</li>
+<li><strong>循环生成 (Loop N Turns)</strong>：<ul>
+<li><strong>User 动作选择</strong>：掷骰子决定下一步动作。<ul>
+<li>30% 概率：继续问 <code>Current_Focus</code> 的其他属性（Breadth）。</li>
+<li>40% 概率：从 <code>Current_Focus</code> 的关系中选一个 <code>Object</code>，作为新的 <code>Current_Focus</code> 并压栈（Depth/Pivot）。</li>
+<li>20% 概率：回退，<code>Pop Stack</code>，回到上一个实体（Return）。</li>
+<li>10% 概率：比较/列表/复杂操作。</li>
+</ul>
+</li>
+<li><strong>Query 构造</strong>：根据选定的 <code>(Subject, Property)</code> 在本地缓存或 Wikidata 查找。</li>
+<li><strong>模板渲染</strong>：<ul>
+<li>User 话术：使用多样化模板（"X是什么？", "告诉我X的信息", "X呢？"）。</li>
+<li>Assistant 话术：根据三元组类型（时间、地点、人物）选择回答模板，并注入 Label 和 Description。</li>
+</ul>
+</li>
+<li><strong>记录</strong>：将 Turn 保存到 JSONL，更新 History。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="5">5. 本章小结</h2>
+<ol>
+<li><strong>不仅仅是问答</strong>：高质量对话数据必须包含追问、指代、焦点转移和逻辑判断，而不仅仅是“Q: A是谁？ A: ...”。</li>
+<li><strong>状态管理</strong>：使用“实体栈”来模拟人类对话中的思维跳跃和回溯。</li>
+<li><strong>结构化优先</strong>：生成的最终产物应该是包含丰富元数据的 JSON，而不是纯文本。文本只是表象，结构才是灵魂。</li>
+<li><strong>捕捉细微差别</strong>：利用 Wikidata 的 Qualifier（限定符）来生成关于时间、角色和不确定性的精准回答。</li>
+</ol>
+<hr />
+<h2 id="6">6. 练习题</h2>
+<h3 id="fundamentals">基础题 (Fundamentals)</h3>
+<details>
+<summary><strong>练习 1：构建追问逻辑</strong></summary>
+<p><strong>场景</strong>：当前焦点是“周杰伦 (Q211241)”。
+<strong>任务</strong>：</p>
+<ol>
+<li>第一轮：询问他的配偶（P26）。</li>
+<li>第二轮：不出现“周杰伦”和“昆凌”的名字，询问结婚时间（P580）。</li>
+<li>请写出第二轮 User 的 3 种不同自然语言问法。</li>
+</ol>
+<p><strong>提示</strong>：利用代词“他们”、“这段婚姻”等。</p>
+<p><br></p>
+<details>
+<summary><strong>参考答案</strong></summary>
+<ol>
+<li><strong>事实获取</strong>：Bot 回复“是昆凌。”</li>
+<li><strong>User 追问模板</strong>：<ul>
+<li>“他们是什么时候结婚的？”</li>
+<li>“这段婚姻开始于哪一年？”</li>
+<li>“在一起多久了？”（虽然需要计算，但意图是询问开始时间）</li>
+</ul>
+</li>
+</ol>
+</details>
+</details>
+<details>
+<summary><strong>练习 2：多值处理 (List Handling)</strong></summary>
+<p><strong>场景</strong>：查询“泰勒·斯威夫特 (Q26876)”的“乐器 (P1303)”。Wikidata 返回了：吉他、钢琴、班卓琴、尤克里里。
+<strong>任务</strong>：编写一个处理逻辑，如果返回值超过 3 个，Bot 该如何回答？请写出伪代码逻辑和最终回复文本。</p>
+<p><br></p>
+<details>
+<summary><strong>参考答案</strong></summary>
+<p><strong>逻辑</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">items</span> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><span class="n">P1303</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">display_items</span> <span class="o">=</span> <span class="n">items</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;她会演奏多种乐器，包括</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">display_items</span><span class="p">)</span><span class="si">}</span><span class="s2">等。&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;她会演奏</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2">。&quot;</span>
+</code></pre></div>
+
+<p><strong>文本</strong>：“她会演奏多种乐器，包括吉他、钢琴、班卓琴等。”</p>
+</details>
+</details>
+<h3 id="advanced">挑战题 (Advanced)</h3>
+<details>
+<summary><strong>练习 3：设计“反事实”纠错数据</strong></summary>
+<p><strong>目标</strong>：生成用于训练模型<strong>拒绝回答</strong>或<strong>纠正错误</strong>的数据。
+<strong>任务</strong>：利用 Wikidata，设计一个生成流程，制造“张冠李戴”的用户问题，并生成正确的纠错回答。
+<strong>例子</strong>：User: "奥巴马是哪一年发明电灯的？" -&gt; Bot: "奥巴马并没有发明电灯，电灯主要是爱迪生改良推广的。"</p>
+<p><strong>提示</strong>：需要选取两个不相关的实体，或者错误的属性值。</p>
+<p><br></p>
+<details>
+<summary><strong>参考答案</strong></summary>
+<p><strong>生成策略</strong>：</p>
+<ol>
+<li><strong>选取实体 A</strong> (如：奥巴马 Q76)。</li>
+<li><strong>选取属性 P</strong> (如：发明者 P61)。</li>
+<li><strong>选取实体 B</strong> (如：电灯泡 Q64995)，确保 B 的 P 是 C (爱迪生)，且 C != A。</li>
+<li><strong>构造 User 话术</strong>：将 A 强行作为 B 的 P 的主语。“[A] 发明了 [B] 吗？” 或 “[A] 是哪年发明 [B] 的？”</li>
+<li><strong>构造 Bot 话术</strong>：<ul>
+<li>Step 1: 否定 (False)。</li>
+<li>Step 2: 检索 B 的真实 P 值 (C)。</li>
+<li>Step 3: 生成“不是 A，其实是 C”。</li>
+</ul>
+</li>
+</ol>
+</details>
+</details>
+<details>
+<summary><strong>练习 4：时间限定符的推理</strong></summary>
+<p><strong>场景</strong>：实体“德国 (Q183)”，属性“货币 (P38)”。
+Wikidata 数据：</p>
+<ol>
+<li>德国马克 (Q16068) (end time: 2001-12-31)</li>
+<li>欧元 (Q4916) (start time: 2002-01-01)
+<strong>任务</strong>：设计一个对话，User 询问“1990年德国用什么钱？”，Bot 必须根据限定符推理出正确答案。请写出 reasoning 过程。</li>
+</ol>
+<p><br></p>
+<details>
+<summary><strong>参考答案</strong></summary>
+<p><strong>Reasoning Process</strong>:</p>
+<ol>
+<li><strong>Extract Constraint</strong>: User query time $T_q = 1990$.</li>
+<li><strong>Retrieve Candidates</strong>: Get all values for <code>Germany -&gt; Currency</code>. Candidates: [Mark, Euro].</li>
+<li><strong>Filter</strong>:<ul>
+<li>Check Mark: No start time (assume valid from past), <code>end_time = 2001</code>. Since $1990 &lt; 2001$, <strong>Match</strong>.</li>
+<li>Check Euro: <code>start_time = 2002</code>. Since $1990 &lt; 2002$, <strong>Mismatch</strong>.</li>
+</ul>
+</li>
+<li><strong>Generate</strong>: "1990年时，德国使用的货币是德国马克（Deutsche Mark）。"</li>
+</ol>
+</details>
+</details>
+<hr />
+<h2 id="7-gotchas">7. 常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1-template-hallucinations">1. "幻觉式"模板 (Template Hallucinations)</h3>
+<ul>
+<li><strong>现象</strong>：模板写死为 <code>"{Name} 的{Prop}是 {Value}"</code>。</li>
+<li><strong>问题</strong>：当 Wikidata 数据缺失时，可能会生成 <code>"{Name} 的配偶是 None"</code> 或者空字符串。</li>
+<li><strong>对策</strong>：在填槽（Slot Filling）之前，<strong>必须</strong>检查 Value 是否存在。如果不存在，应该切换到“我不知道”或“数据缺失”的模板，或者直接放弃生成这一轮。</li>
+</ul>
+<h3 id="2">2. 忽略性别代词</h3>
+<ul>
+<li><strong>现象</strong>：Bot 对女性实体称呼“他”，或对男性称呼“她”。</li>
+<li><strong>原因</strong>：中文生成时默认使用了“他”。</li>
+<li><strong>对策</strong>：查询实体时，顺便查询 <code>P21 (性别)</code>。<ul>
+<li>Q6581097 (male) -&gt; "他"</li>
+<li>Q6581072 (female) -&gt; "她"</li>
+<li>其他/未知 -&gt; "它" 或直呼其名。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3">3. 递归死循环</h3>
+<ul>
+<li><strong>现象</strong>：Bot 和 User 陷入了无限循环：“A的父亲是B”，“B的儿子是A”，“A的父亲是B”...</li>
+<li><strong>原因</strong>：图游走算法没有记录 <code>Visited_Nodes</code>（已访问节点）。</li>
+<li><strong>对策</strong>：维护一个全局 <code>Visited Set</code>。在选择下一跳实体时，排除掉最近 3 轮内已经聊过的实体。</li>
+</ul>
+<h3 id="4_1">4. 值的单位与格式化</h3>
+<ul>
+<li><strong>现象</strong>：User: "太阳有多重？" Bot: "1.989E30 公斤。"</li>
+<li><strong>问题</strong>：直接输出了科学计数法或原始数据，不符合人类直觉。</li>
+<li><strong>对策</strong>：<ul>
+<li>对于大数字：编写 formatter，转为“1989亿亿亿”或保持科学计数法但解释。</li>
+<li>对于日期：将 <code>+1893-12-26T00:00:00Z</code> 转为 <code>1893年12月26日</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5_1">5. 关系的方向性错误</h3>
+<ul>
+<li><strong>现象</strong>：User: "谁是周杰伦的父亲？" Bot: "海瑟薇·罗密欧。" (这是他女儿)</li>
+<li><strong>原因</strong>：没有分清属性的方向。比如 <code>P40 (子女)</code> 是从父母指向子女。如果 User 问父亲，你需要反向查询，或者查询 <code>P22 (父亲)</code>。</li>
+<li><strong>Rule of Thumb</strong>：在写查询模板时，务必在 WDQS 上先验证属性的方向性。Wikidata 的属性名通常暗示了方向（如 "Child of" vs "Father"），但有时会有反向属性。</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter4.html" class="nav-link prev">← Chapter 4：主题生成：从知识图谱采样“多样化主题池”</a><a href="chapter6.html" class="nav-link next">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

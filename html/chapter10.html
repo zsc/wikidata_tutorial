@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-10wikidata-cc0">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</h1>
+<h2 id="1">1. 开篇段落</h2>
+<p>在前面的章节中，我们已经掌握了如何挖掘数据并生成自然的中文对话。现在，假设你手里已经拥有了一个包含 10 万条多轮对话的 JSONL 文件，准备上传到 Hugging Face，或者交付给企业客户用于训练垂直领域的 LLM。</p>
+<p>在按下“发布”键之前，必须通过最后一关：<strong>许可（Licensing）与合规（Compliance）</strong>。</p>
+<p>很多开发者误以为“Wikidata 是开源的”就意味着“毫无风险”。实际上，Wikidata 的 <strong>CC0 (Creative Commons Zero)</strong> 协议虽然放弃了版权，但在数据合成（Data Synthesis）场景下，你仍然面临<strong>隐私权（GDPR）</strong>、<strong>人格权</strong>、<strong>协议传染（Viral Licensing）</strong>以及<strong>数据溯源</strong>的挑战。本章将从法律边界到工程实践，教你如何构建一个既合规又专业的对话数据集。</p>
+<h2 id="2">2. 文字论述</h2>
+<h3 id="21-cc0">2.1 深入理解 CC0：你拥有什么，不拥有什么</h3>
+<p>Wikidata 的核心数据采用 <strong>CC0 1.0 Universal</strong>。这是一种“放弃版权”的声明，意味着数据进入了<strong>公有领域（Public Domain）</strong>。</p>
+<p>| 维度 | Wikidata CC0 允许你做的 | CC0 <strong>不</strong>覆盖（你需要小心的） |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Wikidata CC0 允许你做的</th>
+<th style="text-align: left;">CC0 <strong>不</strong>覆盖（你需要小心的）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>复制与分发</strong></td>
+<td style="text-align: left;">可以自由复制整个数据库</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>修改</strong></td>
+<td style="text-align: left;">可以修改数据、格式、结构</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>商业用途</strong></td>
+<td style="text-align: left;">可以用于构建闭源商业软件</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>署名</strong></td>
+<td style="text-align: left;">法律上<strong>不强制</strong>署名（但强烈建议）</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>隐私/人格权</strong></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;"><strong>活人数据</strong>：受 GDPR 等隐私法保护。不能滥用名人肖像或隐私信息。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>商标/专利</strong></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;"><strong>品牌名称</strong>：可以用文字提到“Nike”，但不能通过生成数据假冒 Nike 官方客服。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>外部引用</strong></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;"><strong>引用的描述文本</strong>：如果某些描述来自 Wikipedia，则不再是 CC0。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-license-contamination">2.2 致命陷阱：协议传染 (License Contamination)</h3>
+<p>这是构建对话数据最容易踩的雷区。Wikidata 本身是 CC0，但 Wikidata 经常引用 <strong>Wikipedia（维基百科）</strong> 的内容。</p>
+<ul>
+<li><strong>Wikidata (数据)</strong> = <strong>CC0</strong> (随便用)</li>
+<li><strong>Wikipedia (文本)</strong> = <strong>CC-BY-SA 3.0/4.0</strong> (署名-相同方式共享)</li>
+</ul>
+<p><strong>场景复现</strong>：
+你在构造对话时，觉得只有三元组（实体-属性-值）太干巴，于是你读取了实体的 <code>schema:description</code>（描述）或者直接通过 API 抓取了对应 Wikipedia 页面的首段摘要（Abstract），拼接到 LLM 的 Prompt 中润色。</p>
+<p><strong>后果</strong>：
+一旦你的数据集混入了 CC-BY-SA 的文本，根据“SA (Share-Alike)”条款，你的整个衍生数据集（Derived Dataset）可能被迫要求<strong>必须开源</strong>，且必须沿用 CC-BY-SA 协议。这对商业闭源模型是致命的。</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+---------------------+</span><span class="c">      </span><span class="nb">+------------------------+</span>
+<span class="c">|   Wikidata Core     |      |   Wikipedia Snippets   |</span>
+<span class="c">| (Triples</span><span class="nt">,</span><span class="c"> Aliases)  |      | (Abstracts</span><span class="nt">,</span><span class="c"> Articles)  |</span>
+<span class="c">|       </span><span class="k">[</span><span class="c">CC0</span><span class="k">]</span><span class="c">         |      |     </span><span class="k">[</span><span class="c">CC</span><span class="nb">-</span><span class="c">BY</span><span class="nb">-</span><span class="c">SA</span><span class="k">]</span><span class="c">         |</span>
+<span class="nb">+----------+----------+</span><span class="c">      </span><span class="nb">+-----------+------------+</span>
+<span class="c">           |                             |</span>
+<span class="c">           v                             v</span>
+<span class="c">    </span><span class="nb">+------+-----------------------------+------+</span>
+<span class="c">    |          你的对话生成流水线               |</span>
+<span class="c">    | (Data Synthesis Pipeline)                 |</span>
+<span class="c">    </span><span class="nb">+--------------------+----------------------+</span>
+<span class="c">                         |</span>
+<span class="c">                         v</span>
+<span class="c">          </span><span class="nb">+-----------------------------+</span>
+<span class="c">          |      最终对话数据集          |</span>
+<span class="c">          |  </span><span class="k">[</span><span class="c">?</span><span class="k">]</span><span class="c"> 协议状态：被污染        |</span>
+<span class="c">          |  可能被迫变为 CC</span><span class="nb">-</span><span class="c">BY</span><span class="nb">-</span><span class="c">SA       |</span>
+<span class="c">          </span><span class="nb">+-----------------------------+</span>
+</code></pre></div>
+
+<p><strong>Rule-of-Thumb</strong>：</p>
+<blockquote>
+<p>商业数据集中，<strong>严禁</strong>直接混入 Wikipedia 的长文本摘要。仅使用 Wikidata 的 Label（标签）、Alias（别名）和 Property Value（属性值）。如果必须使用长文本，请使用 GPT 基于 CC0 的三元组重新生成（Rephrase），而不是直接复制粘贴。</p>
+</blockquote>
+<h3 id="23-provenance">2.3 工程实践：数据溯源 (Provenance) 设计</h3>
+<p>为了合规和调试，每条生成的对话都必须“有据可查”。不要只存对话文本，要存<strong>元数据</strong>。</p>
+<p>建议的 JSONL 结构：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;conv_1024&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;dialogue&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;爱因斯坦是哪一年拿的诺贝尔奖？&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;他在1921年获得了诺贝尔物理学奖。&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;provenance&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;source_dataset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wikidata&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CC0 1.0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;snapshot_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-11-20&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">&quot;entities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;qid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q937&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Albert Einstein&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;veracity_check&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;facts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;property_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P166&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;property_label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;award received&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;value_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q38104&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;value_label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Nobel Prize in Physics&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;qualifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;P585&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1921&quot;</span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;safety&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;is_living_person&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;sensitive_topics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="24-data-card">2.4 数据卡 (Data Card) 规范</h3>
+<p>发布数据集时，必须附带 <code>DATA_CARD.md</code>。这不仅是 Hugging Face 的要求，也是行业规范。针对 Wikidata 衍生数据，重点填写以下部分：</p>
+<h4 id="1-dataset-description">1. Dataset Description (数据集描述)</h4>
+<ul>
+<li><strong>Source</strong>: Wikidata Query Service.</li>
+<li><strong>Creation Method</strong>: SPARQL sampling + Template/LLM Phrasing.</li>
+<li><strong>Languages</strong>: Chinese (zh-cn).</li>
+</ul>
+<h4 id="2-licensing-information">2. Licensing Information (许可信息)</h4>
+<ul>
+<li><strong>Base License</strong>: CC0 1.0 Universal.</li>
+<li><strong>Disclaimer</strong>: "While the underlying data is CC0, the natural language phrasing is machine-generated. Users should verify facts against original QIDs."</li>
+</ul>
+<h4 id="3-personal-and-sensitive-information">3. Personal and Sensitive Information (个人敏感信息)</h4>
+<ul>
+<li><strong>Statement</strong>: "Contains public figures extracted from Wikidata."</li>
+<li><strong>GDPR Compliance</strong>: 说明你是否过滤了非公众人物（例如：过滤掉了虽然有 QID 但维基百科链接数 &lt; 3 的普通人）。</li>
+</ul>
+<h4 id="4-bias-and-limitations">4. Bias and Limitations (偏见与局限)</h4>
+<ul>
+<li><strong>Representation Bias</strong>: 承认 Wikidata 本身存在的欧美中心主义（Eurocentrism）或性别偏差。</li>
+<li><strong>Hallucinations</strong>: 警告自然语言生成部分可能产生非事实性的连接词。</li>
+</ul>
+<hr />
+<h2 id="3">3. 本章小结</h2>
+<ul>
+<li><strong>CC0 是基石</strong>：Wikidata 的三元组、标签、别名是安全的 CC0 资产，可商用。</li>
+<li><strong>隔离 CC-BY-SA</strong>：严防死守 Wikipedia 的摘要文本混入，除非你打算开源整个项目。</li>
+<li><strong>元数据护体</strong>：工程上必须保留 <code>QID</code>、<code>PID</code> 和快照时间，这是应对法律质疑和数据除错的最佳手段。</li>
+<li><strong>隐私红线</strong>：对于“在世人物”，应实施更严格的采样过滤策略（如仅限高知名度公众人物）。</li>
+<li><strong>透明度</strong>：通过详细的 Data Card 告知用户数据的来源、处理方法和潜在偏见。</li>
+</ul>
+<hr />
+<h2 id="4">4. 练习题</h2>
+<h3 id="_1">基础理解题</h3>
+<p><strong>练习 1：协议边界判断</strong></p>
+<blockquote>
+<p>你正在为一个旅游 App 开发问答机器人。你从 Wikidata 下载了所有“旅游景点”的坐标（P625）和名称（Label），并从 Wikimedia Commons 下载了该景点对应的图片（P18）。
+<strong>问题</strong>：你能在不检查每张图片协议的情况下，直接在 App 里展示这些图片并收费吗？</p>
+</blockquote>
+<details>
+<summary>点击展开答案</summary>
+<p><strong>答案：</strong> <strong>绝对不能。</strong>
+<strong>提示：</strong> 区分“引用图片的链接”和“图片文件本身”。
+<strong>解析：</strong></p>
+<ol>
+<li>Wikidata 中存储的“图片文件名”或“URL”这段文本是 CC0 的。</li>
+<li>但 URL 指向的<strong>图片文件本身</strong>存储在 Wikimedia Commons，其协议各不相同（从 CC0 到 CC-BY-SA 4.0 都有）。</li>
+<li>很多图片要求署名（Attribution），有些甚至禁止修改。如果你不检查每张图的 metadata 就商用，极大概率侵权。</li>
+</ol>
+</details>
+<p><strong>练习 2：敏感数据过滤</strong></p>
+<blockquote>
+<p>你要生成一个关于“家庭关系”的对话集。在编写 SPARQL 查询时，为了遵守 GDPR 并降低隐私风险，你应该添加什么过滤条件？请至少列出两条。</p>
+</blockquote>
+<details>
+<summary>点击展开答案</summary>
+<p><strong>答案：</strong></p>
+<ol>
+<li><strong>排除在世人物</strong>：过滤掉没有 <code>P570</code>（死亡日期）的实体，或者计算年龄排除未成年人。</li>
+<li><strong>关注度过滤</strong>：过滤掉 <code>wikibase:sitelinks</code>（维基百科页面链接数）较低的实体。例如 <code>FILTER(?sitelinks &gt; 5)</code>。这样可以确保只包含“公众人物”，排除只被少量记录的普通人。</li>
+</ol>
+</details>
+<p><strong>练习 3：溯源字段设计</strong></p>
+<blockquote>
+<p>为什么在保存对话数据时，建议保存 <code>snapshot_date</code>（快照日期）？</p>
+</blockquote>
+<details>
+<summary>点击展开答案</summary>
+<p><strong>答案：</strong>
+Wikidata 是动态更新的。</p>
+<ol>
+<li><strong>事实变更</strong>：某国总统今天换届了，如果你生成的数据说的是旧总统，有了快照日期，你就可以解释“这是基于 2023 年的数据生成的”，而不是模型出错了。</li>
+<li><strong>ID 复用/合并</strong>：极少数情况下 QID 会被重定向或合并，快照日期有助于历史回溯。</li>
+</ol>
+</details>
+<h3 id="_2">进阶挑战题</h3>
+<p><strong>练习 4：商业化清洗场景</strong></p>
+<blockquote>
+<p>某初创公司抓取了 Wikidata 所有数据，用 LLM 改写成了一本电子书《世界百科全书》并以 9.9 元出售。</p>
+<ol>
+<li>如果他们只用了三元组（QID/PID），合法吗？</li>
+<li>如果他们在 Prompt 里放入了 Wikidata 的 <code>description</code> 字段（其中部分由机器从 Wikipedia 自动导入），且没有人工审核，风险在哪里？</li>
+</ol>
+</blockquote>
+<details>
+<summary>点击展开答案</summary>
+<p><strong>答案：</strong></p>
+<ol>
+<li><strong>合法</strong>。三元组是 CC0，改写后的文本由 LLM 生成，版权归属（视当地法律）通常属于生成者或公有领域，但不侵犯 Wikidata 版权。</li>
+<li><strong>风险极高</strong>。Wikidata 的 <code>description</code> 字段虽然大部分是短语，但有时会包含从 Wikipedia 导入的长句。如果这些描述构成了“独创性表达”且属于 CC-BY-SA，那么电子书可能违反了 Share-Alike 条款（即电子书必须免费/开源）。虽然概率较低（因为 description 通常很短），但在法律合规审查中这是一个瑕疵。</li>
+</ol>
+</details>
+<p><strong>练习 5：编写审计脚本</strong></p>
+<blockquote>
+<p>编写一个伪代码或 Python 函数逻辑，用于检查你的输出数据集是否意外包含了“受保护的品牌词”作为误导性实体。
+<em>背景：Wikidata 中 Q1（宇宙）到 Q999999 都有。Q201445 是 "Nike"（公司）。</em></p>
+</blockquote>
+<details>
+<summary>点击展开答案</summary>
+<p><strong>提示：</strong> 关注 P31 (instance of) 和 P1454 (legal form)。</p>
+<p><strong>参考逻辑：</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">safety_check</span><span class="p">(</span><span class="n">entity_data</span><span class="p">):</span>
+    <span class="c1"># 1. 检查是否是商业组织</span>
+    <span class="c1"># P31 (是) -&gt; Q4830453 (商业企业) 或 Q6881511 (企业)</span>
+    <span class="n">is_business</span> <span class="o">=</span> <span class="n">check_property</span><span class="p">(</span><span class="n">entity_data</span><span class="p">,</span> <span class="s2">&quot;P31&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q4830453&quot;</span><span class="p">,</span> <span class="s2">&quot;Q6881511&quot;</span><span class="p">])</span>
+
+    <span class="c1"># 2. 检查意图</span>
+    <span class="c1"># 如果生成的对话是 &quot;我是 Nike 的客服，请问有什么帮您？&quot; -&gt; 违规（冒充）</span>
+    <span class="c1"># 如果生成的对话是 &quot;Nike 是一家成立在俄勒冈州的公司&quot; -&gt; 合规（陈述事实）</span>
+
+    <span class="k">if</span> <span class="n">is_business</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Entity </span><span class="si">{</span><span class="n">entity_data</span><span class="p">[</span><span class="s1">&#39;qid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> is a business.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ensure dialogue templates are strictly 3rd-person descriptive.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Do NOT use 1st-person &#39;I am...&#39; templates for this entity.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>解析：</strong> CC0 允许你谈论商标持有人，但不允许你<strong>冒充</strong>商标持有人或在商业活动中引起混淆。</p>
+</details>
+<p><strong>练习 6：Data Card 的伦理声明</strong></p>
+<blockquote>
+<p>你的数据集包含关于“药物（Q12140）”及其“副作用（P1909）”的对话。
+请为 <code>DATA_CARD.md</code> 写一段“免责声明（Disclaimer）”和“预期用途（Intended Use）”。</p>
+</blockquote>
+<details>
+<summary>点击展开答案</summary>
+<p><strong>参考答案：</strong></p>
+<ul>
+<li><strong>Disclaimer</strong>: "This dataset contains medical information derived from Wikidata. It is for <strong>informational and NLP research purposes only</strong> and does NOT constitute medical advice. Wikidata is a community-edited database and may contain errors. Do not use this model for clinical decision-making."</li>
+<li><strong>Intended Use</strong>: "Evaluating the ability of LLMs to structure biomedical knowledge graphs; Generating synthetic training data for entity extraction."</li>
+<li><strong>Out-of-Scope Use</strong>: "Building medical chatbots for patients without human-in-the-loop verification."</li>
+</ul>
+</details>
+<hr />
+<h2 id="5-gotchas">5. 常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1-ghost-references">🔴 陷阱 1：幽灵引用 (Ghost References)</h3>
+<p><strong>现象</strong>：SPARQL 查询时未过滤 <code>wikibase:rank</code>。
+<strong>问题</strong>：Wikidata 保留了历史数据。例如，某城市的人口数据可能有 1950年、1980年、2020年三条。如果你随机采样，可能会生成“北京的人口是 200 万”（这是 1949 年的数据）。
+<strong>对策</strong>：总是优先选择 <code>PreferredRank</code>，或者在查询时按 <code>P585</code> (point in time) 倒序排列取最新值。</p>
+<h3 id="2-id">🔴 陷阱 2：外部 ID 的反向抓取</h3>
+<p><strong>现象</strong>：Wikidata 包含大量 External IDs（如 IMDb ID, Twitter ID）。
+<strong>问题</strong>：虽然 ID 本身是 CC0，但开发者写脚本去遍历这些 ID 爬取 IMDb 或 Twitter 的内容，并将这些内容混入数据集。
+<strong>后果</strong>：这直接违反了 IMDb/Twitter 的 ToS（服务条款），法律风险远高于 Wikidata 本身。
+<strong>对策</strong>：仅使用 Wikidata 内的数据。如果需要外部数据，必须单独处理其合规性，不要以为有了 Wikidata ID 就是“尚方宝剑”。</p>
+<h3 id="3label">🔴 陷阱 3：Label 的语言回退误导</h3>
+<p><strong>现象</strong>：使用 <code>SERVICE wikibase:label { bd:serviceParam wikibase:language "zh,en". }</code>
+<strong>问题</strong>：如果中文 Label 缺失，WDQS 会自动回退到英文。如果你的生成模板是中文的，最后会生成中英夹杂的句子：“这座建筑位于 New York City。”
+<strong>后果</strong>：虽然合规，但数据质量低劣，后续清洗困难。
+<strong>对策</strong>：在代码层面明确检测 Label 的语言属性。如果获取到的是英文 Label，要么调用翻译 API（需注意翻译 API 的许可），要么丢弃该条数据。</p>
+<h3 id="4-right-of-publicity">🔴 陷阱 4：忽视 "人格权" (Right of Publicity)</h3>
+<p><strong>现象</strong>：生成了大量虚拟对话，模拟某位已故名人（如玛丽莲·梦露）推荐某款现代商品。
+<strong>问题</strong>：虽然照片可能不再受版权保护，但许多州/国家保护名人的“形象权”或“人格权”，禁止未经授权的商业代言关联。
+<strong>对策</strong>：在数据生成 Prompt 中添加负面约束（Negative Constraints），禁止生成名人推荐商品类的内容，仅限于传记式问答。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter9.html" class="nav-link prev">← Chapter 9：多语言与中文缺失处理</a><a href="chapter11.html" class="nav-link next">Chapter 11：工程化实践：从脚本到生产级流水线 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

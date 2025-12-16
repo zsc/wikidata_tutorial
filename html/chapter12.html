@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 12：查询模板库与速查表 (Appendices)</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-12-appendices">Chapter 12：查询模板库与速查表 (Appendices)</h1>
+<h2 id="1">1. 本章概览</h2>
+<p>在构建对话数据流水线时，SPARQL 查询是获取原材料的第一步。很多时候，你不需要精通 SPARQL 的每一个语法细节，只需要拥有一个<strong>高质量的代码片段库</strong>（Snippets）。</p>
+<p>本章不仅仅是简单的语法参考，而是针对<strong>对话生成场景</strong>整理的“武器库”。我们重点解决了以下工程难题：</p>
+<ul>
+<li><strong>查全率</strong>：如何找到描述一个实体的所有关键属性？</li>
+<li><strong>多样性</strong>：如何避免只抓取到“头部热门数据”？</li>
+<li><strong>精准度</strong>：如何利用限定符（Qualifiers）生成“在2008年获得奥斯卡奖”这样精确的句子，而不是笼统的“获得过奥斯卡”。</li>
+</ul>
+<p><strong>使用建议</strong>：
+建议将本章提到的 SPARQL 模板保存为 <code>.rq</code> 文件，或整理进你的 Python <code>QueryBuilder</code> 类中。</p>
+<hr />
+<h2 id="2-standard-prefixes">2. 基础配置与前缀 (Standard Prefixes)</h2>
+<p>在 Python 脚本（如 <code>SPARQLWrapper</code>）中发送请求时，必须包含这些前缀。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">PREFIX</span> <span class="nn">wd</span><span class="p">:</span> <span class="nl">&lt;http://www.wikidata.org/entity/&gt;</span>          <span class="c"># 实体 (Item), e.g., wd:Q5</span>
+<span class="k">PREFIX</span> <span class="nn">wdt</span><span class="p">:</span> <span class="nl">&lt;http://www.wikidata.org/prop/direct/&gt;</span>    <span class="c"># 真值属性 (Truthy), e.g., wdt:P31</span>
+<span class="k">PREFIX</span> <span class="nn">wikibase</span><span class="p">:</span> <span class="nl">&lt;http://wikiba.se/ontology#&gt;</span>         <span class="c"># 维基基础本体</span>
+<span class="k">PREFIX</span> <span class="nn">p</span><span class="p">:</span> <span class="nl">&lt;http://www.wikidata.org/prop/&gt;</span>             <span class="c"># 声明节点 (Statement Node)</span>
+<span class="k">PREFIX</span> <span class="nn">ps</span><span class="p">:</span> <span class="nl">&lt;http://www.wikidata.org/prop/statement/&gt;</span>  <span class="c"># 声明的具体值</span>
+<span class="k">PREFIX</span> <span class="nn">pq</span><span class="p">:</span> <span class="nl">&lt;http://www.wikidata.org/prop/qualifier/&gt;</span>  <span class="c"># 限定符 (Qualifier)</span>
+<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>  <span class="c"># 标签用</span>
+<span class="k">PREFIX</span> <span class="nn">bd</span><span class="p">:</span> <span class="nl">&lt;http://www.bigdata.com/rdf#&gt;</span>              <span class="c"># BigData 扩展 (Label Service)</span>
+<span class="k">PREFIX</span> <span class="nn">schema</span><span class="p">:</span> <span class="nl">&lt;http://schema.org/&gt;</span>                   <span class="c"># 用于描述/别名</span>
+<span class="k">PREFIX</span> <span class="nn">skos</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2004/02/skos/core#&gt;</span>   <span class="c"># 用于别名 (altLabel)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="3-id-the-big-map">3. ID 速查表 (The "Big Map")</h2>
+<p>在生成对话时，你需要根据 PID 的数据类型来决定生成的句式（例如：时间类型用“发生在...”，地点类型用“位于...”）。</p>
+<h3 id="31-core-metadata">3.1 核心元数据 (Core Metadata)</h3>
+<p><em>用于过滤数据质量和基本类型。</em></p>
+<p>| 属性/类型 | ID | 说明 | 对话生成用途 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">属性/类型</th>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">对话生成用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Instance of</strong></td>
+<td style="text-align: left;"><code>P31</code></td>
+<td style="text-align: left;">实例归属</td>
+<td style="text-align: left;">核心过滤器，决定话题是“人”还是“山”。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Subclass of</strong></td>
+<td style="text-align: left;"><code>P279</code></td>
+<td style="text-align: left;">子类归属</td>
+<td style="text-align: left;">用于扩充话题，如 <code>P279* wd:Q11424</code> (所有类型的电影)。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Image</strong></td>
+<td style="text-align: left;"><code>P18</code></td>
+<td style="text-align: left;">图像</td>
+<td style="text-align: left;">多模态对话素材。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sitelinks</strong></td>
+<td style="text-align: left;"><code>wikibase:sitelinks</code></td>
+<td style="text-align: left;">维基链接数</td>
+<td style="text-align: left;"><strong>极其重要</strong>，用于衡量“热度”，过滤冷门噪声。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Disambiguation</strong></td>
+<td style="text-align: left;"><code>Q4167410</code></td>
+<td style="text-align: left;">消歧页</td>
+<td style="text-align: left;"><strong>黑名单</strong>，必须在 <code>MINUS { ?item wdt:P31 wd:Q4167410 }</code> 中排除。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-people-biographies">3.2 人物与生物 (People &amp; Biographies)</h3>
+<p><em>用于生成传记类、八卦类、关系类对话。</em></p>
+<p>| 属性名 | ID | 数据类型 | 典型值示例 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">属性名</th>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">数据类型</th>
+<th style="text-align: left;">典型值示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>性别</strong></td>
+<td style="text-align: left;"><code>P21</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">男性/女性/非二元</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出生日期</strong></td>
+<td style="text-align: left;"><code>P569</code></td>
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">1980-01-01</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>死亡日期</strong></td>
+<td style="text-align: left;"><code>P570</code></td>
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">2023-10-27</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出生地</strong></td>
+<td style="text-align: left;"><code>P19</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">纽约</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国籍</strong></td>
+<td style="text-align: left;"><code>P27</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">中国</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>职业</strong></td>
+<td style="text-align: left;"><code>P106</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">政治家、演员</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>配偶</strong></td>
+<td style="text-align: left;"><code>P26</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(另一个人物QID)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>父亲/母亲</strong></td>
+<td style="text-align: left;"><code>P22</code>/<code>P25</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(父母QID)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>获知奖项</strong></td>
+<td style="text-align: left;"><code>P166</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">诺贝尔物理学奖</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>学历/母校</strong></td>
+<td style="text-align: left;"><code>P69</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">哈佛大学</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-geography-places">3.3 地理与行政区 (Geography &amp; Places)</h3>
+<p><em>用于生成旅游助手、地理问答对话。</em></p>
+<p>| 属性名 | ID | 数据类型 | 典型值示例 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">属性名</th>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">数据类型</th>
+<th style="text-align: left;">典型值示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>所属国家</strong></td>
+<td style="text-align: left;"><code>P17</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">必须校验的属性，避免“巴黎在中国”的错误生成。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>坐标</strong></td>
+<td style="text-align: left;"><code>P625</code></td>
+<td style="text-align: left;">GlobeCoord</td>
+<td style="text-align: left;">Point(121.4 31.2)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人口</strong></td>
+<td style="text-align: left;"><code>P1082</code></td>
+<td style="text-align: left;">Quantity</td>
+<td style="text-align: left;">24,000,000</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>面积</strong></td>
+<td style="text-align: left;"><code>P2046</code></td>
+<td style="text-align: left;">Quantity</td>
+<td style="text-align: left;">6000 km²</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>下辖地区</strong></td>
+<td style="text-align: left;"><code>P150</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(包含的行政区)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>毗邻</strong></td>
+<td style="text-align: left;"><code>P47</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(接壤的国家/省份)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>最高点</strong></td>
+<td style="text-align: left;"><code>P610</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">珠穆朗玛峰</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-arts-media-works">3.4 文化与作品 (Arts, Media &amp; Works)</h3>
+<p><em>用于生成推荐系统、影评、书籍讨论对话。</em></p>
+<p>| 属性名 | ID | 数据类型 | 典型值示例 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">属性名</th>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">数据类型</th>
+<th style="text-align: left;">典型值示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>创作者</strong></td>
+<td style="text-align: left;"><code>P170</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(艺术家)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>作者</strong></td>
+<td style="text-align: left;"><code>P50</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(作家)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>导演</strong></td>
+<td style="text-align: left;"><code>P57</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(导演)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>演员成员</strong></td>
+<td style="text-align: left;"><code>P161</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">(演员列表)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出版日期</strong></td>
+<td style="text-align: left;"><code>P577</code></td>
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">2000-01-01</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>类型(Genre)</strong></td>
+<td style="text-align: left;"><code>P136</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">科幻、流行音乐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>片长</strong></td>
+<td style="text-align: left;"><code>P2047</code></td>
+<td style="text-align: left;">Quantity</td>
+<td style="text-align: left;">120 分钟</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>制作商</strong></td>
+<td style="text-align: left;"><code>P272</code></td>
+<td style="text-align: left;">Item</td>
+<td style="text-align: left;">华纳兄弟</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-scenario-based-templates">4. 场景化查询模板库 (Scenario-Based Templates)</h2>
+<p>这里将查询按“对话功能”分类。你可以直接复制使用。</p>
+<h3 id="a-profile-generation">场景 A：生成“实体百科介绍” (Profile Generation)</h3>
+<p><strong>目标</strong>：获取关于一个实体的全方位信息，用于生成“介绍一下 X”的回复。
+<strong>策略</strong>：一次性拉取多个属性，使用 <code>OPTIONAL</code> 防止因某个属性缺失导致整条数据被丢弃。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?itemLabel</span> <span class="nv">?desc</span> <span class="nv">?birthDate</span> <span class="nv">?birthPlaceLabel</span> <span class="nv">?jobLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="c"># 1. 定义范围：中国作家，且按热度排序前 100</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">;</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P106</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q36180</span><span class="p">;</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P27</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q148</span><span class="p">.</span>
+  <span class="nv">?item</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">sitelinks</span> <span class="nv">?sitelinks</span><span class="p">.</span>
+
+  <span class="c"># 2. 可选属性：即使没有这些属性，也返回实体</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P569</span> <span class="nv">?birthDate</span><span class="p">.</span> <span class="p">}</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P19</span> <span class="nv">?birthPlace</span><span class="p">.</span> <span class="p">}</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P106</span> <span class="nv">?job</span><span class="p">.</span> <span class="p">}</span>
+
+  <span class="c"># 3. 获取描述和别名</span>
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">schema</span><span class="p">:</span><span class="nt">description</span> <span class="nv">?desc</span><span class="p">.</span> <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?desc</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;zh&quot;</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="c"># 4. 标签服务</span>
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> 
+    <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> 
+    <span class="nv">?item</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?itemLabel</span><span class="p">.</span>
+    <span class="nv">?birthPlace</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?birthPlaceLabel</span><span class="p">.</span>
+    <span class="nv">?job</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?jobLabel</span><span class="p">.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">ORDER BY</span> <span class="k">DESC</span><span class="p">(</span><span class="nv">?sitelinks</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mi">100</span>
+</code></pre></div>
+
+<h3 id="b-list-recommendation">场景 B：生成“列表与推荐” (List &amp; Recommendation)</h3>
+<p><strong>目标</strong>：生成类似“列举几部张艺谋导演的电影”的数据。
+<strong>关键点</strong>：从“导演”实体反向查询“电影”。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?directorLabel</span> <span class="nv">?movieLabel</span> <span class="nv">?year</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="c"># 绑定导演：张艺谋 (Q55430)</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nn">wd</span><span class="p">:</span><span class="nt">Q55430</span> <span class="k">AS</span> <span class="nv">?director</span><span class="p">)</span>
+
+  <span class="c"># 反向查询：找电影，其 P57 (导演) 是张艺谋</span>
+  <span class="nv">?movie</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q11424</span><span class="p">;</span>
+         <span class="nn">wdt</span><span class="p">:</span><span class="nt">P57</span> <span class="nv">?director</span><span class="p">;</span>
+         <span class="nn">wdt</span><span class="p">:</span><span class="nt">P577</span> <span class="nv">?pubDate</span><span class="p">.</span>
+
+  <span class="c"># 提取年份</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">YEAR</span><span class="p">(</span><span class="nv">?pubDate</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?year</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">ORDER BY</span> <span class="k">DESC</span><span class="p">(</span><span class="nv">?year</span><span class="p">)</span> <span class="c"># 按年份倒序</span>
+<span class="k">LIMIT</span> <span class="mi">20</span>
+</code></pre></div>
+
+<h3 id="c-qualifiers-context">场景 C：生成“复杂关系与限定符” (Qualifiers &amp; Context)</h3>
+<p><strong>目标</strong>：生成包含时间状语的复杂句，如“奥巴马从2009年到2017年担任美国总统”。
+<strong>关键点</strong>：使用 <code>p:</code> 进入声明节点，使用 <code>pq:</code> 提取时间。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?personLabel</span> <span class="nv">?positionLabel</span> <span class="nv">?startTime</span> <span class="nv">?endTime</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="c"># 某人拥有 P39 (担任职位) 的声明</span>
+  <span class="nv">?person</span> <span class="nn">p</span><span class="p">:</span><span class="nt">P39</span> <span class="nv">?statement</span><span class="p">.</span>
+
+  <span class="c"># 声明的值是 美国总统 (Q11696)</span>
+  <span class="nv">?statement</span> <span class="nn">ps</span><span class="p">:</span><span class="nt">P39</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q11696</span><span class="p">;</span>
+             <span class="nn">pq</span><span class="p">:</span><span class="nt">P580</span> <span class="nv">?startTime</span><span class="p">.</span>  <span class="c"># 限定符：开始时间</span>
+
+  <span class="k">OPTIONAL</span> <span class="p">{</span> <span class="nv">?statement</span> <span class="nn">pq</span><span class="p">:</span><span class="nt">P582</span> <span class="nv">?endTime</span><span class="p">.</span> <span class="p">}</span> <span class="c"># 限定符：结束时间 (可能还在任)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">50</span>
+</code></pre></div>
+
+<h3 id="d-multi-hop-reasoning">场景 D：生成“多跳推理与对比” (Multi-hop Reasoning)</h3>
+<p><strong>目标</strong>：生成“A的父亲是谁？”或者“A和B谁更老？”的数据对。
+<strong>关键点</strong>：在一个查询中引用两个实体或两层关系。</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 查询：祖孙三代关系 (用于生成亲属关系推理题)</span>
+<span class="k">SELECT</span> <span class="nv">?grandchildLabel</span> <span class="nv">?childLabel</span> <span class="nv">?grandparentLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?grandchild</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">;</span>
+              <span class="nn">wdt</span><span class="p">:</span><span class="nt">P22</span> <span class="nv">?child</span><span class="p">.</span>      <span class="c"># child 是 grandchild 的父亲</span>
+  <span class="nv">?child</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">;</span>
+         <span class="nn">wdt</span><span class="p">:</span><span class="nt">P22</span> <span class="nv">?grandparent</span><span class="p">.</span>     <span class="c"># grandparent 是 child 的父亲</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">50</span>
+</code></pre></div>
+
+<hr />
+<h2 id="5-advanced-sampling-strategies">5. 高级采样技巧 (Advanced Sampling Strategies)</h2>
+<p>为了让对话数据集具有<strong>多样性</strong>，避免偏见，请使用以下技巧。</p>
+<h3 id="51-md5-hash">5.1 随机采样的正确姿势 (MD5 Hash)</h3>
+<p>Wikidata 的 <code>RAND()</code> 经常超时。使用 ID 哈希法可以实现<strong>确定性随机</strong>（Deterministic Randomness），方便复现。</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 随机抽取 1/100 的人类数据</span>
+<span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?itemLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">.</span>
+
+  <span class="c"># 将 QID 转换为字符串并哈希</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">STR</span><span class="p">(</span><span class="nv">?item</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?str_id</span><span class="p">)</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">MD5</span><span class="p">(</span><span class="nv">?str_id</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?hash</span><span class="p">)</span>
+
+  <span class="c"># 筛选哈希值以 &quot;a5&quot; 开头的实体 (16*16 = 256, 约 1/256 的采样率)</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">STRSTARTS</span><span class="p">(</span><span class="nv">?hash</span><span class="p">,</span> <span class="s">&quot;a5&quot;</span><span class="p">))</span> 
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">100</span>
+</code></pre></div>
+
+<h3 id="52-geo-diversity">5.2 强制地域多样性 (Geo-Diversity)</h3>
+<p>避免数据集中全是欧美国家。使用 <code>VALUES</code> 轮询不同大洲或国家。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?countryLabel</span> <span class="nv">?cityLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="c"># 强制指定要采样的国家列表：中国、尼日利亚、巴西、法国</span>
+  <span class="k">VALUES</span> <span class="nv">?country</span> <span class="p">{</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q148</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q1033</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q155</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q142</span> <span class="p">}</span>
+
+  <span class="nv">?city</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q515</span><span class="p">;</span>    <span class="c"># 是城市</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P17</span> <span class="nv">?country</span><span class="p">.</span>   <span class="c"># 属于上述国家之一</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">200</span>
+</code></pre></div>
+
+<h3 id="53-quality-filters">5.3 过滤“垃圾”数据 (Quality Filters)</h3>
+<p>在造数据前，先在 SPARQL 层过滤掉质量差的实体。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FILTER</span> <span class="nf">NOT EXISTS</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q4167410</span> <span class="p">}</span> <span class="c"># 排除消歧页</span>
+<span class="k">FILTER</span> <span class="nf">NOT EXISTS</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q13406463</span> <span class="p">}</span> <span class="c"># 排除“维基媒体列表”</span>
+<span class="k">FILTER</span><span class="p">(</span><span class="nf">BOUND</span><span class="p">(</span><span class="nv">?itemLabel</span><span class="p">))</span> <span class="c"># 排除没有 Label 的</span>
+<span class="k">FILTER</span><span class="p">(</span><span class="o">!</span><span class="nf">REGEX</span><span class="p">(</span><span class="nf">STR</span><span class="p">(</span><span class="nv">?itemLabel</span><span class="p">),</span> <span class="s">&quot;^Q[0-9]+$&quot;</span><span class="p">))</span> <span class="c"># 排除 Label 等于 QID 的</span>
+</code></pre></div>
+
+<hr />
+<h2 id="6-troubleshooting-gotchas">6. 常见错误与排障 (Troubleshooting &amp; Gotchas)</h2>
+<h3 id="1_1">错误 1：查询结果为空，但明明有数据</h3>
+<ul>
+<li><strong>原因 A</strong>：你使用了 <code>wdt:Pxxx</code>，但该数据包含限定符，有时需要检查是否有特殊 rank（虽然少见，但 wdt 只指向 best rank）。</li>
+<li><strong>原因 B</strong>：<strong>语言回退失败</strong>。如果实体没有中文标签，且你只指定了 <code>"zh"</code>，Label Service 可能返回空行或 QID。<ul>
+<li><em>Fix</em>：始终使用 <code>"zh,en,fr"</code> 等多语言回退，或者在 SELECT 变量中显式包含 <code>?item</code> (QID)，以便调试。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2query-timeout-500502">错误 2：<code>Query Timeout</code> (500/502)</h3>
+<ul>
+<li><strong>原因</strong>：扫描范围太大。<ul>
+<li><em>Bad</em>: <code>?item wdt:P31 wd:Q5</code> (数千万人)。</li>
+<li><em>Fix</em>: 必须加次级索引，如 <code>?item wdt:P31 wd:Q5; wdt:P27 wd:Q148</code> (中国用户)。</li>
+</ul>
+</li>
+<li><strong>技巧</strong>：如果你必须跑全量，请使用 <code>OFFSET</code> 分页，或者使用上面的 <strong>MD5 分片</strong> 跑多次。</li>
+</ul>
+<h3 id="3-cartesian-product">错误 3：多值爆炸 (Cartesian Product)</h3>
+<ul>
+<li><strong>现象</strong>：一个人有 3 个职业，2 个国籍。查询返回了 3*2=6 行数据。</li>
+<li><strong>后果</strong>：生成对话时会重复：“他是演员，是中国人。他是作家，是中国人...”。</li>
+<li><strong>Fix</strong>：在 SPARQL 中使用 <code>GROUP_CONCAT</code> 聚合。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c"># 将多个职业合并成一个字符串: &quot;演员, 作家, 导演&quot;</span>
+<span class="k">SELECT</span> <span class="nv">?itemLabel</span> <span class="p">(</span><span class="nf">GROUP_CONCAT</span><span class="p">(</span><span class="nv">?jobLabel</span><span class="p">;</span> <span class="nf">separator</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?jobs</span><span class="p">)</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">;</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P106</span> <span class="nv">?job</span><span class="p">.</span>
+  <span class="nv">?job</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?jobLabel</span><span class="p">.</span> <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?jobLabel</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;zh&quot;</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">GROUP BY</span> <span class="nv">?itemLabel</span>
+</code></pre></div>
+
+<hr />
+<h2 id="7-exercises">7. 练习题 (Exercises)</h2>
+<h3 id="_1">基础题</h3>
+<p><strong>练习 1：化学元素周期表</strong>
+查询所有“化学元素”（P31: Q11344），列出它们的“符号”（P246）和“原子序数”（P1086）。</p>
+<details>
+<summary>点击查看答案</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?elementLabel</span> <span class="nv">?symbol</span> <span class="nv">?atomicNumber</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?element</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q11344</span><span class="p">;</span>
+           <span class="nn">wdt</span><span class="p">:</span><span class="nt">P246</span> <span class="nv">?symbol</span><span class="p">;</span>
+           <span class="nn">wdt</span><span class="p">:</span><span class="nt">P1086</span> <span class="nv">?atomicNumber</span><span class="p">.</span>
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">ORDER BY</span> <span class="nv">?atomicNumber</span>
+</code></pre></div>
+
+</details>
+<h3 id="_2">进阶题</h3>
+<p><strong>练习 2：查找“同时代”的人</strong>
+编写一个查询，找出所有和“爱因斯坦”（Q937）出生在同一年（P569），且也是“物理学家”（P106: Q169470）的人。
+<em>提示：使用 <code>YEAR(?date)</code> 函数提取年份。</em></p>
+<details>
+<summary>点击查看答案</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?scientistLabel</span> <span class="nv">?birthDate</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nn">wd</span><span class="p">:</span><span class="nt">Q937</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P569</span> <span class="nv">?einsteinBirth</span><span class="p">.</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">YEAR</span><span class="p">(</span><span class="nv">?einsteinBirth</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?targetYear</span><span class="p">)</span>
+
+  <span class="nv">?scientist</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P106</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q169470</span><span class="p">;</span>
+             <span class="nn">wdt</span><span class="p">:</span><span class="nt">P569</span> <span class="nv">?birthDate</span><span class="p">.</span>
+
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">YEAR</span><span class="p">(</span><span class="nv">?birthDate</span><span class="p">)</span> <span class="o">=</span> <span class="nv">?targetYear</span><span class="p">)</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nv">?scientist</span> <span class="o">!=</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q937</span><span class="p">)</span> <span class="c"># 排除爱因斯坦自己</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</details>
+<p><strong>练习 3：数据清洗挑战</strong>
+查询“世界上最高的 10 座建筑”，但必须排除掉“规划中”或“未建成”的项目。
+<em>提示：通常可以通过检查 <code>P580</code> (开始时间) 或 <code>P571</code> (成立/创建时间) 是否存在，或者检查是否有 <code>P582</code> (结束/拆除) 来做简单过滤。更严格的方法是检查 <code>P31</code> 的子类是否包含“未建成建筑”。这里尝试简单的存在性检查。</em></p>
+<details>
+<summary>点击查看答案</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?building</span> <span class="nv">?buildingLabel</span> <span class="nv">?height</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?building</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q41176</span><span class="p">;</span> <span class="c"># 建筑或其子类</span>
+            <span class="nn">wdt</span><span class="p">:</span><span class="nt">P2048</span> <span class="nv">?height</span><span class="p">.</span>           <span class="c"># 高度</span>
+
+  <span class="c"># 必须有建成时间，作为“已建成”的一个弱代理</span>
+  <span class="k">FILTER</span> <span class="nf">EXISTS</span> <span class="p">{</span> <span class="nv">?building</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P571</span> <span class="nv">?date</span> <span class="p">}</span> 
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">ORDER BY</span> <span class="k">DESC</span><span class="p">(</span><span class="nv">?height</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mi">10</span>
+</code></pre></div>
+
+</details>
+<hr />
+<p><a href="index.html">回到目录</a> | <a href="chapter11.html">上一章：工程化实践</a></p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter11.html" class="nav-link prev">← Chapter 11：工程化实践：从脚本到生产级流水线</a><a href="CLAUDE.html" class="nav-link next">Untitled →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

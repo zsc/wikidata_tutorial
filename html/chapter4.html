@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 4：主题生成：从知识图谱采样“多样化主题池”</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-4">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</h1>
+<p>在构建对话数据（尤其是用于训练或评测 LLM 的数据）时，最致命的问题往往不是“数据量不够”，而是<strong>“数据分布偏差”</strong>。</p>
+<p>如果你只是随机爬取 Wiki，你可能会得到 80% 的欧美流行文化（Head），15% 的二战历史，以及 5% 的其他内容。这种数据训练出的模型，在回答“非洲有哪些著名诗人”或“唐朝的税收制度”时会显得捉襟见肘。</p>
+<p>本章将带你构建一个工业级的<strong>主题采样器（Topic Sampler）</strong>。我们将超越简单的 <code>SELECT *</code>，学习如何设计<strong>分层采样（Stratified Sampling）</strong>策略，在热度、地域、时间、领域等多个维度上实现数据的精确控制。</p>
+<h2 id="41">4.1 本章学习目标</h2>
+<ol>
+<li><strong>构建主题分类树</strong>：利用 Wikidata 的层级结构（Ontology），将业务需求映射为精确的查询路径。</li>
+<li><strong>热度分层（Head/Tail）</strong>：量化实体“冷热度”，确保数据集既懂常识（Head）又有深度（Tail）。</li>
+<li><strong>多维均衡采样</strong>：通过 SPARQL 动态参数，强制平衡地域（亚非拉 vs 欧美）、时间（古代 vs 现代）和性别/类型分布。</li>
+<li><strong>清洗与去重</strong>：识别并剔除消歧义页、列表页、同质化数据及敏感内容。</li>
+<li><strong>工程化采样方案</strong>：学习如何利用哈希随机（Hash Randomization）解决大数据集采样超时的问题。</li>
+</ol>
+<hr />
+<h2 id="42">4.2 核心概念：主题空间的设计</h2>
+<p>在写代码之前，我们需要定义“主题空间”。在 Wikidata 中，这通常意味着找到正确的 <strong>根节点（Root QID）</strong> 和 <strong>属性路径（Property Path）</strong>。</p>
+<h3 id="421">4.2.1 领域映射逻辑</h3>
+<p>不要直接平铺式地抓取。建议维护一个类似 YAML 的配置文件，定义你的采样目标：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># topic_schema.yaml 示例</span>
+<span class="nt">domains</span><span class="p">:</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;世界文学&quot;</span>
+<span class="w">    </span><span class="nt">root_qid</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Q8261&quot;</span><span class="w"> </span><span class="c1"># Novel (小说)</span>
+<span class="w">    </span><span class="c1"># 策略：不仅要小说，还要文学作品(Q7725634)的子类</span>
+<span class="w">    </span><span class="nt">path_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wdt:P31/wdt:P279*&quot;</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">sampling_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w"> </span><span class="c1"># 占总数据集 30%</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;知名企业&quot;</span>
+<span class="w">    </span><span class="nt">root_qid</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Q4830453&quot;</span><span class="w"> </span><span class="c1"># Business Enterprise</span>
+<span class="w">    </span><span class="nt">path_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wdt:P31/wdt:P279*&quot;</span>
+<span class="w">    </span><span class="nt">sampling_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span>
+</code></pre></div>
+
+<h3 id="422-p31-vs-p279">4.2.2 关键路径：<code>P31</code> vs <code>P279</code></h3>
+<p>理解这两个属性的区别是采样的基础：</p>
+<ul>
+<li><strong>P31 (instance of / 是...的实例)</strong>：实体 $\rightarrow$ 类别。例如：<code>《三体》 P31 小说</code>。</li>
+<li><strong>P279 (subclass of / 是...的子类)</strong>：类别 $\rightarrow$ 父类别。例如：<code>科幻小说 P279 小说</code>。</li>
+</ul>
+<blockquote>
+<p><strong>Rule of Thumb #1: 永远使用传递路径查询</strong></p>
+<ul>
+<li>❌ <strong>新手写法</strong>：<code>?item wdt:P31 wd:Q11424</code> (仅查找直接被标记为“电影”的项)。</li>
+<li>✅ <strong>专家写法</strong>：<code>?item wdt:P31/wdt:P279* wd:Q11424</code> (查找是“电影”或“电影的任何子类”的项)。</li>
+</ul>
+<p>理由：Wikidata 的分类非常细致。很多条目不会直接挂在“根节点”下，而是挂在叶子节点（如“定格动画电影”）下。</p>
+</blockquote>
+<hr />
+<h2 id="43-a-head-vs-tail">4.3 采样策略 A：头部与长尾 (Head vs. Tail)</h2>
+<p>LLM 需要兼顾“通用性”和“知识广度”。我们可以利用 <strong>Sitelinks (维基百科链接数)</strong> 作为实体热度的代理指标。</p>
+<h3 id="431-buckets">4.3.1 定义热度桶 (Buckets)</h3>
+<p>| 桶 (Bucket) | Sitelinks 数量 | 特点 | 采样目的 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">桶 (Bucket)</th>
+<th style="text-align: left;">Sitelinks 数量</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">采样目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Head (头部)</strong></td>
+<td style="text-align: left;">&gt; 30</td>
+<td style="text-align: left;">国际知名（如：爱因斯坦、巴黎）</td>
+<td style="text-align: left;">测试模型的基础常识跟随能力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mid (腰部)</strong></td>
+<td style="text-align: left;">5 ~ 30</td>
+<td style="text-align: left;">区域知名（如：某省会城市的市长、某知名游戏角色）</td>
+<td style="text-align: left;">测试特定领域的知识深度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tail (长尾)</strong></td>
+<td style="text-align: left;">1 ~ 4</td>
+<td style="text-align: left;">极冷门（如：18世纪的捷克诗人、某小行星）</td>
+<td style="text-align: left;">减少幻觉，测试知识边界</td>
+</tr>
+</tbody>
+</table>
+<h3 id="432-sparql">4.3.2 对应的 SPARQL 写法</h3>
+<p>我们通常不一次性查完，而是分批查询。</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 查询：腰部实体 (Mid-tier) 的科幻电影</span>
+<span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?itemLabel</span> <span class="nv">?sitelinks</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q24925</span><span class="p">.</span> <span class="c"># 科幻电影</span>
+  <span class="nv">?item</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">sitelinks</span> <span class="nv">?sitelinks</span><span class="p">.</span>
+
+  <span class="c"># 核心逻辑：锁定腰部区间</span>
+  <span class="k">FILTER</span> <span class="p">(</span><span class="nv">?sitelinks</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="o">&amp;&amp;</span> <span class="nv">?sitelinks</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="c"># 随机取样将在后续处理，这里先 LIMIT 较大值</span>
+<span class="k">LIMIT</span> <span class="mi">1000</span>
+</code></pre></div>
+
+<hr />
+<h2 id="44-b-debiasing">4.4 采样策略 B：维度均衡 (Debiasing)</h2>
+<p>Wikidata 存在显著的 <strong>西方中心主义 (Western Bias)</strong>。如果你不加控制地采样“城市”，前 100 个结果可能 80% 在欧洲和北美。</p>
+<p>我们需要在 SPARQL 层面强制进行 <strong>分层 (Stratification)</strong>。</p>
+<h3 id="441-geographical-balancing">4.4.1 地域均衡 (Geographical Balancing)</h3>
+<p>利用 <code>P30</code> (Continent) 或 <code>P17</code> (Country) 进行控制。</p>
+<p><strong>糟糕的策略</strong>：随机查 1000 个城市。
+<strong>优秀的策略</strong>：分别查 200 个亚洲城市、200 个非洲城市...</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 模板查询：获取特定大洲的作家</span>
+<span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?itemLabel</span> <span class="nv">?countryLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">;</span>            <span class="c"># 人类</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P106</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q36180</span><span class="p">.</span>       <span class="c"># 职业：作家</span>
+
+  <span class="c"># 关键链条：人 -&gt; 国籍 -&gt; 所属大洲</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P27</span> <span class="nv">?country</span><span class="p">.</span>
+  <span class="nv">?country</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P30</span> <span class="nv">?continent</span><span class="p">.</span>
+
+  <span class="c"># 过滤器：在这里填入特定大洲的 QID</span>
+  <span class="c"># 亚洲: Q48, 非洲: Q15, 欧洲: Q46, 南美: Q18</span>
+  <span class="k">FILTER</span> <span class="p">(</span><span class="nv">?continent</span> <span class="o">=</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q15</span><span class="p">)</span> 
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">100</span>
+</code></pre></div>
+
+<p><em>在 Python 脚本中，轮询 Q48, Q15, Q46... 拼接结果。</em></p>
+<h3 id="442-temporal-balancing">4.4.2 时间均衡 (Temporal Balancing)</h3>
+<p>避免数据集中在 21 世纪。使用 <code>P569</code> (出生日期) 或 <code>P577</code> (出版日期/发生日期)。</p>
+<blockquote>
+<p><strong>Rule of Thumb #2: 并不是所有实体都有精确日期</strong></p>
+<p>不要强制 <code>FILTER (?date = "1990-01-01"^^xsd:dateTime)</code>。
+最好使用 <strong>范围查询 (Range Query)</strong>，并允许一定的缺失值（如果不强求时间属性）。</p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="c"># 筛选 19 世纪 (1801-1900) 的画作</span>
+<span class="k">FILTER</span> <span class="p">(</span><span class="nv">?inception</span> <span class="o">&gt;=</span> <span class="s">&quot;1801-01-01&quot;</span><span class="o">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="o">&amp;&amp;</span> <span class="nv">?inception</span> <span class="o">&lt;=</span> <span class="s">&quot;1900-12-31&quot;</span><span class="o">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="45-c">4.5 采样策略 C：解决“随机查询”超时问题</h2>
+<h3 id="451-order-by-rand">4.5.1 <code>ORDER BY RAND()</code> 的陷阱</h3>
+<p>对包含数百万实体的类（如 <code>wd:Q5</code> 人类）执行 <code>ORDER BY RAND()</code> 会导致 WDQS 数据库全表扫描并排序，极大概率 <strong>Timeout</strong>。</p>
+<h3 id="452-md5">4.5.2 解决方案：MD5 哈希采样法</h3>
+<p>利用实体的 QID 或 Label 生成哈希值，筛选特定哈希结尾的实体。这是在大数据集中实现“确定性随机”的最佳实践。</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 高级技巧：随机采样 1/100 的人类数据，且不使用 RAND()</span>
+<span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?itemLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">.</span> 
+
+  <span class="c"># 将 QID 转换为字符串 ID (去掉 URL 前缀)</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">STR</span><span class="p">(</span><span class="nv">?item</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?itemStr</span><span class="p">)</span>
+  <span class="c"># 生成 MD5 哈希</span>
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">MD5</span><span class="p">(</span><span class="nv">?itemStr</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">?hash</span><span class="p">)</span>
+
+  <span class="c"># 筛选：只取哈希值以 &quot;a1&quot; 结尾的实体 (概率约 1/256)</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">REGEX</span><span class="p">(</span><span class="nv">?hash</span><span class="p">,</span> <span class="s">&quot;a1$&quot;</span><span class="p">))</span> 
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">100</span>
+</code></pre></div>
+
+<p><em>这种方法极快，且结果可复现。</em></p>
+<hr />
+<h2 id="46">4.6 清洗与安全过滤</h2>
+<p>在数据进入对话生成环节前，必须进行清洗。</p>
+<h3 id="461">4.6.1 结构性噪音清洗</h3>
+<p>Wikidata 中有很多不是“实体”的条目，需要剔除。</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 在查询中加入 MINUS 块</span>
+<span class="k">MINUS</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q4167410</span><span class="p">.</span>  <span class="c"># 排除：维基百科消歧义页</span>
+<span class="p">}</span>
+<span class="k">MINUS</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q13406463</span><span class="p">.</span> <span class="c"># 排除：维基百科列表条目 (List of...)</span>
+<span class="p">}</span>
+<span class="k">MINUS</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q11266439</span><span class="p">.</span> <span class="c"># 排除：维基百科模板 (Template:...)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="462-nsfwsafety">4.6.2 敏感内容过滤 (NSFW/Safety)</h3>
+<p>对于对话模型，通常需要过滤色情、暴力或仇恨内容。我们可以维护一个<strong>黑名单类列表</strong>。</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 排除特定类的实例及其子类</span>
+<span class="k">MINUS</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q12744</span><span class="p">.</span> <span class="p">}</span> <span class="c"># 色情片</span>
+<span class="k">MINUS</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q35245</span><span class="p">.</span> <span class="p">}</span> <span class="c"># 犯罪行为</span>
+</code></pre></div>
+
+<hr />
+<h2 id="47">4.7 典型流程图</h2>
+<p>构建主题池的完整流水线如下：</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[配置: topic_schema.yaml]</span>
+<span class="na">(定义领域, 权重, 过滤规则)</span>
+<span class="w">       </span><span class="na">|</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="k">[查询生成器 (Python)] &lt;-----&gt; [黑名单 QID 池]</span>
+<span class="na">(拼接 SPARQL</span><span class="o">:</span><span class="w"> </span><span class="s">增加地域/时间/Sitelinks 约束)</span>
+<span class="w">       </span><span class="na">|</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="na">[WDQS API 执行器] ----&gt; (使用 MD5 哈希采样防超时)</span>
+<span class="w">       </span><span class="na">|</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="k">[原始结果 (Raw JSON)]</span>
+<span class="w">       </span><span class="na">|</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="k">[后处理与验证]</span>
+
+<span class="na">1. 去重 (QID Deduplication)</span>
+<span class="na">2. Label 检查 (必须有中文名? 或允许回退英文?)</span>
+<span class="na">3. 描述检查 (Description 是否包含 &quot;disambiguation&quot;?)</span>
+<span class="w">       </span><span class="na">|</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="na">[最终主题池 (Topic Pool)]</span><span class="w"> </span><span class="o">=</span><span class="s">==&gt; 进入下一章：对话生成</span>
+</code></pre></div>
+
+<hr />
+<h2 id="48">4.8 本章小结</h2>
+<ul>
+<li><strong>路径</strong>：使用 <code>wdt:P31/wdt:P279*</code> 抓取完整的主题树，不要只抓叶子。</li>
+<li><strong>分层</strong>：通过 <code>wikibase:sitelinks</code> 区分 Head/Mid/Tail，按比例混合以保证难度多样性。</li>
+<li><strong>均衡</strong>：不要把所有鸡蛋放在一个篮子里。在 Python 端循环查询不同的 <code>Continent</code> 和 <code>Time Period</code> 来打破数据偏见。</li>
+<li><strong>性能</strong>：避免在大类上使用 <code>ORDER BY RAND()</code>，改用 <code>MD5</code> 哈希后缀筛选。</li>
+<li><strong>清洁</strong>：显式排除 <code>Q4167410</code> (消歧义页) 和敏感类别。</li>
+</ul>
+<hr />
+<h2 id="49">4.9 练习题</h2>
+<h3 id="50">基础题 (50%)</h3>
+<details>
+<summary><b>习题 4.1：基础的长尾筛选（点击展开）</b></summary>
+<p><strong>题目</strong>：查找 <strong>50 个</strong> 类型为“电子游戏”（Q7889），且 Wikipedia 链接数在 <strong>2 到 5 之间</strong>（冷门但非孤立）的游戏。</p>
+<p><strong>Hint</strong>：结合 <code>wikibase:sitelinks</code> 和 <code>FILTER</code> 的逻辑与 (<code>&amp;&amp;</code>)。</p>
+<details>
+<summary><b>参考答案</b></summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?game</span> <span class="nv">?gameLabel</span> <span class="nv">?sitelinks</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?game</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q7889</span><span class="p">.</span> <span class="c"># 使用路径查询包含子类</span>
+  <span class="nv">?game</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">sitelinks</span> <span class="nv">?sitelinks</span><span class="p">.</span>
+
+  <span class="k">FILTER</span><span class="p">(</span><span class="nv">?sitelinks</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="nv">?sitelinks</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">50</span>
+</code></pre></div>
+
+</details>
+</details>
+<details>
+<summary><b>习题 4.2：时间切片采样（点击展开）</b></summary>
+<p><strong>题目</strong>：查找 <strong>10 位</strong> 出生于 <strong>1980年到1990年之间</strong> 的 <strong>网球运动员</strong>（Q10833314）。</p>
+<p><strong>Hint</strong>：注意 <code>xsd:dateTime</code> 比较格式。</p>
+<details>
+<summary><b>参考答案</b></summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?player</span> <span class="nv">?playerLabel</span> <span class="nv">?birthDate</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?player</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q5</span><span class="p">;</span>                <span class="c"># 是人类</span>
+          <span class="nn">wdt</span><span class="p">:</span><span class="nt">P106</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q10833314</span><span class="p">;</span>        <span class="c"># 职业是网球运动员</span>
+          <span class="nn">wdt</span><span class="p">:</span><span class="nt">P569</span> <span class="nv">?birthDate</span><span class="p">.</span>          <span class="c"># 出生日期</span>
+
+  <span class="k">FILTER</span><span class="p">(</span><span class="nv">?birthDate</span> <span class="o">&gt;=</span> <span class="s">&quot;1980-01-01&quot;</span><span class="o">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="o">&amp;&amp;</span> 
+         <span class="nv">?birthDate</span> <span class="o">&lt;=</span> <span class="s">&quot;1990-12-31&quot;</span><span class="o">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh,en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">10</span>
+</code></pre></div>
+
+</details>
+</details>
+<details>
+<summary><b>习题 4.3：排除消歧义页（点击展开）</b></summary>
+<p><strong>题目</strong>：查找 Label 包含 "Phoenix" 的所有条目，但<strong>必须排除</strong>消歧义页面（Q4167410）。</p>
+<p><strong>Hint</strong>：使用 <code>MINUS</code> 子句。</p>
+<details>
+<summary><b>参考答案</b></summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?item</span> <span class="nv">?itemLabel</span> <span class="nv">?desc</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?item</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?label</span><span class="p">.</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">CONTAINS</span><span class="p">(</span><span class="nv">?label</span><span class="p">,</span> <span class="s">&quot;Phoenix&quot;</span><span class="p">))</span>
+
+  <span class="c"># 排除消歧义页</span>
+  <span class="k">MINUS</span> <span class="p">{</span> <span class="nv">?item</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q4167410</span><span class="p">.</span> <span class="p">}</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">20</span>
+</code></pre></div>
+
+</details>
+</details>
+<hr />
+<h3 id="50_1">挑战题 (50%)</h3>
+<details>
+<summary><b>习题 4.4：设计地域均衡的建筑查询（点击展开）</b></summary>
+<p><strong>题目</strong>：请编写一个查询，寻找位于 <strong>南美洲 (Q18)</strong> 的 <strong>摩天大楼 (Q11303)</strong>。
+<strong>要求</strong>：</p>
+<ol>
+<li>必须有中文标签。</li>
+<li>必须有图片（P18）。</li>
+<li>这是一个从属性链（Property Chain）推导位置的练习。</li>
+</ol>
+<p><strong>Hint</strong>：摩天大楼 -&gt; P131 (行政区划) -&gt; ... -&gt; P17 (国家) -&gt; P30 (洲)。路径可能不直接，推荐直接用 <code>wdt:P17/wdt:P30</code> 链式查询。</p>
+<details>
+<summary><b>参考答案</b></summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?building</span> <span class="nv">?buildingLabel</span> <span class="nv">?countryLabel</span> <span class="nv">?image</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?building</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q11303</span><span class="p">;</span>  <span class="c"># 是摩天大楼或其子类</span>
+            <span class="nn">wdt</span><span class="p">:</span><span class="nt">P18</span> <span class="nv">?image</span><span class="p">.</span>               <span class="c"># 有图片</span>
+
+  <span class="c"># 地理位置约束链：建筑 -&gt; 国家 -&gt; 洲</span>
+  <span class="nv">?building</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P17</span> <span class="nv">?country</span><span class="p">.</span>
+  <span class="nv">?country</span>  <span class="nn">wdt</span><span class="p">:</span><span class="nt">P30</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q18</span><span class="p">.</span>               <span class="c"># Q18 = 南美洲</span>
+
+  <span class="c"># 强制要求有中文标签 (通过过滤 label 的语言 tag)</span>
+  <span class="nv">?building</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?buildingLabel</span><span class="p">.</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?buildingLabel</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;zh&quot;</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">20</span>
+</code></pre></div>
+
+</details>
+</details>
+<details>
+<summary><b>习题 4.5：实现 MD5 哈希采样（点击展开）</b></summary>
+<p><strong>题目</strong>：不使用 <code>ORDER BY RAND()</code>，请从数以万计的 <strong>小行星 (Q3863)</strong> 中随机抽取大约 10 个样本。假设哈希空间分布均匀。</p>
+<p><strong>Hint</strong>：<code>BIND(MD5(STR(?item)) AS ?hash)</code>。正则匹配哈希的最后几位。</p>
+<details>
+<summary><b>参考答案</b></summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?asteroid</span> <span class="nv">?asteroidLabel</span> <span class="nv">?hash</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?asteroid</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q3863</span><span class="p">.</span>
+
+  <span class="k">BIND</span><span class="p">(</span><span class="nf">MD5</span><span class="p">(</span><span class="nf">STR</span><span class="p">(</span><span class="nv">?asteroid</span><span class="p">))</span> <span class="k">AS</span> <span class="nv">?hash</span><span class="p">)</span>
+
+  <span class="c"># 16进制哈希，每位有16种可能。</span>
+  <span class="c"># 匹配最后3位为 &quot;abc&quot;，概率为 1/(16^3) = 1/4096</span>
+  <span class="c"># 如果小行星有 50万个，这会返回约 120 个。调整位数以控制数量。</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">REGEX</span><span class="p">(</span><span class="nv">?hash</span><span class="p">,</span> <span class="s">&quot;abc$&quot;</span><span class="p">))</span> 
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;en&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">10</span>
+</code></pre></div>
+
+</details>
+</details>
+<details>
+<summary><b>习题 4.6：开放设计题——多轮对话的数据完备性检查（点击展开）</b></summary>
+<p><strong>题目</strong>：假设你要生成一个关于“书籍推荐”的多轮对话，机器人需要知道书籍的：1. 作者 2. 出版日期 3. 类型 4. 主角。
+请写一个查询，找出满足<strong>所有</strong>这4个条件（即属性都不为空）的书籍，并限制只查找 <strong>中文标签存在</strong> 的书籍。</p>
+<p><strong>思考</strong>：这样的数据在 Wikidata 中多吗？如果太少，在数据生成阶段该怎么做？（降级策略）</p>
+<details>
+<summary><b>参考答案</b></summary>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="nv">?book</span> <span class="nv">?bookLabel</span> <span class="nv">?authorLabel</span> <span class="nv">?date</span> <span class="nv">?genreLabel</span> <span class="nv">?characterLabel</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?book</span> <span class="nn">wdt</span><span class="p">:</span><span class="nt">P31</span><span class="o">/</span><span class="nn">wdt</span><span class="p">:</span><span class="nt">P279</span><span class="o">*</span> <span class="nn">wd</span><span class="p">:</span><span class="nt">Q571</span><span class="p">;</span>  <span class="c"># 书籍</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P50</span> <span class="nv">?author</span><span class="p">;</span>            <span class="c"># 作者</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P577</span> <span class="nv">?date</span><span class="p">;</span>             <span class="c"># 出版日期</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P136</span> <span class="nv">?genre</span><span class="p">;</span>            <span class="c"># 类型</span>
+        <span class="nn">wdt</span><span class="p">:</span><span class="nt">P674</span> <span class="nv">?character</span><span class="p">.</span>        <span class="c"># 登场人物 (这个属性通常很稀疏！)</span>
+
+  <span class="c"># 强制中文标签存在</span>
+  <span class="nv">?book</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?bookLabel</span><span class="p">.</span>
+  <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?bookLabel</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;zh&quot;</span><span class="p">)</span>
+
+  <span class="k">SERVICE</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">label</span> <span class="p">{</span> <span class="nn">bd</span><span class="p">:</span><span class="nt">serviceParam</span> <span class="nn">wikibase</span><span class="p">:</span><span class="nt">language</span> <span class="s">&quot;zh&quot;</span><span class="p">.</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">LIMIT</span> <span class="mi">50</span>
+</code></pre></div>
+
+<p><strong>思考解答</strong>：
+同时满足这4个属性（特别是“登场人物 P674”）且有中文名的书籍，在 Wikidata 中属于<strong>极其稀疏</strong>的数据（可能只有哈利波特、红楼梦等头部书籍满足）。
+<strong>策略建议</strong>：
+在构造数据流水线时，不要用 <code>AND</code> 强约束所有属性。应该用 <code>OPTIONAL</code> 查询这些属性。如果某个属性缺失，生成的对话模板就变成：“抱歉，我不太清楚这本书的主角是谁，但我知道它的作者是...” —— <strong>这也增加了对话数据的真实感（机器人不应该全知全能）。</strong></p>
+</details>
+</details>
+<hr />
+<h2 id="410-gotchas">4.10 常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1">1. 递归查询的性能黑洞</h3>
+<p><strong>错误</strong>：<code>?item wdt:P31* wd:Q5.</code> (查找人类及其所有子类实例)
+<strong>问题</strong>：<code>*</code> 表示 0 次或多次。这会匹配到 <code>wd:Q5</code> 本身，甚至导致查询引擎遍历巨大的图谱路径。
+<strong>修正</strong>：对于 <code>P31</code> (实例)，通常不需要递归，因为实体直连类。对于 <code>P279</code> (子类)，才需要 <code>*</code>。最稳妥写法：<code>?item wdt:P31/wdt:P279* wd:TargetClass</code>.</p>
+<h3 id="2-cardinality">2. 忽略了多值属性 (Cardinality)</h3>
+<p><strong>场景</strong>：查询电影的类型。
+<strong>问题</strong>：一部电影可能是“科幻片”也是“动作片”。简单的 SELECT 会导致同一部电影出现多行数据（笛卡尔积）。
+<strong>修正</strong>：在 Python 端处理聚合，或者在 SPARQL 中使用 <code>GROUP BY ?item</code> 和 <code>GROUP_CONCAT(?typeLabel; separator=", ")</code>。但在造数据初期，保留多行（explode）通常更方便后续处理。</p>
+<h3 id="3-label-service">3. Label Service 的“英文霸权”</h3>
+<p><strong>现象</strong>：<code>bd:serviceParam wikibase:language "zh"</code>
+<strong>问题</strong>：如果没有中文名，这一行数据就会展示为空白 label，或者直接被某些客户端丢弃。
+<strong>修正</strong>：必须设置回退链：<code>"zh,zh-hans,zh-cn,en,fr,de"</code>. 优先展示中文，没有则展示英文，保证数据 ID 可见。</p>
+<h3 id="4">4. 混淆“国家”与“位置”</h3>
+<p><strong>问题</strong>：筛选 <code>wdt:P17</code> (国家) = 中国。
+<strong>漏网之鱼</strong>：很多历史人物（如李白）的国籍是“唐朝” (Q983898)，而不是“中华人民共和国” (Q148)。
+<strong>修正</strong>：如果是查现代数据，用 P17；如果是查历史数据，需要包含历史政权 QID，或者使用 <code>P27</code> (国籍) 并接受多样化的值。</p>
+<hr />
+<p><a href="chapter3.html">&lt; Chapter 3：WDQS 入门</a> | <a href="chapter5.html">Chapter 5：把事实变成对话 &gt;</a></p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter3.html" class="nav-link prev">← Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</a><a href="chapter5.html" class="nav-link next">Chapter 5：把事实变成对话：多轮结构与标注方案 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

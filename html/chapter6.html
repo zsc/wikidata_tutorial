@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-6-wdqs">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</h1>
+<p>在前面的章节中，你已经掌握了 SPARQL 查询的编写技巧。现在，我们面临的问题是如何将“一次性查询”转变为“生产级数据流水线”。</p>
+<p>如果你只是想下载几百条数据，点击 WDQS 网页上的 Download 按钮就够了。但对于<strong>构造对话数据</strong>而言，我们通常面临以下挑战：</p>
+<ol>
+<li><strong>数据量大</strong>：需要采样数万甚至数十万个实体。</li>
+<li><strong>查询复杂</strong>：单一查询容易超时（Timeout）。</li>
+<li><strong>网络不稳定</strong>：WDQS 是公共资源，会有速率限制（Rate Limit）和偶尔的宕机。</li>
+<li><strong>迭代频繁</strong>：你修改了 Prompt 模板，需要重新跑数据，如果每次都重新请求 API，效率极低且不环保。</li>
+</ol>
+<p>本章将指导你使用 Python 构建一个健壮的（Robust）、支持断点续传和本地缓存的数据抓取系统。</p>
+<hr />
+<h2 id="1">1. 学习目标</h2>
+<ul>
+<li><strong>掌握 WDQS API 协议</strong>：HTTP 方法选择、User-Agent 规范、JSON 响应解析。</li>
+<li><strong>构建健壮的请求器</strong>：实现指数退避（Exponential Backoff）重试机制，优雅处理 429/50x 错误。</li>
+<li><strong>实施高效缓存策略</strong>：实现“Query Hash”缓存，将网络 IO 转化为本地磁盘 IO。</li>
+<li><strong>解决大规模数据获取</strong>：放弃低效的 OFFSET 分页，掌握基于 ID 或属性的“切片（Slicing）”技巧。</li>
+<li><strong>数据持久化</strong>：使用 JSONL 格式构建流式数据处理管道。</li>
+</ul>
+<hr />
+<h2 id="2-the-pipeline">2. 核心架构：数据管道 (The Pipeline)</h2>
+<p>一个成熟的对话数据获取系统通常包含四个模块。不要在一个脚本里写完所有逻辑，应该尽量解耦。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[ 配置层: Topic Definitions ]</span>
+<span class="w">       </span><span class="na">| (生成 SPARQL)</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="na">+-------------+      1. Check      +------------------+</span>
+<span class="na">|             | -----------------&gt; |                  |</span>
+<span class="na">|  Fetcher    |      2. Return     |   Local Cache    |</span>
+<span class="na">| (Py Script) | &lt;----------------- | (disk/sqlite)    |</span>
+<span class="na">|             |      (If Hit)      |                  |</span>
+<span class="na">+-------------+                    +------------------+</span>
+<span class="w">       </span><span class="na">|</span>
+<span class="w">       </span><span class="na">| 3. HTTP Request (If Miss)</span>
+<span class="w">       </span><span class="na">| (with Retry &amp; Backoff)</span>
+<span class="w">       </span><span class="na">v</span>
+<span class="na">+-------------+                    +------------------+</span>
+<span class="na">|             | 4. JSON Response   |                  |</span>
+<span class="na">|   WDQS      | -----------------&gt; |  Raw Data Dump   |</span>
+<span class="na">| (Internet)  | 5. Write Cache     |  (.jsonl files)  |</span>
+<span class="na">+-------------+                    +------------------+</span>
+<span class="w">                                           </span><span class="na">|</span>
+<span class="w">                                           </span><span class="na">| 6. Stream Read</span>
+<span class="w">                                           </span><span class="na">v</span>
+<span class="w">                                   </span><span class="na">+------------------+</span>
+<span class="w">                                   </span><span class="na">|                  |</span>
+<span class="w">                                   </span><span class="na">|   Normalizer     |</span>
+<span class="w">                                   </span><span class="na">| (Clean &amp; Format) |</span>
+
+<span class="w">                                   </span><span class="na">| (Clean &amp; Format) |</span>
+<span class="w">                                   </span><span class="na">|                  |</span>
+
+<span class="w">                                   </span><span class="na">+------------------+</span>
+</code></pre></div>
+
+<h3 id="21-user-agent">2.1 必须遵守的规则：User-Agent</h3>
+<p>Wikidata 对匿名爬虫非常敏感。如果你的 Python 脚本不带 Header，默认 User-Agent 通常是 <code>python-requests/x.x.x</code>，这会被直接封禁。</p>
+<p><strong>Rule of Thumb</strong>：</p>
+<blockquote>
+<p>永远在 Header 中附带你的项目名称和联系方式（邮箱）。</p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;MyDialogueBot/1.0 (bot_admin@example.com) based on Wikidata-Toolkit&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/sparql-results+json&#39;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="22-get-vs-post">2.2 GET vs POST</h3>
+<p>WDQS 支持 GET 和 POST。</p>
+<ul>
+<li><strong>GET</strong>：将查询拼接到 URL 参数中。限制：URL 长度通常不能超过 2KB~4KB。</li>
+<li><strong>POST</strong>：将查询放在 Body 中。限制：几乎没有长度限制。</li>
+</ul>
+<p><strong>最佳实践</strong>：为了避免“URI Too Long”错误，统一封装一个使用 <strong>POST</strong> 的请求函数。</p>
+<hr />
+<h2 id="3">3. 核心技术详解</h2>
+<h3 id="31-query-as-key">3.1 缓存策略：以查询为键 (Query-as-Key)</h3>
+<p>在开发调试阶段，你可能会运行脚本 50 次。如果没有缓存，你会对 Wikidata 发起 50 次相同的请求，既慢又可能被封 IP。</p>
+<p>我们推荐<strong>文件哈希缓存</strong>：</p>
+<ol>
+<li>输入 SPARQL 查询字符串。</li>
+<li>计算 MD5 哈希值（例如 <code>a1b2c3d4...</code>）。</li>
+<li>检查 <code>cache/a1b2c3d4.json</code> 是否存在。
+   - <strong>Hit</strong>: 直接读取文件内容。
+   - <strong>Miss</strong>: 发起 HTTP 请求，成功后将结果写入该文件。</li>
+</ol>
+<p>这种方法的优点是<strong>幂等性</strong>（Idempotency）：只要查询语句没变，结果就是稳定的。</p>
+<h3 id="32">3.2 错误处理与指数退避</h3>
+<p>网络错误主要分为两类：</p>
+<ol>
+<li><strong>硬错误 (400 Bad Request)</strong>：你的 SPARQL 语法错了。重试 100 次也没用。策略：<strong>抛出异常，人工修复</strong>。</li>
+<li><strong>软错误 (429 Too Many Requests / 5xx Server Error)</strong>：服务器忙。策略：<strong>等待后重试</strong>。</li>
+</ol>
+<p><strong>指数退避 (Exponential Backoff)</strong> 算法：</p>
+<ul>
+<li>第 1 次失败：等待 1 秒</li>
+<li>第 2 次失败：等待 2 秒</li>
+<li>第 3 次失败：等待 4 秒</li>
+<li>...</li>
+<li>超过最大次数：放弃并报错。</li>
+</ul>
+<h3 id="33-slicing">3.3 大规模数据的切片策略 (Slicing)</h3>
+<p>这是本章最高级的技巧。</p>
+<h4 id="offset">❌ 反模式：使用 OFFSET 分页</h4>
+<div class="codehilite"><pre><span></span><code><span class="c"># 极不推荐</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">WHERE</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span> <span class="k">LIMIT</span> <span class="mi">1000</span> <span class="k">OFFSET</span> <span class="mi">10000</span>
+</code></pre></div>
+
+<p>随着 OFFSET 增大，数据库必须扫描并丢弃前面的记录，查询会变得极其缓慢直至超时（Timeout）。</p>
+<h4 id="id">✅ 最佳实践：基于 ID 或属性切片</h4>
+<p><strong>方法 A：按时间/数值切片</strong>
+适用于有明确时间属性的数据（如出生日期）。</p>
+<ul>
+<li>Query 1: 1900-1910</li>
+<li>Query 2: 1910-1920</li>
+<li>...</li>
+</ul>
+<p><strong>方法 B：按 QID 范围切片 (万能法)</strong>
+由于每个实体都有唯一的数值 ID（Q123 中的 123），我们可以利用 SPARQL 的字符串处理或数值转换来分片。</p>
+<p>虽然 SPARQL 处理字符串 ID 较慢，但更高效的是结合 <code>wd:Q*</code> 实际上是 IRI 的特性，或者直接依赖<strong>外部逻辑生成多条查询</strong>。</p>
+<p>例如，我们要查所有“人类”：</p>
+<ul>
+<li>不要在 SPARQL 里写 <code>LIMIT 1000000</code>.</li>
+<li>而是写 10 个查询，每个查询增加约束：</li>
+<li><code>Query 1</code>: ... 且 <code>?item</code> 位于“亚洲”</li>
+<li><code>Query 2</code>: ... 且 <code>?item</code> 位于“欧洲”</li>
+<li>...</li>
+</ul>
+<hr />
+<h2 id="4">4. 实战代码构建</h2>
+<p>我们将构建一个名为 <code>WikidataFetcher</code> 的类。</p>
+<h3 id="41">4.1 基础结构与缓存</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">class</span> <span class="nc">WikidataFetcher</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;cache&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://query.wikidata.org/sparql&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;DialogueSynthBot/0.1 (me@mysite.com)&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">=</span> <span class="n">cache_dir</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_cache_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="c1"># 计算 MD5</span>
+        <span class="n">query_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">query_hash</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">force_refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">cache_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cache_path</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="c1"># 1. 尝试读取缓存</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force_refresh</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_path</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading from cache: </span><span class="si">{</span><span class="n">cache_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="c1"># 2. 缓存未命中，发起请求</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetching from WDQS...&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="c1"># 3. 写入缓存</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">_make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="c1"># 将在下一节实现具体的请求逻辑</span>
+        <span class="k">pass</span>
+</code></pre></div>
+
+<h3 id="42">4.2 实现重试逻辑</h3>
+<div class="codehilite"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="n">max_retries</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># 使用 POST 方法</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> 
+                    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;json&#39;</span><span class="p">},</span> 
+                    <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+                    <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span> <span class="c1"># 设置超时很重要</span>
+                <span class="p">)</span>
+
+                <span class="c1"># 400 错误直接抛出，不重试</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SPARQL Syntax Error: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># 429 或 5xx 错误进行重试</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">429</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">504</span><span class="p">]:</span>
+                    <span class="n">sleep_time</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span> <span class="c1"># 1, 2, 4, 8...</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">. Retrying in </span><span class="si">{</span><span class="n">sleep_time</span><span class="si">}</span><span class="s2">s...&quot;</span><span class="p">)</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span> <span class="c1"># 其他错误抛出异常</span>
+
+                <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Network error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">attempt</span> <span class="o">==</span> <span class="n">max_retries</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Max retries exceeded&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="5">5. 本章小结</h2>
+<ol>
+<li><strong>工程化第一</strong>：不要依赖浏览器，要依赖代码。</li>
+<li><strong>缓存是必选项</strong>：<code>md5(query)</code> 是实现缓存最简单有效的方法，能节省 90% 的调试时间。</li>
+<li><strong>拥抱 JSONL</strong>：在处理列表型数据时，JSONL（每行一个 JSON）比 JSON Array 更节省内存，比 CSV 表达能力更强。</li>
+<li><strong>切片优于分页</strong>：用业务逻辑（时间、地点、ID段）拆分查询，避免使用深度的 OFFSET。</li>
+<li><strong>礼貌爬取</strong>：设置 User-Agent，遇到 429 请等待。</li>
+</ol>
+<hr />
+<h2 id="6">6. 练习题</h2>
+<h3 id="_1">基础题</h3>
+<p><strong>练习 6.1：JSON 结果提取</strong>
+Wikidata 返回的 JSON 结构比较深。编写一个辅助函数 <code>simplify_results(data)</code>，将原始的 SPARQL JSON 响应转化为简单的字典列表。
+输入示例：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;head&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;results&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;bindings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;item&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://.../Q1&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;itemLabel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cat&quot;</span><span class="p">}}]}}</span>
+</code></pre></div>
+
+<p>期望输出：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">[{</span><span class="s2">&quot;item&quot;</span><span class="p">:</span> <span class="s2">&quot;Q1&quot;</span><span class="p">,</span> <span class="s2">&quot;itemLabel&quot;</span><span class="p">:</span> <span class="s2">&quot;Cat&quot;</span><span class="p">}]</span>
+</code></pre></div>
+
+<p><em>提示：需要处理 value 中的 URL，提取最后的 QID。</em></p>
+<details>
+<summary>点击查看答案思路</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">simplify_results</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
+    <span class="n">simplified</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">bindings</span> <span class="o">=</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bindings&#39;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">bindings</span><span class="p">:</span>
+        <span class="n">new_row</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value_obj</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">value_obj</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="c1"># 如果是wikidata实体URL，提取QID</span>
+            <span class="k">if</span> <span class="s1">&#39;entity/Q&#39;</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">new_row</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="n">simplified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">simplified</span>
+</code></pre></div>
+
+</details>
+<p><strong>练习 6.2：JSONL 写入器</strong>
+编写一个函数 <code>save_to_jsonl(data_list, filename)</code>。
+要求：</p>
+<ol>
+<li>如果文件不存在，创建并写入。</li>
+<li>如果文件存在，<strong>追加</strong>写入。</li>
+<li>确保中文不被转义（显示为汉字而不是 <code>\uXXXX</code>）。</li>
+</ol>
+<details>
+<summary>点击查看答案思路</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">save_to_jsonl</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="c1"># 使用 &#39;a&#39; 模式进行追加</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data_list</span><span class="p">:</span>
+            <span class="c1"># ensure_ascii=False 保证中文正常显示</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h3 id="_2">挑战题</h3>
+<p><strong>练习 6.3：自动切分查询生成器 (Challenge)</strong>
+假设你需要查询 1900 年到 2020 年每一部电影的名称。单一查询会超时。
+编写一个 Python 生成器 <code>query_generator()</code>。
+它接受一个基本的 SPARQL 模板（包含 <code>{start}</code> 和 <code>{end}</code> 占位符），起始年份和结束年份，以及步长（比如 5 年）。
+它通过 <code>yield</code> 返回填充好时间的 SPARQL 字符串。</p>
+<p><em>SPARQL 时间过滤提示</em>：<code>FILTER(?date &gt;= "{start}-01-01"^^xsd:dateTime &amp;&amp; ?date &lt; "{end}-01-01"^^xsd:dateTime)</code></p>
+<details>
+<summary>点击查看答案思路</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">query_generator</span><span class="p">(</span><span class="n">base_template</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">start_year</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="o">&lt;</span> <span class="n">end_year</span><span class="p">:</span>
+        <span class="n">next_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">end_year</span><span class="p">)</span>
+        <span class="c1"># 构造参数字典</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">current</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">next_val</span>
+        <span class="p">}</span>
+        <span class="c1"># 填充模板</span>
+        <span class="k">yield</span> <span class="n">base_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">next_val</span>
+
+<span class="c1"># 使用示例</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT ?film ?filmLabel WHERE {{</span>
+<span class="s2">  ?film wdt:P31 wd:Q11424 ; wdt:P577 ?date .</span>
+<span class="s2">  FILTER(?date &gt;= &quot;</span><span class="si">{start}</span><span class="s2">-01-01&quot;^^xsd:dateTime &amp;&amp; ?date &lt; &quot;</span><span class="si">{end}</span><span class="s2">-01-01&quot;^^xsd:dateTime)</span>
+<span class="s2">  SERVICE wikibase:label {{ bd:serviceParam wikibase:language &quot;zh,en&quot;. }}</span>
+<span class="s2">}}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">query_generator</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="mi">1900</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="c1"># 打印切分后的查询，随后可送入 Fetcher</span>
+</code></pre></div>
+
+</details>
+<p><strong>练习 6.4：审计日志 (Audit Log)</strong>
+修改你的 Fetcher 类。每次发生网络请求（不是 Cache Hit）时，向一个名为 <code>audit.log</code> 的文件中写入一行日志。
+格式：<code>[时间] [状态码] [耗时ms] [查询哈希] [返回记录数]</code>
+这对于监控你的数据管道健康状况非常重要。</p>
+<details>
+<summary>点击查看答案思路</summary>
+<p>在 <code>_make_request</code> 方法内部记录开始时间 <code>start = time.time()</code>，请求结束后记录 <code>end = time.time()</code>。
+使用 Python 的 <code>logging</code> 模块或简单的文件追加写入。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="n">record_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bindings&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+<span class="n">log_line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">ms] [</span><span class="si">{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">record_count</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;audit.log&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">log_line</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h2 id="7-gotchas">7. 常见陷阱与错误 (Gotchas)</h2>
+<h3 id="1wdt-vs-p">🔴 陷阱 1：<code>wdt:</code> vs <code>p:</code> 的混淆导致数据膨胀</h3>
+<p>当你不需要限定符（Qualifier）或引用（Reference）时，<strong>千万不要</strong>查询 <code>p:Pxxx</code>。</p>
+<ul>
+<li><code>wdt:Pxxx</code>：直接指向值（Truthy value），通常每个属性只有 1-2 个值。</li>
+<li><code>p:Pxxx</code>：指向声明节点（Statement node）。如果你查了这个节点，SPARQL 结果集会发生笛卡尔积爆炸。
+<strong>Rule</strong>: 除非你要造包含“时间/地点/来源”等细节的复杂对话，否则只用 <code>wdt:</code>。</li>
+</ul>
+<h3 id="2label-service">🔴 陷阱 2：Label Service 的隐形超时</h3>
+<p><code>SERVICE wikibase:label { ... }</code> 是个黑盒，有时候会极慢。
+<strong>调试技巧</strong>：如果查询超时，尝试去掉 Label Service，只查 QID。如果速度变快，说明瓶颈在 Label 服务。此时可以在 Python 端后续批量查询 Label，而不是在复杂 SPARQL 中做 Join。</p>
+<h3 id="3python-37">🔴 陷阱 3：Python 字典无序 (但在 3.7+ 已改善)</h3>
+<p>虽然 Python 3.7+ 字典保持插入顺序，但 JSON 标准本身是无序的。
+不要依赖 <code>keys()</code> 的顺序来对齐 CSV 列头，始终显式指定列名列表。</p>
+<h3 id="4_1">🔴 陷阱 4：忽略数据类型的转换</h3>
+<p>SPARQL 返回的时间通常是 <code>2023-01-01T00:00:00Z</code> 格式的字符串。
+在生成对话时，直接把这个字符串填进模板会很怪（“他在 1990-01-01T00:00:00Z 出生”）。
+你需要在<strong>规范化阶段（Normalizer）</strong>编写函数，将其转换为“1990年1月1日”或“1990年”。</p>
+<hr />
+<h2 id="_3">下一章预告</h2>
+<p>现在你的硬盘里可能已经躺着 100 个 <code>.jsonl</code> 文件，包含 50,000 个实体的原始数据。但它们还是这种格式：
+<code>{"entity": "Q42", "birth_date": "1952-03-11"}</code>。</p>
+<p>如何把它变成：“<em>道格拉斯·亚当斯出生于1952年，他是《银河系漫游指南》的作者。</em>”？
+甚至变成多轮对话：“<em>Q: 道格拉斯是哪国人？ A: 英国。</em>”？</p>
+<p>下一章 <strong><a href="chapter7.html">Chapter 7：中文自然语言生成</a></strong>，我们将构建核心的<strong>模板引擎</strong>与<strong>自然语言润色器</strong>。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter5.html" class="nav-link prev">← Chapter 5：把事实变成对话：多轮结构与标注方案</a><a href="chapter7.html" class="nav-link next">Chapter 7：中文自然语言生成：从三元组到口语化表达 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

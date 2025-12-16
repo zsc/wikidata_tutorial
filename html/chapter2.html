@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">面向造对话数据的 Wikidata 使用教程（用于生成多样化主题）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 4：主题生成：从知识图谱采样“多样化主题池”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 5：把事实变成对话：多轮结构与标注方案</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 6：自动化抓取与缓存：从 WDQS 到本地数据管道</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 7：中文自然语言生成：从三元组到口语化表达</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 8：质量控制与评估体系：构建数据流水线的“质检局”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 9：多语言与中文缺失处理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 10：许可与合规：Wikidata CC0 与对话数据发布注意事项</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 11：工程化实践：从脚本到生产级流水线</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 12：查询模板库与速查表 (Appendices)</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter-2wikidata-qp">Chapter 2：Wikidata 数据模型详解（Q/P/声明/限定符/引用）</h1>
+<h2 id="1">1. 开篇：为什么造对话数据要懂“超图”模型？</h2>
+<p>在传统的知识图谱（KG）教程中，你可能学过“三元组（Subject-Predicate-Object）”。例如：<code>（李白，出生地，碎叶城）</code>。</p>
+<p>但在构建<strong>真实对话</strong>数据时，三元组是远远不够的。人类的对话充满了<strong>上下文（Context）</strong>、<strong>时效性（Temporality）</strong>和<strong>来源（Provenance）</strong>。请看下面这个对话示例：</p>
+<blockquote>
+<p><strong>用户</strong>：奥巴马是美国总统吗？
+<strong>Bot（三元组思维）</strong>：是。（这就是他的属性）
+<strong>Bot（Wikidata 思维）</strong>：他<strong>曾是</strong>美国总统。他于 <strong>2009年</strong> 就职，<strong>2017年</strong> 卸任，是第 <strong>44</strong> 任总统。</p>
+</blockquote>
+<p>为了生成第二个回答，你需要的数据结构不是简单的连线，而是一个“声明（Statement）”结构。Wikidata 本质上是一个<strong>超图（Hypergraph）</strong>——一条边上可以挂载更多的键值对。</p>
+<p><strong>本章目标</strong>：</p>
+<ol>
+<li>彻底搞懂 <strong>QID</strong> (实体) 和 <strong>PID</strong> (属性) 的指纹机制。</li>
+<li>掌握 <strong>Statement (声明)</strong> 的完整解剖结构：Main Snak, Qualifiers, References, Ranks。</li>
+<li>学习处理复杂数据类型（时间精度、带单位的数量、多语言文本）。</li>
+<li>学会将这些结构映射为 JSON 对话数据模版。</li>
+</ol>
+<hr />
+<h2 id="2-fingerprint">2. 基础原子：指纹 (Fingerprint)</h2>
+<p>在 Wikidata 中，每个页面（无论是实体还是属性）都有三个核心的语言描述字段，统称为“指纹”。这三者对于<strong>自然语言生成（NLG）</strong>和<strong>自然语言理解（NLU）</strong>有着完全不同的用途。</p>
+<h3 id="21-item-q-id-property-p-id">2.1 实体 (Item, Q-ID) 与 属性 (Property, P-ID)</h3>
+<ul>
+<li><strong>Item (Qxxxx)</strong>：代表节点。如 <code>Q2</code> (地球), <code>Q42</code> (道格拉斯·亚当斯)。</li>
+<li><strong>Property (Pxxx)</strong>：代表边，但它是特殊的边，它定义了关系的语义。如 <code>P31</code> (是...的实例), <code>P569</code> (出生日期)。</li>
+</ul>
+<h3 id="22">2.2 标签、描述与别名：对话生成的“语料库”</h3>
+<p>很多开发者只抓取 Label，这是错误的。在造对话数据时，请遵循以下 <strong>Rule-of-Thumb</strong>：</p>
+<p>| 字段 | 英文 | 示例 (Q957 / 北京) | 对话生成中的角色 | 策略 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">英文</th>
+<th style="text-align: left;">示例 (Q957 / 北京)</th>
+<th style="text-align: left;">对话生成中的角色</th>
+<th style="text-align: left;">策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>标签</strong></td>
+<td style="text-align: left;"><strong>Label</strong></td>
+<td style="text-align: left;">北京</td>
+<td style="text-align: left;"><strong>Bot 的嘴</strong> (NLG)</td>
+<td style="text-align: left;">Bot 输出时使用的标准名称，确保回答专业规范。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>描述</strong></td>
+<td style="text-align: left;"><strong>Description</strong></td>
+<td style="text-align: left;">中华人民共和国首都</td>
+<td style="text-align: left;"><strong>消歧义</strong> (Disambiguation)</td>
+<td style="text-align: left;">当用户问“凤凰”时，用于区分是“神话生物”、“古城”还是“自行车品牌”。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>别名</strong></td>
+<td style="text-align: left;"><strong>Aliases</strong></td>
+<td style="text-align: left;">北平<br>燕京<br>Beijing</td>
+<td style="text-align: left;"><strong>用户的嘴</strong> (NLU/Diversity)</td>
+<td style="text-align: left;"><strong>这是宝藏！</strong> 用来模拟多样化的用户提问。用户可能问“燕京在哪？”，而不是“北京在哪？”。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>ASCII 图解：指纹结构</strong>
+<code>text
+[Item: Q957]
+  |
+  +-- Labels:
+  |    |-- zh: "北京"
+  |    |-- en: "Beijing"
+  |
+  +-- Descriptions:
+  |    |-- zh: "中华人民共和国首都"
+  |
+  +-- Aliases:
+       |-- zh: ["北平", "燕京", "京城", "帝都"(可能包含俗语)]</code></p>
+</blockquote>
+<hr />
+<h2 id="3-statement">3. 核心架构：声明 (Statement) 的完整解剖</h2>
+<p>这是本章的重点。不要把 Wikidata 的数据看作 <code>Key: Value</code>，要看作一组<strong>声明对象</strong>。</p>
+<h3 id="31">3.1 结构图解</h3>
+<p>以 <strong>“玛丽·居里 (Q7186) 获得 诺贝尔物理学奖 (Q38104)”</strong> 为例：</p>
+<div class="codehilite"><pre><span></span><code>[实体 Item: Q7186 (玛丽·居里)]
+   |
+   +-- [属性 Property: P166 (获奖)]
+         |
+         +-- [声明 Statement Node]
+               |
+               |-- 1. [Main Snak (核心值)]
+               |       ╰-&gt; Value: Q38104 (诺贝尔物理学奖)
+               |
+               |-- 2. [Qualifiers (限定符)]  &lt;-- 让对话变丰富的关键
+               |       |-- P585 (时间点): 1903年
+               |       |-- P1706 (一起获奖者): 皮埃尔·居里 (Q37463)
+               |       ╰-- P1706 (一起获奖者): 亨利·贝克勒 (Q41269)
+               |
+               |-- 3. [References (引用)]    &lt;-- 让对话可信的关键
+               |       ╰-- [Reference Block]
+               |             |-- P854 (参考URL): http://nobelprize.org/...
+               |             ╰-- P813 (检索日期): 2020-01-01
+               |
+               ╰-- 4. [Rank (等级)]: Preferred (首选)
+</code></pre></div>
+
+<h3 id="32">3.2 组件详解与对话应用</h3>
+<h4 id="1-main-snak">1. Main Snak (核心值)</h4>
+<p>这是事实的主干。</p>
+<ul>
+<li><strong>应用</strong>：回答 <code>What</code> 类问题。</li>
+<li><strong>例子</strong>：“玛丽·居里得过什么奖？” -&gt; “诺贝尔物理学奖”。</li>
+</ul>
+<h4 id="2-qualifiers">2. Qualifiers (限定符)</h4>
+<p>这是附着在主干上的修饰词。<strong>没有限定符，多轮对话就无法展开。</strong></p>
+<ul>
+<li><strong>应用</strong>：回答 <code>When</code>, <code>Who else</code>, <code>Why</code>, <code>How</code> 类问题，或者用于<strong>主动追问</strong>。</li>
+<li><strong>对话合成策略</strong>：<ul>
+<li><em>User</em>: 玛丽·居里得过诺贝尔奖吗？</li>
+<li><em>Bot</em>: 得过。（基于 Main Snak）</li>
+<li><em>Bot (进阶)</em>: 是的，她在 <strong>1903年</strong>（基于 P585）和丈夫 <strong>皮埃尔·居里</strong>（基于 P1706）一起获得了诺贝尔物理学奖。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-references">3. References (引用)</h4>
+<p>数据的来源证据。</p>
+<ul>
+<li><strong>应用</strong>：用于生成 <code>Source</code> 字段，或在 Bot 回答受质疑时抛出证据。</li>
+<li><strong>注意</strong>：不是所有声明都有引用，采样时可以优先过滤出 <code>aggregated by (P248)</code> 或 <code>reference URL (P854)</code> 存在的声明。</li>
+</ul>
+<h4 id="4-rank">4. Rank (等级)</h4>
+<p>一个属性可能有多个值，Rank 告诉我们哪个更重要。</p>
+<ul>
+<li><strong>Preferred (首选)</strong>：当前的、最公认的、官方的。<ul>
+<li><em>例</em>：现任法国总统。</li>
+</ul>
+</li>
+<li><strong>Normal (正常)</strong>：历史上的、其他的、并列的。<ul>
+<li><em>例</em>：前任法国总统。</li>
+</ul>
+</li>
+<li><strong>Deprecated (废弃)</strong>：错误的或过时被修正的（但为了记录历史保留）。<ul>
+<li><em>例</em>：冥王星曾被归类为行星（如果在 Wikidata 中保留此记录，可能会标记为 Deprecated 或通过 Qualifier 标记结束时间）。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>常见陷阱</strong>：在生成“现在的 X 是谁？”这类对话时，必须过滤 <code>Rank != Deprecated</code>，且通常优先取 <code>Preferred</code>，或者检查 <code>End Time</code> 限定符是否存在。</p>
+</blockquote>
+<hr />
+<h2 id="4-data-types">4. 关键数据类型 (Data Types)</h2>
+<p>在 JSON 响应中，值（Value）的格式随类型变化。解析错误是新手最常遇到的 Bug。</p>
+<h3 id="41-wikibaseitem">4.1 WikibaseItem (实体链接)</h3>
+<ul>
+<li><strong>JSON 表现</strong>：<code>{"entity-type": "item", "id": "Qxxx"}</code></li>
+<li><strong>处理</strong>：你需要拿着这个 ID 再去查一次它的 Label，才能在对话中说出来。</li>
+</ul>
+<h3 id="42-time">4.2 Time (时间)</h3>
+<ul>
+<li><strong>JSON 表现</strong>：<code>{"time": "+1903-00-00T00:00:00Z", "precision": 9, ...}</code></li>
+<li><strong>关键字段：Precision (精度)</strong><ul>
+<li><code>11</code> = 天 (Day) -&gt; 可生成 "X年X月X日"</li>
+<li><code>10</code> = 月 (Month) -&gt; 可生成 "X年X月"</li>
+<li><code>9</code> = 年 (Year) -&gt; <strong>只能</strong>生成 "X年"。千万不要因为看到 <code>00-00</code> 就生成 "1月1日"。</li>
+<li><code>7</code> = 世纪 (Century) -&gt; 生成 "X世纪"。</li>
+</ul>
+</li>
+</ul>
+<h3 id="43-quantity">4.3 Quantity (数量)</h3>
+<ul>
+<li><strong>JSON 表现</strong>：<code>{"amount": "+8848", "unit": "http://.../Q11573"}</code></li>
+<li><strong>处理</strong>：<ol>
+<li><strong>Unit</strong>：单位是指向实体的 URI（如 <code>Q11573</code> 代表米）。必须解析这个 ID 对应的中文 Label。</li>
+<li><strong>Amount</strong>：通常是字符串形式的数字，解析时注意正负号。</li>
+<li><strong>Bounds</strong>：有时包含 <code>upperBound</code> 和 <code>lowerBound</code>，表示误差范围。对话中可以说“大约 8848 米”。</li>
+</ol>
+</li>
+</ul>
+<h3 id="44-monolingual-text">4.4 Monolingual Text (单语文本)</h3>
+<ul>
+<li>有些属性（如 P1448 官方名称）特定于某种语言。</li>
+<li>处理：检查 <code>language</code> 字段。如果你的对话是中文的，但文本是法文，需要决策是直接显示原文，还是尝试寻找翻译。</li>
+</ul>
+<hr />
+<h2 id="5-somevalue-novalue">5. 特殊值：SomeValue 与 NoValue</h2>
+<p>Wikidata 允许声明“不知道”或“没有”。</p>
+<ul>
+<li>
+<p><strong>SomeValue (某值/未知值)</strong>：</p>
+<ul>
+<li>含义：我知道有这个关系，但我不知道具体是谁/是什么。</li>
+<li><em>例子</em>：某古人的父亲是存在的，但史书没记载名字。</li>
+<li><em>SPARQL 表现</em>：节点是一个空白节点 (Blank Node)。</li>
+<li><em>对话生成</em>：Bot 应回答“资料记载不详”或“具体身份未确认”。</li>
+</ul>
+</li>
+<li>
+<p><strong>NoValue (无值)</strong>：</p>
+<ul>
+<li>含义：确定没有这个关系。</li>
+<li><em>例子</em>：某人终身未婚，其配偶属性可能被标记为 NoValue。</li>
+<li><em>对话生成</em>：Bot 应回答“没有”、“无”。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="6">6. 本章小结</h2>
+<ol>
+<li><strong>不仅仅是三元组</strong>：Wikidata 是以<strong>声明 (Statement)</strong> 为中心的。</li>
+<li><strong>限定符 (Qualifier) 是对话的灵魂</strong>：它提供了时间、地点、原因和伴随状况，是构造多轮对话追问逻辑的基础。</li>
+<li><strong>别名 (Alias) 是扩充语料的神器</strong>：利用别名生成多样化的 User Query。</li>
+<li><strong>精度与单位</strong>：处理时间时看 <code>precision</code>，处理数量时必查 <code>unit</code>。</li>
+<li><strong>Rank 决定时效性</strong>：区分“现任”与“前任”，靠的是 Rank 和时间限定符。</li>
+</ol>
+<hr />
+<h2 id="7">7. 练习题</h2>
+<h3 id="_1">基础题</h3>
+<p><strong>练习 2.1：手动解析 JSON</strong>
+访问 <a href="https://www.wikidata.org/wiki/Special:EntityData/Q42.json">Wikidata API (Q42)</a>。
+搜索 <code>P569</code> (出生日期)。</p>
+<ol>
+<li>找到它的 <code>mainsnak</code> -&gt; <code>datavalue</code> -&gt; <code>value</code>。</li>
+<li>记录下 <code>time</code> 字符串和 <code>precision</code> 数值。</li>
+<li>如果 precision 是 11，你应该转换成什么中文格式？如果是 9 呢？</li>
+</ol>
+<details>
+<summary>点击展开答案提示</summary>
+<ul>
+<li><strong>URL</strong>: 打开链接后搜索 "P569"。</li>
+<li><strong>结构</strong>: 你会看到 <code>time: "+1952-03-11T00:00:00Z"</code>, <code>precision: 11</code>。</li>
+<li><strong>转换</strong>:<ul>
+<li>Precision 11 (Day) -&gt; "1952年3月11日"</li>
+<li>Precision 9 (Year) -&gt; "1952年" (忽略后面的月日)</li>
+</ul>
+</li>
+</ul>
+</details>
+<p><strong>练习 2.2：寻找限定符</strong>
+在 Wikidata 页面查看 <strong>泰坦尼克号 (Q25173)</strong> 的属性 <strong>长眠地 (P119)</strong>。</p>
+<ol>
+<li>它的值是“北大西洋”。</li>
+<li>它有一个非常关键的限定符 <strong>坐标 (P625)</strong>。</li>
+<li>如果没有这个限定符，导航员能找到它吗？思考这在 "Ask for location" 对话中的区别。</li>
+</ol>
+<details>
+<summary>点击展开答案提示</summary>
+<ul>
+<li><strong>观察</strong>: P119 的值是广义的 "North Atlantic Ocean"，但下方限定符 P625 给出了精确的经纬度。</li>
+<li><strong>对话区别</strong>:<ul>
+<li>简单回答: "它沉没在北大西洋。"</li>
+<li>精确回答: "它位于北大西洋，具体坐标是北纬 41度43分，西经 49度56分。"（通过读取限定符实现）</li>
+</ul>
+</li>
+</ul>
+</details>
+<p><strong>练习 2.3：别名的提取</strong>
+选择一个你喜欢的电子游戏或电影（例如《原神》 Q100730053 或 《黑客帝国》 Q83495）。
+查看其所有中文和英文别名。
+设计 3 个不同的用户提问，分别使用 Label 和不同的 Alias。</p>
+<details>
+<summary>点击展开答案提示</summary>
+<ul>
+<li><strong>实体</strong>: Q100730053 (原神)</li>
+<li><strong>Label</strong>: 原神</li>
+<li><strong>Alias</strong>: Genshin Impact, Yuan Shen</li>
+<li><strong>生成的提问</strong>:<ol>
+<li>"<strong>原神</strong>是哪一年发行的？" (Label)</li>
+<li>"我想知道 <strong>Genshin Impact</strong> 的开发商是谁？" (Alias En)</li>
+<li>"这游戏也叫 <strong>Yuan Shen</strong> 吗？" (Alias Pinyin)</li>
+</ol>
+</li>
+</ul>
+</details>
+<hr />
+<h3 id="_2">挑战题</h3>
+<p><strong>练习 2.4：多值与 Rank 的处理逻辑</strong>
+实体：<strong>中华人民共和国 (Q148)</strong>。
+属性：<strong>国家元首 (P35)</strong>。
+这个属性下列出了从毛泽东到现任的所有主席。</p>
+<ol>
+<li>找到标记为 <code>Preferred</code> 的声明。它是谁？</li>
+<li>找到其他的声明。它们的 Rank 是什么？</li>
+<li>设计一段伪代码逻辑：当用户问“中国国家元首是谁？”时，如何从这堆列表中只返回正确的那一个？</li>
+</ol>
+<details>
+<summary>点击展开答案提示</summary>
+<ol>
+<li><strong>Preferred</strong>: 习近平 (Q15031)</li>
+<li><strong>Normal</strong>: 毛泽东、刘少奇等历史主席。</li>
+<li><strong>伪代码</strong>:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="n">statements</span> <span class="o">=</span> <span class="n">get_statements</span><span class="p">(</span><span class="n">entity</span><span class="o">=</span><span class="s2">&quot;Q148&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;P35&quot;</span><span class="p">)</span>
+<span class="c1"># 策略1: 优先找 Preferred</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">statements</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="s2">&quot;preferred&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">answer</span><span class="p">:</span>
+    <span class="c1"># 策略2: 如果没有 preferred，找 end_time 不存在的 (假设现在还在任)</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">statements</span><span class="p">,</span> <span class="n">qualifier_p582</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;现任元首是: </span><span class="si">{</span><span class="n">get_label</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<p><strong>练习 2.5：基于限定符的“澄清式”对话</strong>
+场景：用户问“乔布斯什么时候离开苹果的？”
+实体：<strong>史蒂夫·乔布斯 (Q19837)</strong>，属性：<strong>雇主 (P108)</strong> -&gt; 值：<strong>苹果公司</strong>。
+观察：你会发现这里有<strong>两个</strong>针对苹果公司的声明（因为他离开过又回来了）。
+任务：利用 <code>P580</code> (开始时间) 和 <code>P582</code> (结束时间) 限定符，构造一个能理清这段历史的 Bot 回答。</p>
+<details>
+<summary>点击展开答案提示</summary>
+<ul>
+<li><strong>数据</strong>:<ul>
+<li>声明1: Apple, Start: 1976, End: 1985</li>
+<li>声明2: Apple, Start: 1997, End: 2011</li>
+</ul>
+</li>
+<li><strong>构造回答</strong>:<ul>
+<li>"乔布斯曾<strong>两次</strong>任职于苹果公司。第一次是从 <strong>1976年</strong> 到 <strong>1985年</strong>；第二次是从 <strong>1997年</strong> 回归，直到 <strong>2011年</strong>。"</li>
+</ul>
+</li>
+<li><em>提示</em>: 检测到同一属性指向同一 Value 但有不同的限定符时，是生成“对比/变迁类”对话的绝佳机会。</li>
+</ul>
+</details>
+<hr />
+<h2 id="8-gotchas">8. 常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li>
+<p><strong>单位对应的不是中文</strong>：</p>
+<ul>
+<li><em>现象</em>：生成“这座山高 8848 <strong>Q11573</strong>”。</li>
+<li><em>原因</em>：获取 Quantity 类型时，直接使用了 unit 的 URL 后缀。</li>
+<li><em>解决</em>：必须像处理普通 Entity 一样，去获取 <code>Q11573</code> 的 Label（即“米”）。</li>
+</ul>
+</li>
+<li>
+<p><strong>默认公历的坑</strong>：</p>
+<ul>
+<li><em>现象</em>：获取古代人物生日，日期偏差几天。</li>
+<li><em>原因</em>：Wikidata 的时间模型存储了历法（格里历 vs 儒略历）。</li>
+<li><em>解决</em>：对于一般对话数据，通常忽略历法转换，直接取字符串中的年月日即可。但如果是严谨的历史对话，需注意 <code>calendarmodel</code> 字段。</li>
+</ul>
+</li>
+<li>
+<p><strong>忽略“废弃”等级</strong>：</p>
+<ul>
+<li><em>现象</em>：Bot 说“冥王星是太阳系第九大行星”。</li>
+<li><em>原因</em>：没有过滤 <code>rank != deprecated</code>。</li>
+<li><em>解决</em>：在 SPARQL 查询或后处理中显式排除 Deprecated 声明，除非你的目的是做“历史上的错误认知”科普。</li>
+</ul>
+</li>
+<li>
+<p><strong>把 Qualifiers 当作 Main Value</strong>：</p>
+<ul>
+<li><em>现象</em>：查询“谁获得了诺贝尔奖？”，结果列表里不仅有获奖人，还混入了一些莫名其妙的日期或地点。</li>
+<li><em>原因</em>：SPARQL 写得不对，混淆了 <code>wdt:Pxxx</code> (Truth) 和 <code>pq:Pxxx</code> (Qualifier)。我们将在下一章详细讲解如何正确查询它们。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p><a href="chapter1.html">&lt; Chapter 1</a> | <a href="index.html">Return to Index</a> | <a href="chapter3.html">Chapter 3 &gt;</a></p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter1.html" class="nav-link prev">← Chapter 1：Wikidata 与对话数据：为什么它适合做“多样化主题”</a><a href="chapter3.html" class="nav-link next">Chapter 3：WDQS 入门：用 SPARQL 把知识“查出来” →</a></nav>
+        </main>
+    </div>
+</body>
+</html>
